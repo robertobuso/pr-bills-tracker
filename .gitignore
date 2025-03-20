@@ -16,6 +16,8 @@
 .env.development.local
 .env.test.local
 .env.production.local
+venv/
+*.pyc
 
 npm-debug.log*
 yarn-debug.log*
@@ -23,3 +25,6 @@ yarn-error.log*
 
 # backend
 /poc_downloads
+
+venv/
+*.pyc
