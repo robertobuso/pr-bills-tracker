@@ -231,28 +231,20 @@ function App() {
   const handleOpen = async (billId) => {
     setLoading(true);
     try {
-      const detailsURL = `${BASE_URL}/bills/${billId}?include=sponsorships&include=abstracts&include=other_titles&include=other_identifiers&include=actions&include=sources&include=documents&include=versions&include=votes&include=related_bills&apikey=${API_KEY}`;
-      const response = await axios.get(detailsURL);
+      // Use the enhanced scraper to get bill details
+      const billWithScrapedData = await fetchBillDetailsWithScraper(billId);
       
-      // Preprocess the bill data to extract and validate dates
-      const billWithDates = {
-        ...response.data,
-        // Extract key dates with rich metadata
-        processedDates: {
-          latest: extractBestDate(response.data, 'latest'),
-          created: extractBestDate(response.data, 'created'),
-          passage: extractBestDate(response.data, 'passage')
-        }
-      };
+      setSelectedBill(billWithScrapedData);
+      setOpen(true);
       
       // Sort actions array by date for timeline consistency
-      if (billWithDates.actions && Array.isArray(billWithDates.actions)) {
-        billWithDates.actions = sortActionsByDate(billWithDates.actions);
+      if (billWithScrapedData.actions && Array.isArray(billWithScrapedData.actions)) {
+        billWithScrapedData.actions = sortActionsByDate(billWithScrapedData.actions);
       }
       
       // NEW: If there's no eventos array, create one from actions
-      if (!billWithDates.eventos && billWithDates.actions) {
-        billWithDates.eventos = billWithDates.actions.map(action => ({
+      if (!billWithScrapedData.eventos && billWithScrapedData.actions) {
+        billWithScrapedData.eventos = billWithScrapedData.actions.map(action => ({
           descripcion: action.description,
           fecha: action.date,
           tipo: 'tramite',
@@ -260,24 +252,22 @@ function App() {
           documents: [] // You might want to extract documents if available
         }));
       }
+  
       
-      setSelectedBill(billWithDates);
-      setOpen(true);
-      
-      // Add to recently viewed bills
-      const updatedRecentlyViewed = [billId, ...recentlyViewedBills.filter(id => id !== billId)].slice(0, 10);
-      setRecentlyViewedBills(updatedRecentlyViewed);
-      localStorage.setItem('recentlyViewedBills', JSON.stringify(updatedRecentlyViewed));
-    } catch (err) {
-      console.error('Error fetching bill details:', err);
-      setError({
-        severity: 'error',
-        message: 'Failed to load bill details. Please try again later.'
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Add to recently viewed bills
+    const updatedRecentlyViewed = [billId, ...recentlyViewedBills.filter(id => id !== billId)].slice(0, 10);
+    setRecentlyViewedBills(updatedRecentlyViewed);
+    localStorage.setItem('recentlyViewedBills', JSON.stringify(updatedRecentlyViewed));
+  } catch (err) {
+    console.error('Error fetching bill details:', err);
+    setError({
+      severity: 'error',
+      message: 'Failed to load bill details. Please try again later.'
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleClose = () => {
     setOpen(false);
@@ -294,6 +284,22 @@ function App() {
       
       const response = await axios.get(detailsURL);
       const openStatesBill = response.data;
+      
+      // Preprocess the bill data with rich date metadata
+      const processedBill = {
+        ...openStatesBill,
+        processedDates: {
+          latest: extractBestDate(openStatesBill, 'latest'),
+          created: extractBestDate(openStatesBill, 'created'),
+          passage: extractBestDate(openStatesBill, 'passage')
+        }
+      };
+      
+      // Sort actions array by date for timeline consistency
+      if (processedBill.actions && Array.isArray(processedBill.actions)) {
+        processedBill.actions = sortActionsByDate(processedBill.actions);
+      }
+      
       console.log(`Successfully fetched basic bill data for ${billId}`);
       
       // Step 2: Find SUTRA URL from the sources array
@@ -313,65 +319,91 @@ function App() {
         }
       }
       
-      // If we couldn't find a SUTRA URL, log and return basic data
+      // If we couldn't find a SUTRA URL, return the basic data and create 
+      // a fallback eventos array from actions
       if (!sutraUrl) {
         console.warn(`No SUTRA URL found for bill ${billId}. Using only OpenStates data.`);
-        return openStatesBill;
+        
+        // Create eventos array from actions as a fallback
+        processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
+          ? processedBill.actions.map(action => ({
+              descripcion: action.description,
+              fecha: action.date,
+              tipo: 'tramite',
+              comision: action.organization ? action.organization.name : null,
+              documents: []
+            }))
+          : [];
+        
+        return processedBill;
       }
       
       // Step 3: Call our backend scraper with the SUTRA URL
       console.log(`Calling enhanced scraper with URL: ${sutraUrl}`);
-      const scraperResponse = await axios.post('http://localhost:3001/api/download-documents', {
-        sutraUrl: sutraUrl
-      });
       
-      // Step 4: Check if scraper response was successful
-      if (scraperResponse.data && scraperResponse.data.success !== false) {
-        console.log(`Successfully scraped additional data from SUTRA`);
+      // Get the backend URL - handle both development and production
+      const backendUrl = process.env.NODE_ENV === 'production' 
+        ? '/api/download-documents'  // In production, use relative URL
+        : 'http://localhost:3001/api/download-documents';  // In development
+      
+      try {
+        const scraperResponse = await axios.post(backendUrl, {
+          sutraUrl: sutraUrl
+        });
         
-        // Combine data from both sources
-        const combinedData = {
-          ...openStatesBill,
-          // Add scraped data with fallbacks
-          eventos: scraperResponse.data.eventos || [],
-          comisiones: scraperResponse.data.comisiones || openStatesBill.comisiones || [],
-          // Add any other fields from the scraper that you want to use
-        };
-        
-        console.log(`Combined data has ${combinedData.eventos?.length || 0} eventos`);
-        return combinedData;
-      } else {
-        // If scraper failed but returned a response, log the error
-        if (scraperResponse.data && scraperResponse.data.error) {
-          console.error(`Scraper error: ${scraperResponse.data.error}`);
+        // Step 4: Check if scraper response was successful
+        if (scraperResponse.data && scraperResponse.data.success !== false) {
+          console.log(`Successfully scraped additional data from SUTRA`);
+          
+          // Combine data from both sources
+          const combinedData = {
+            ...processedBill,
+            // Add scraped data with fallbacks
+            eventos: scraperResponse.data.eventos || [],
+            comisiones: scraperResponse.data.comisiones || processedBill.comisiones || [],
+          };
+          
+          console.log(`Combined data has ${combinedData.eventos?.length || 0} eventos`);
+          return combinedData;
         } else {
-          console.error(`Scraper failed with unknown error`);
+          // If scraper failed but returned a response, log the error
+          if (scraperResponse.data && scraperResponse.data.error) {
+            console.error(`Scraper error: ${scraperResponse.data.error}`);
+          } else {
+            console.error(`Scraper failed with unknown error`);
+          }
+          
+          // Use the fallback eventos array
+          processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
+            ? processedBill.actions.map(action => ({
+                descripcion: action.description,
+                fecha: action.date,
+                tipo: 'tramite',
+                comision: action.organization ? action.organization.name : null,
+                documents: []
+              }))
+            : [];
+          
+          return processedBill;
         }
+      } catch (scraperError) {
+        console.error('Error calling scraper backend:', scraperError);
         
-        // Return the original data as fallback
-        return openStatesBill;
+        // Return the basic bill data with a fallback eventos array
+        processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
+          ? processedBill.actions.map(action => ({
+              descripcion: action.description,
+              fecha: action.date,
+              tipo: 'tramite',
+              comision: action.organization ? action.organization.name : null,
+              documents: []
+            }))
+          : [];
+        
+        return processedBill;
       }
     } catch (error) {
       console.error('Error in fetchBillDetailsWithScraper:', error);
-      
-      // For debugging: log detailed error information
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error('Error response:', {
-          data: error.response.data,
-          status: error.response.status,
-          headers: error.response.headers
-        });
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Error request:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error message:', error.message);
-      }
-      
-      // Re-throw the error so the calling function can handle it
       throw error;
     }
   };
@@ -1527,7 +1559,12 @@ function App() {
                 >
                   <Tab label="Overview" icon={<DescriptionIcon />} iconPosition="start" />
                   <Tab label="Timeline" icon={<TimelineIcon />} iconPosition="start" />
-                  <Tab label="Eventos" icon={<EventIcon />} iconPosition="start" />
+                  
+                  {/* Only show Eventos tab if there's data */}
+                  {selectedBill.eventos && selectedBill.eventos.length > 0 && (
+                    <Tab label="Eventos" icon={<EventIcon />} iconPosition="start" />
+                  )}
+
                   <Tab label="Documents" icon={<ArticleIcon />} iconPosition="start" />
                   <Tab label="Sponsors" icon={<PeopleIcon />} iconPosition="start" />
                 </Tabs>
@@ -1673,8 +1710,8 @@ function App() {
                 </Paper>
               )}
 
-              {tabValue === 2 && (
-                <EventosView eventos={selectedBill.eventos || []} />
+              {tabValue === 2 && selectedBill.eventos && (
+                <EventosView eventos={selectedBill.eventos} />
               )}
               
               {tabValue === 3 && (

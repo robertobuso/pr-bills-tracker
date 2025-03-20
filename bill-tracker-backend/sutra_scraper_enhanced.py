@@ -618,23 +618,23 @@ if __name__ == "__main__":
 
         if "error" in result:
             logger.error(result["error"])
+            # Still output the result as JSON even on error
+            print(json.dumps(result))
         else:
             # Save the result to a JSON file
             with open("result.json", "w", encoding="utf-8") as f:
                 json.dump(result, indent=2, ensure_ascii=False, fp=f)
             logger.info("Results saved to result.json")
             
-            # Print summary to console
-            print("\nSCRAPER SUMMARY:")
-            print(f"Measure Number: {result.get('measure_number', 'Not found')}")
-            print(f"Title: {result.get('title', 'Not found')}")
-            print(f"Status: {result.get('status', 'Not found')}")
-            print(f"Documents found: {len(result.get('documents', []))}")
-            print(f"Tramites found: {len(result.get('tramites', []))}")
-            print(f"Votaciones found: {len(result.get('votaciones', []))}")
-            print(f"Comisiones found: {len(result.get('comisiones', []))}")
+            # IMPORTANT: Print the result as JSON for the Node.js server to parse
+            print(json.dumps(result))
             
-            if "errors" in result:
-                print(f"Errors encountered: {len(result['errors'])}")
+            # Also print summary to logger only, not to stdout
+            logger.info("\nSCRAPER SUMMARY:")
+            logger.info(f"Measure Number: {result.get('measure_number', 'Not found')}")
+            logger.info(f"Title: {result.get('title', 'Not found')}")
+            logger.info(f"Status: {result.get('status', 'Not found')}")
+            logger.info(f"Events found: {len(result.get('eventos', []))}")
+            logger.info(f"Commissions found: {len(result.get('comisiones', []))}")
     else:
-        print("Please provide a URL as a command-line argument.")
+        print(json.dumps({"error": "Please provide a URL as a command-line argument."}))
