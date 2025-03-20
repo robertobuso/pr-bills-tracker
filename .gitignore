@@ -1,6 +1,6 @@
 # dependencies
 bill-tracker-frontend/node_modules/
-/.pnp
+.pnp
 .pnp.js
 
 # testing
