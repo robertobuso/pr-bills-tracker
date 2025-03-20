@@ -525,6 +525,7 @@ def scrape_and_download(url, output_dir="scraped_data"):
         # Process results as they complete to track errors
         for i, doc_info in enumerate(executor.map(download_fn, all_documents)):
             processed_documents.append(doc_info)
+
             # If document had an error, add it to the data errors list
             if 'error' in doc_info:
                 data.setdefault("errors", []).append(doc_info['error'])
@@ -588,6 +589,8 @@ def scrape_and_download(url, output_dir="scraped_data"):
         json.dump(data, indent=2, ensure_ascii=False, fp=json_file)
     logger.info(f"Saved structured data to {json_filepath}")
 
+    cleanup_debug_files()
+
     return data
 
 def extract_text_from_docx(docx_path):
@@ -637,6 +640,18 @@ def extract_text_from_pdf(pdf_path):
         logger.error(f"Error extracting text from {pdf_path}: {e}")
         return ""
 
+def cleanup_debug_files():
+    debug_files = ['page_source.html', 'error_screenshot.png']
+    for i in range(5):
+        debug_files.append(f'loading_attempt_{i+1}.png')
+        
+    for file in debug_files:
+        if os.path.exists(file):
+            try:
+                os.remove(file)
+                logger.info(f"Cleaned up debug file: {file}")
+            except Exception as e:
+                logger.warning(f"Could not clean up {file}: {e}")
 
 # --- Main Execution ---
 if __name__ == "__main__":

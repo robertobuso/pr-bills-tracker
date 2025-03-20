@@ -1,4 +1,3 @@
-// server.js improvements
 const express = require('express');
 const { exec } = require('child_process');
 const cors = require('cors');
@@ -6,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 
 // Improved CORS configuration
 app.use(cors({
@@ -165,30 +165,54 @@ app.get('/api/proxy-document', async (req, res) => {
     const { url } = req.query;
     
     if (!url) {
-      return res.status(400).send('URL parameter is required');
+      return res.status(400).json({ error: 'URL parameter is required' });
     }
     
+    console.log(`Proxying document: ${url}`);
+    
     try {
+      // Set headers to avoid caching issues
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
+      // Set appropriate content type based on file extension
+      if (url.toLowerCase().endsWith('.pdf')) {
+        res.setHeader('Content-Type', 'application/pdf');
+      } else if (url.toLowerCase().endsWith('.docx')) {
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+      } else if (url.toLowerCase().endsWith('.doc')) {
+        res.setHeader('Content-Type', 'application/msword');
+      }
+      
+      // Stream the file directly without additional processing
       const response = await axios({
         method: 'GET',
         url: url,
-        responseType: 'stream'
+        responseType: 'stream',
+        timeout: 30000,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': '*/*'
+        }
       });
       
-      // Set appropriate content type header
-      if (url.endsWith('.pdf')) {
-        res.setHeader('Content-Type', 'application/pdf');
-      } else if (url.endsWith('.docx')) {
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-      } else if (url.endsWith('.doc')) {
-        res.setHeader('Content-Type', 'application/msword');
+      // Pass through original headers that might help with format detection
+      const contentType = response.headers['content-type'];
+      if (contentType) {
+        res.setHeader('Content-Type', contentType);
       }
       
       // Pipe the document stream to the response
       response.data.pipe(res);
+      
     } catch (error) {
-      console.error('Error proxying document:', error);
-      res.status(500).send('Error fetching document');
+      console.error('Error proxying document:', error.message);
+      res.status(500).json({ 
+        error: 'Failed to proxy document', 
+        details: error.message,
+        url: url
+      });
     }
   });
 

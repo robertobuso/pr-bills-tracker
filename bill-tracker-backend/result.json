@@ -1,8 +1,8 @@
 {
-  "measure_number": "Proyecto del Senado (PS0259)",
-  "title": "Para viabilizar la transferencia de las carreteras secundarias y su mantenimiento a los municipios de Puerto Rico, con el fin de que los municipios tengan mayor autonomía y puedan mejorar las fallas más apremiantes en cuanto a la infraestructura vial del país, y se expanda su capacidad para prestar servicios directos a la ciudadanía; enmendar el Artículo 1, añadir un nuevo inciso (d) y reenumerar los actuales incisos (d), (e) (f), (g), (h), (i) y (j), como los incisos (e), (f), (g), (h), (i), (j) y (k), respectivamente; enmendar los Artículos 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16 y 19 de la Ley 94-2013, conocida como “Ley para Traspasar las Carreteras Terciarias del Departamento de Transportación y Obras Públicas del Estado Libre Asociado de Puerto Rico a los Municipios”; y para otros fines relacionados.",
+  "measure_number": "Proyecto del Senado (PS0043)",
+  "title": "Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo\n1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como\n\"Código Civil de Puerto Rico\", a los fines de aclarar que las instituciones de cuidado\nde salud responderán vicariamente y no objetivamente por los daños que causan\npersonas que operan franquicias exclusivas de servicios de salud en dichas\ninstituciones o por los daños causados por personal de la institución a un paciente\nque accede directamente sin referido de un médico primario; y para otros fines\nrelacionados.",
   "status": null,
-  "filing_date": "01/15/2025",
+  "filing_date": "01/02/2025",
   "authors": [],
   "origin_chamber": null,
   "current_chamber": null,
@@ -11,111 +11,16 @@
   "comisiones": [],
   "eventos": [
     {
-      "descripcion": "Referido a Comisión(es)",
-      "fecha": "03/20/2025",
+      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
+      "fecha": "04/01/2025",
       "documents": [],
-      "comision": "Comisión de Asuntos Municipales",
-      "tipo": "tramite"
-    },
-    {
-      "descripcion": "Aparece en Primera Lectura de la Cámara",
-      "fecha": "03/20/2025",
-      "documents": [],
-      "tipo": "tramite"
-    },
-    {
-      "camara": "Senado",
-      "fecha": "03/13/2025",
-      "descripcion": "Aprobado por el Senado en Votación Final",
-      "documents": [
-        {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/MeasuresAndVotes (1)-4.pdf",
-          "description": "MeasuresAndVotes (1)-4.pdf",
-          "filepath": "scraped_data/MeasuresAndVotes (1)-4.pdf",
-          "text_filepath": "scraped_data/MeasuresAndVotes (1)-4.pdf.txt",
-          "downloaded": true,
-          "text_extracted": true
-        }
-      ],
-      "votes": {
-        "Votos a favor": ":25",
-        "Votos en contra": ":0",
-        "Votos abstenidos": ":0",
-        "Votos ausentes": ":3"
-      },
-      "tipo": "votacion"
-    },
-    {
-      "camara": "Cámara",
-      "fecha": "03/13/2025",
-      "descripcion": "Aprobado con enmiendas del informe",
-      "documents": [],
-      "votes": null,
-      "tipo": "votacion"
-    },
-    {
-      "descripcion": "Texto de Aprobación Final enviado a la Cámara",
-      "fecha": "03/13/2025",
-      "documents": [
-        {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259a-25.doc",
-          "description": "ps0259a-25.doc",
-          "filepath": "scraped_data/ps0259a-25.doc",
-          "text_filepath": "scraped_data/ps0259a-25.doc.txt",
-          "downloaded": true,
-          "text_extracted": true
-        }
-      ],
-      "tipo": "tramite"
-    },
-    {
-      "descripcion": "En el Calendario de Ordenes Especiales del Senado",
-      "fecha": "03/13/2025",
-      "documents": [],
-      "tipo": "tramite"
-    },
-    {
-      "descripcion": "Remitido a la Comisión de Reglas y Calendario del Senado",
-      "fecha": "03/12/2025",
-      "documents": [],
-      "tipo": "tramite"
-    },
-    {
-      "descripcion": "Entirillado del Informe",
-      "fecha": "03/12/2025",
-      "documents": [
-        {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-ent.doc",
-          "description": "ps0259-ent.doc",
-          "filepath": "scraped_data/ps0259-ent.doc",
-          "text_filepath": "scraped_data/ps0259-ent.doc.txt",
-          "downloaded": true,
-          "text_extracted": true
-        }
-      ],
-      "tipo": "tramite"
-    },
-    {
-      "descripcion": "1er Informe Comisión rendido con enmiendas",
-      "fecha": "03/12/2025",
-      "documents": [
-        {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-Inf..docx",
-          "description": "ps0259-Inf..docx",
-          "filepath": "scraped_data/ps0259-Inf..docx",
-          "text_filepath": "scraped_data/ps0259-Inf..docx.txt",
-          "downloaded": true,
-          "text_extracted": true
-        }
-      ],
-      "comision": "Comisión de Asuntos Municipales",
       "tipo": "tramite"
     },
     {
       "descripcion": "Referido a Comisión(es)",
       "fecha": "01/16/2025",
       "documents": [],
-      "comision": "Comisión de Asuntos Municipales",
+      "comision": "Comisión De Lo Jurídico",
       "tipo": "tramite"
     },
     {
@@ -126,15 +31,15 @@
     },
     {
       "descripcion": "Radicado",
-      "fecha": "01/15/2025",
+      "fecha": "01/02/2025",
       "documents": [
         {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-25.doc",
-          "description": "ps0259-25.doc",
-          "filepath": "scraped_data/ps0259-25.doc",
-          "text_filepath": "scraped_data/ps0259-25.doc.txt",
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf",
+          "description": "PS0043.pdf",
+          "filepath": "scraped_data/PS0043.pdf",
+          "text_filepath": "scraped_data/PS0043.pdf.txt",
           "downloaded": true,
-          "text_extracted": true
+          "text_extracted": false
         }
       ],
       "tipo": "tramite"

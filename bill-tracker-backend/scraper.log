@@ -2162,3 +2162,717 @@ SCRAPER SUMMARY:
 2025-03-20 15:58:30,341 - INFO - Status: None
 2025-03-20 15:58:30,342 - INFO - Events found: 12
 2025-03-20 15:58:30,342 - INFO - Commissions found: 0
+2025-03-20 16:14:12,901 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154296
+2025-03-20 16:14:12,902 - INFO - Installing ChromeDriver...
+2025-03-20 16:14:12,902 - INFO - ====== WebDriver manager ======
+2025-03-20 16:14:13,442 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:14:13,677 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:14:13,843 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:14:13,843 - INFO - Creating ChromeService...
+2025-03-20 16:14:13,844 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:14:17,626 - INFO - Setting page load timeout...
+2025-03-20 16:14:17,649 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154296
+2025-03-20 16:14:18,614 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:14:18,875 - INFO - Page loaded successfully.
+2025-03-20 16:14:23,893 - INFO - Page source saved to page_source.html
+2025-03-20 16:14:23,906 - INFO - Found measure number: Proyecto de la Cámara (PC0421)
+2025-03-20 16:14:23,907 - INFO - Found filing date: 03/18/2025
+2025-03-20 16:14:23,907 - INFO - Found title: Para crear la “Ley de Notificaciones de Pérdidas o...
+2025-03-20 16:14:23,910 - INFO - Found documents tab
+2025-03-20 16:14:23,912 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:14:23,912 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:14:23,912 - INFO - Found 3 general documents
+2025-03-20 16:14:23,913 - INFO - Found 3 event items
+2025-03-20 16:14:23,914 - INFO - Extracted 3 tramites and 0 votaciones
+2025-03-20 16:14:24,059 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 16:14:24,059 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 16:14:24,062 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:14:24,062 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:14:24,065 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154296/PC0421 (A-021).docx
+2025-03-20 16:14:24,065 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154296/PC0421 (A-021).docx
+2025-03-20 16:14:24,723 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 16:14:24,724 - INFO - Data structure collected from scraping:
+2025-03-20 16:14:24,724 - INFO - {
+  "measure_number": "Proyecto de la Cámara (PC0421)",
+  "title": "Para crear la “Ley de Notificaciones de Pérdidas o Irregularidades en el Manejo de Fondos y Bienes Públicos” para establecer las normas a seguir para la notificación de pérdidas o irregularidades en el manejo de bienes públicos; imponer sanciones por incumplimiento; derogar la Ley Núm. 96 de 26 de junio de 1964, según enmendada; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "03/18/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Gobierno",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/18/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/154296/PC0421 (A-021).docx",
+          "description": "PC0421 (A-021).docx",
+          "filepath": "scraped_data/PC0421 (A-021).docx",
+          "text_filepath": "scraped_data/PC0421 (A-021).docx.txt",
+          "downloaded": true,
+          "text_extracted": false
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:14:24,725 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:14:24,726 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:14:24,727 - INFO - Results saved to result.json
+2025-03-20 16:14:24,727 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:14:24,727 - INFO - Measure Number: Proyecto de la Cámara (PC0421)
+2025-03-20 16:14:24,727 - INFO - Title: Para crear la “Ley de Notificaciones de Pérdidas o Irregularidades en el Manejo de Fondos y Bienes Públicos” para establecer las normas a seguir para la notificación de pérdidas o irregularidades en el manejo de bienes públicos; imponer sanciones por incumplimiento; derogar la Ley Núm. 96 de 26 de junio de 1964, según enmendada; y para otros fines relacionados.
+2025-03-20 16:14:24,728 - INFO - Status: None
+2025-03-20 16:14:24,728 - INFO - Events found: 3
+2025-03-20 16:14:24,728 - INFO - Commissions found: 0
+2025-03-20 16:15:11,869 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 16:15:11,869 - INFO - Installing ChromeDriver...
+2025-03-20 16:15:11,870 - INFO - ====== WebDriver manager ======
+2025-03-20 16:15:12,536 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:15:12,708 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:15:12,873 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:15:12,874 - INFO - Creating ChromeService...
+2025-03-20 16:15:12,874 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:15:16,654 - INFO - Setting page load timeout...
+2025-03-20 16:15:16,657 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 16:15:17,602 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:15:17,836 - INFO - Page loaded successfully.
+2025-03-20 16:15:22,853 - INFO - Page source saved to page_source.html
+2025-03-20 16:15:22,869 - INFO - Found measure number: Proyecto del Senado (PS0413)
+2025-03-20 16:15:22,871 - INFO - Found filing date: 03/11/2025
+2025-03-20 16:15:22,872 - INFO - Found title: “Para establecer la “Ley del Expediente Digital Ún...
+2025-03-20 16:15:22,878 - INFO - Found documents tab
+2025-03-20 16:15:22,881 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:15:22,881 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:15:22,881 - INFO - Found 2 general documents
+2025-03-20 16:15:22,883 - INFO - Found 4 event items
+2025-03-20 16:15:22,884 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 16:15:23,095 - INFO - Found 2 documents to download (text extraction deferred)
+2025-03-20 16:15:23,095 - INFO - Starting parallel download of 2 documents (no text extraction)
+2025-03-20 16:15:23,098 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:15:23,099 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:15:23,107 - INFO - Completed downloading 2 documents (text extraction deferred)
+2025-03-20 16:15:23,109 - INFO - Data structure collected from scraping:
+2025-03-20 16:15:23,110 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0413)",
+  "title": "“Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”\ny ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,\nimplementación y mantenimiento de un expediente digital centralizado que contenga\ninformación sobre los servicios prestados por el Departamento de Salud, el Departamento de\nEducación y la Administración de Rehabilitación Vocacional a personas con diversidad\nfuncional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”",
+  "status": null,
+  "filing_date": "03/11/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón María Martínez de Pérez Almiroty",
+      "fecha": "03/28/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/11/2025",
+      "documents": [],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:15:23,111 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:15:23,111 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:15:23,112 - INFO - Results saved to result.json
+2025-03-20 16:15:23,113 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:15:23,113 - INFO - Measure Number: Proyecto del Senado (PS0413)
+2025-03-20 16:15:23,113 - INFO - Title: “Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”
+y ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,
+implementación y mantenimiento de un expediente digital centralizado que contenga
+información sobre los servicios prestados por el Departamento de Salud, el Departamento de
+Educación y la Administración de Rehabilitación Vocacional a personas con diversidad
+funcional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”
+2025-03-20 16:15:23,113 - INFO - Status: None
+2025-03-20 16:15:23,113 - INFO - Events found: 4
+2025-03-20 16:15:23,113 - INFO - Commissions found: 0
+2025-03-20 16:15:35,226 - INFO - Starting scraper for URL: https://sutra.oslpr.org/osl/esutra/MedidaReg.aspx?rid=129800
+2025-03-20 16:15:35,226 - INFO - Installing ChromeDriver...
+2025-03-20 16:15:35,226 - INFO - ====== WebDriver manager ======
+2025-03-20 16:15:35,653 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:15:35,830 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:15:35,990 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:15:35,990 - INFO - Creating ChromeService...
+2025-03-20 16:15:35,991 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:15:37,857 - INFO - Setting page load timeout...
+2025-03-20 16:15:37,879 - INFO - Loading URL: https://sutra.oslpr.org/osl/esutra/MedidaReg.aspx?rid=129800
+2025-03-20 16:15:38,711 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:15:49,053 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-20 16:15:49,679 - INFO - Waiting for elements to load (attempt 2/5)...
+2025-03-20 16:16:10,090 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-20 16:16:10,515 - INFO - Waiting for elements to load (attempt 3/5)...
+2025-03-20 16:16:50,531 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-20 16:16:51,466 - INFO - Waiting for elements to load (attempt 4/5)...
+2025-03-20 16:18:11,569 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-20 16:18:12,302 - INFO - Waiting for elements to load (attempt 5/5)...
+2025-03-20 16:20:52,506 - ERROR - Selenium error: Message: 
+. Screenshot saved to error_screenshot.png
+2025-03-20 16:20:52,683 - ERROR - Selenium error: Message: 
+
+2025-03-20 16:22:48,992 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 16:22:48,993 - INFO - Installing ChromeDriver...
+2025-03-20 16:22:48,993 - INFO - ====== WebDriver manager ======
+2025-03-20 16:22:49,483 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:22:49,655 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:22:49,843 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:22:49,843 - INFO - Creating ChromeService...
+2025-03-20 16:22:49,844 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:22:53,486 - INFO - Setting page load timeout...
+2025-03-20 16:22:53,491 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 16:22:54,390 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:22:54,577 - INFO - Page loaded successfully.
+2025-03-20 16:22:59,595 - INFO - Page source saved to page_source.html
+2025-03-20 16:22:59,607 - INFO - Found measure number: Proyecto del Senado (PS0043)
+2025-03-20 16:22:59,608 - INFO - Found filing date: 01/02/2025
+2025-03-20 16:22:59,608 - INFO - Found title: Para insertar un nuevo inciso (d) y renumerar los ...
+2025-03-20 16:22:59,612 - INFO - Found documents tab
+2025-03-20 16:22:59,614 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:22:59,614 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:22:59,614 - INFO - Found 3 general documents
+2025-03-20 16:22:59,615 - INFO - Found 4 event items
+2025-03-20 16:22:59,616 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 16:22:59,824 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 16:22:59,824 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 16:22:59,829 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:22:59,830 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:22:59,831 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf
+2025-03-20 16:22:59,832 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf
+2025-03-20 16:23:00,855 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 16:23:00,856 - INFO - Data structure collected from scraping:
+2025-03-20 16:23:00,857 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0043)",
+  "title": "Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo\n1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como\n\"Código Civil de Puerto Rico\", a los fines de aclarar que las instituciones de cuidado\nde salud responderán vicariamente y no objetivamente por los daños que causan\npersonas que operan franquicias exclusivas de servicios de salud en dichas\ninstituciones o por los daños causados por personal de la institución a un paciente\nque accede directamente sin referido de un médico primario; y para otros fines\nrelacionados.",
+  "status": null,
+  "filing_date": "01/02/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
+      "fecha": "04/01/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/02/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf",
+          "description": "PS0043.pdf",
+          "filepath": "scraped_data/PS0043.pdf",
+          "text_filepath": "scraped_data/PS0043.pdf.txt",
+          "downloaded": true,
+          "text_extracted": false
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:23:00,859 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:23:00,859 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:23:00,860 - INFO - Cleaned up debug file: error_screenshot.png
+2025-03-20 16:23:00,860 - INFO - Cleaned up debug file: loading_attempt_1.png
+2025-03-20 16:23:00,860 - INFO - Cleaned up debug file: loading_attempt_2.png
+2025-03-20 16:23:00,861 - INFO - Cleaned up debug file: loading_attempt_3.png
+2025-03-20 16:23:00,861 - INFO - Cleaned up debug file: loading_attempt_4.png
+2025-03-20 16:23:00,862 - INFO - Results saved to result.json
+2025-03-20 16:23:00,862 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:23:00,862 - INFO - Measure Number: Proyecto del Senado (PS0043)
+2025-03-20 16:23:00,862 - INFO - Title: Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo
+1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como
+"Código Civil de Puerto Rico", a los fines de aclarar que las instituciones de cuidado
+de salud responderán vicariamente y no objetivamente por los daños que causan
+personas que operan franquicias exclusivas de servicios de salud en dichas
+instituciones o por los daños causados por personal de la institución a un paciente
+que accede directamente sin referido de un médico primario; y para otros fines
+relacionados.
+2025-03-20 16:23:00,862 - INFO - Status: None
+2025-03-20 16:23:00,862 - INFO - Events found: 4
+2025-03-20 16:23:00,862 - INFO - Commissions found: 0
+2025-03-20 16:31:23,551 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154330
+2025-03-20 16:31:23,552 - INFO - Installing ChromeDriver...
+2025-03-20 16:31:23,552 - INFO - ====== WebDriver manager ======
+2025-03-20 16:31:24,149 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:31:24,357 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:31:24,552 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:31:24,553 - INFO - Creating ChromeService...
+2025-03-20 16:31:24,553 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:31:28,094 - INFO - Setting page load timeout...
+2025-03-20 16:31:28,103 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154330
+2025-03-20 16:31:29,097 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:31:29,208 - INFO - Page loaded successfully.
+2025-03-20 16:31:34,224 - INFO - Page source saved to page_source.html
+2025-03-20 16:31:34,232 - INFO - Found measure number: Resolución Conjunta de la Cámara (RCC0081)
+2025-03-20 16:31:34,233 - INFO - Found filing date: 03/20/2025
+2025-03-20 16:31:34,234 - INFO - Found title: Para ordenar a la Comisión de Recreación y Deporte...
+2025-03-20 16:31:34,238 - INFO - Found documents tab
+2025-03-20 16:31:34,240 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:31:34,241 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:31:34,241 - INFO - Found 2 general documents
+2025-03-20 16:31:34,241 - INFO - Found 2 event items
+2025-03-20 16:31:34,242 - INFO - Extracted 2 tramites and 0 votaciones
+2025-03-20 16:31:34,353 - INFO - Found 2 documents to download (text extraction deferred)
+2025-03-20 16:31:34,353 - INFO - Starting parallel download of 2 documents (no text extraction)
+2025-03-20 16:31:34,356 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:31:34,356 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:31:34,357 - INFO - Completed downloading 2 documents (text extraction deferred)
+2025-03-20 16:31:34,358 - INFO - Data structure collected from scraping:
+2025-03-20 16:31:34,358 - INFO - {
+  "measure_number": "Resolución Conjunta de la Cámara (RCC0081)",
+  "title": "Para ordenar a la Comisión de Recreación y Deportes investigar el estado de las facilidades deportivas en Cabo Rojo, San Germán y Hormigueros, y para otros fines.",
+  "status": null,
+  "filing_date": "03/20/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Retirada por su Autor",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:31:34,359 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:31:34,359 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:31:34,360 - INFO - Results saved to result.json
+2025-03-20 16:31:34,360 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:31:34,360 - INFO - Measure Number: Resolución Conjunta de la Cámara (RCC0081)
+2025-03-20 16:31:34,360 - INFO - Title: Para ordenar a la Comisión de Recreación y Deportes investigar el estado de las facilidades deportivas en Cabo Rojo, San Germán y Hormigueros, y para otros fines.
+2025-03-20 16:31:34,360 - INFO - Status: None
+2025-03-20 16:31:34,360 - INFO - Events found: 2
+2025-03-20 16:31:34,360 - INFO - Commissions found: 0
+2025-03-20 16:31:44,443 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152744
+2025-03-20 16:31:44,443 - INFO - Installing ChromeDriver...
+2025-03-20 16:31:44,444 - INFO - ====== WebDriver manager ======
+2025-03-20 16:31:44,795 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:31:44,992 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:31:45,172 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:31:45,172 - INFO - Creating ChromeService...
+2025-03-20 16:31:45,173 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:31:47,548 - INFO - Setting page load timeout...
+2025-03-20 16:31:47,556 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152744
+2025-03-20 16:31:48,548 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:31:48,674 - INFO - Page loaded successfully.
+2025-03-20 16:31:53,691 - INFO - Page source saved to page_source.html
+2025-03-20 16:31:53,717 - INFO - Found measure number: Proyecto del Senado (PS0169)
+2025-03-20 16:31:53,718 - INFO - Found filing date: 01/07/2025
+2025-03-20 16:31:53,719 - INFO - Found title: Para enmendar el inciso (hh) del Articulo 3 y añad...
+2025-03-20 16:31:53,725 - INFO - Found documents tab
+2025-03-20 16:31:53,728 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:31:53,729 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:31:53,729 - INFO - Found 3 general documents
+2025-03-20 16:31:53,731 - INFO - Found 5 event items
+2025-03-20 16:31:53,735 - INFO - Extracted 5 tramites and 0 votaciones
+2025-03-20 16:31:53,929 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 16:31:53,929 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 16:31:53,933 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:31:53,934 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:31:53,936 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/152744/ps0169-25.doc
+2025-03-20 16:31:53,937 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/152744/ps0169-25.doc
+2025-03-20 16:31:54,452 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 16:31:54,453 - INFO - Data structure collected from scraping:
+2025-03-20 16:31:54,453 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0169)",
+  "title": "Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la\nLey 57-2023, conocida como \"Ley para la Prevención del Maltrato, Preservación de\nla Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores\",\ncon el propósito de establecer una \"orden de protección duradera\" en aquellos\ncasos de abuso sexual contra personas menores, cuya vigencia será hasta que la\nvictima cumpla la edad de dieciocho (18) años; y para otros fines.",
+  "status": null,
+  "filing_date": "01/07/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "04/11/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "03/18/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/07/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152744/ps0169-25.doc",
+          "description": "ps0169-25.doc",
+          "filepath": "scraped_data/ps0169-25.doc",
+          "text_filepath": "scraped_data/ps0169-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": false
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:31:54,454 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:31:54,457 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:31:54,459 - INFO - Results saved to result.json
+2025-03-20 16:31:54,459 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:31:54,459 - INFO - Measure Number: Proyecto del Senado (PS0169)
+2025-03-20 16:31:54,459 - INFO - Title: Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la
+Ley 57-2023, conocida como "Ley para la Prevención del Maltrato, Preservación de
+la Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores",
+con el propósito de establecer una "orden de protección duradera" en aquellos
+casos de abuso sexual contra personas menores, cuya vigencia será hasta que la
+victima cumpla la edad de dieciocho (18) años; y para otros fines.
+2025-03-20 16:31:54,460 - INFO - Status: None
+2025-03-20 16:31:54,460 - INFO - Events found: 5
+2025-03-20 16:31:54,460 - INFO - Commissions found: 0
+2025-03-20 16:32:20,421 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 16:32:20,421 - INFO - Installing ChromeDriver...
+2025-03-20 16:32:20,422 - INFO - ====== WebDriver manager ======
+2025-03-20 16:32:20,741 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:32:20,946 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:32:21,129 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:32:21,130 - INFO - Creating ChromeService...
+2025-03-20 16:32:21,130 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:32:23,653 - INFO - Setting page load timeout...
+2025-03-20 16:32:23,660 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 16:32:24,607 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:32:24,729 - INFO - Page loaded successfully.
+2025-03-20 16:32:29,750 - INFO - Page source saved to page_source.html
+2025-03-20 16:32:29,777 - INFO - Found measure number: Proyecto del Senado (PS0413)
+2025-03-20 16:32:29,778 - INFO - Found filing date: 03/11/2025
+2025-03-20 16:32:29,779 - INFO - Found title: “Para establecer la “Ley del Expediente Digital Ún...
+2025-03-20 16:32:29,785 - INFO - Found documents tab
+2025-03-20 16:32:29,791 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:32:29,791 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:32:29,792 - INFO - Found 2 general documents
+2025-03-20 16:32:29,793 - INFO - Found 4 event items
+2025-03-20 16:32:29,795 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 16:32:30,012 - INFO - Found 2 documents to download (text extraction deferred)
+2025-03-20 16:32:30,012 - INFO - Starting parallel download of 2 documents (no text extraction)
+2025-03-20 16:32:30,014 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:32:30,014 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:32:30,015 - INFO - Completed downloading 2 documents (text extraction deferred)
+2025-03-20 16:32:30,016 - INFO - Data structure collected from scraping:
+2025-03-20 16:32:30,017 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0413)",
+  "title": "“Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”\ny ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,\nimplementación y mantenimiento de un expediente digital centralizado que contenga\ninformación sobre los servicios prestados por el Departamento de Salud, el Departamento de\nEducación y la Administración de Rehabilitación Vocacional a personas con diversidad\nfuncional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”",
+  "status": null,
+  "filing_date": "03/11/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón María Martínez de Pérez Almiroty",
+      "fecha": "03/28/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/11/2025",
+      "documents": [],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:32:30,019 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:32:30,021 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:32:30,022 - INFO - Results saved to result.json
+2025-03-20 16:32:30,022 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:32:30,022 - INFO - Measure Number: Proyecto del Senado (PS0413)
+2025-03-20 16:32:30,022 - INFO - Title: “Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”
+y ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,
+implementación y mantenimiento de un expediente digital centralizado que contenga
+información sobre los servicios prestados por el Departamento de Salud, el Departamento de
+Educación y la Administración de Rehabilitación Vocacional a personas con diversidad
+funcional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”
+2025-03-20 16:32:30,022 - INFO - Status: None
+2025-03-20 16:32:30,022 - INFO - Events found: 4
+2025-03-20 16:32:30,023 - INFO - Commissions found: 0
+2025-03-20 16:33:24,234 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 16:33:24,235 - INFO - Installing ChromeDriver...
+2025-03-20 16:33:24,235 - INFO - ====== WebDriver manager ======
+2025-03-20 16:33:24,802 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:33:25,025 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:33:25,218 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:33:25,218 - INFO - Creating ChromeService...
+2025-03-20 16:33:25,219 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:33:29,342 - INFO - Setting page load timeout...
+2025-03-20 16:33:29,357 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 16:33:29,841 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:33:30,678 - INFO - Page loaded successfully.
+2025-03-20 16:33:35,692 - INFO - Page source saved to page_source.html
+2025-03-20 16:33:35,710 - INFO - Found measure number: Proyecto del Senado (PS0413)
+2025-03-20 16:33:35,711 - INFO - Found filing date: 03/11/2025
+2025-03-20 16:33:35,712 - INFO - Found title: “Para establecer la “Ley del Expediente Digital Ún...
+2025-03-20 16:33:35,716 - INFO - Found documents tab
+2025-03-20 16:33:35,719 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:33:35,719 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:33:35,719 - INFO - Found 2 general documents
+2025-03-20 16:33:35,720 - INFO - Found 4 event items
+2025-03-20 16:33:35,723 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 16:33:35,939 - INFO - Found 2 documents to download (text extraction deferred)
+2025-03-20 16:33:35,940 - INFO - Starting parallel download of 2 documents (no text extraction)
+2025-03-20 16:33:35,945 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:33:35,946 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:33:35,946 - INFO - Completed downloading 2 documents (text extraction deferred)
+2025-03-20 16:33:35,947 - INFO - Data structure collected from scraping:
+2025-03-20 16:33:35,947 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0413)",
+  "title": "“Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”\ny ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,\nimplementación y mantenimiento de un expediente digital centralizado que contenga\ninformación sobre los servicios prestados por el Departamento de Salud, el Departamento de\nEducación y la Administración de Rehabilitación Vocacional a personas con diversidad\nfuncional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”",
+  "status": null,
+  "filing_date": "03/11/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón María Martínez de Pérez Almiroty",
+      "fecha": "03/28/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/11/2025",
+      "documents": [],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:33:35,948 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:33:35,949 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:33:35,950 - INFO - Results saved to result.json
+2025-03-20 16:33:35,951 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:33:35,951 - INFO - Measure Number: Proyecto del Senado (PS0413)
+2025-03-20 16:33:35,951 - INFO - Title: “Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”
+y ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,
+implementación y mantenimiento de un expediente digital centralizado que contenga
+información sobre los servicios prestados por el Departamento de Salud, el Departamento de
+Educación y la Administración de Rehabilitación Vocacional a personas con diversidad
+funcional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”
+2025-03-20 16:33:35,951 - INFO - Status: None
+2025-03-20 16:33:35,951 - INFO - Events found: 4
+2025-03-20 16:33:35,951 - INFO - Commissions found: 0
+2025-03-20 16:33:44,218 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 16:33:44,218 - INFO - Installing ChromeDriver...
+2025-03-20 16:33:44,219 - INFO - ====== WebDriver manager ======
+2025-03-20 16:33:44,560 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:33:44,769 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 16:33:44,954 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 16:33:44,954 - INFO - Creating ChromeService...
+2025-03-20 16:33:44,955 - INFO - Initializing Chrome WebDriver...
+2025-03-20 16:33:47,120 - INFO - Setting page load timeout...
+2025-03-20 16:33:47,126 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 16:33:47,992 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 16:33:48,223 - INFO - Page loaded successfully.
+2025-03-20 16:33:53,233 - INFO - Page source saved to page_source.html
+2025-03-20 16:33:53,245 - INFO - Found measure number: Proyecto del Senado (PS0043)
+2025-03-20 16:33:53,245 - INFO - Found filing date: 01/02/2025
+2025-03-20 16:33:53,246 - INFO - Found title: Para insertar un nuevo inciso (d) y renumerar los ...
+2025-03-20 16:33:53,249 - INFO - Found documents tab
+2025-03-20 16:33:53,251 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:33:53,251 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 16:33:53,251 - INFO - Found 3 general documents
+2025-03-20 16:33:53,252 - INFO - Found 4 event items
+2025-03-20 16:33:53,253 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 16:33:53,352 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 16:33:53,352 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 16:33:53,353 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:33:53,353 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 16:33:53,356 - INFO - File exists, skipping download: PS0043.pdf
+2025-03-20 16:33:53,356 - INFO - File exists, skipping download: PS0043.pdf
+2025-03-20 16:33:53,356 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 16:33:53,358 - INFO - Data structure collected from scraping:
+2025-03-20 16:33:53,358 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0043)",
+  "title": "Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo\n1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como\n\"Código Civil de Puerto Rico\", a los fines de aclarar que las instituciones de cuidado\nde salud responderán vicariamente y no objetivamente por los daños que causan\npersonas que operan franquicias exclusivas de servicios de salud en dichas\ninstituciones o por los daños causados por personal de la institución a un paciente\nque accede directamente sin referido de un médico primario; y para otros fines\nrelacionados.",
+  "status": null,
+  "filing_date": "01/02/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
+      "fecha": "04/01/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/02/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf",
+          "description": "PS0043.pdf",
+          "filepath": "scraped_data/PS0043.pdf",
+          "text_filepath": "scraped_data/PS0043.pdf.txt",
+          "downloaded": true,
+          "text_extracted": false
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 16:33:53,359 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 16:33:53,359 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 16:33:53,360 - INFO - Results saved to result.json
+2025-03-20 16:33:53,360 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 16:33:53,361 - INFO - Measure Number: Proyecto del Senado (PS0043)
+2025-03-20 16:33:53,361 - INFO - Title: Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo
+1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como
+"Código Civil de Puerto Rico", a los fines de aclarar que las instituciones de cuidado
+de salud responderán vicariamente y no objetivamente por los daños que causan
+personas que operan franquicias exclusivas de servicios de salud en dichas
+instituciones o por los daños causados por personal de la institución a un paciente
+que accede directamente sin referido de un médico primario; y para otros fines
+relacionados.
+2025-03-20 16:33:53,361 - INFO - Status: None
+2025-03-20 16:33:53,361 - INFO - Events found: 4
+2025-03-20 16:33:53,361 - INFO - Commissions found: 0
