@@ -20,8 +20,12 @@ app.use(express.json());
 
 // Add a health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'up', timestamp: new Date().toISOString() });
-});
+    res.json({ 
+      status: 'up', 
+      timestamp: new Date().toISOString(),
+      message: 'NEW CODE VERSION IS RUNNING!'
+    });
+  });
 
 app.post('/api/download-documents', (req, res) => {
     console.log("Received scraper request:", req.body);
@@ -41,6 +45,10 @@ app.post('/api/download-documents', (req, res) => {
 
     console.log(`Executing Python scraper with URL: ${sanitizedUrl}`);
     
+    console.log("*****************************************************");
+    console.log("EXECUTING PYTHON WITH COMMAND:", `python3 sutra_scraper_enhanced.py "${sanitizedUrl}" --no-extract`);
+    console.log("*****************************************************");
+
     // Execute the Python scraper with the --no-extract flag to skip text extraction
     exec(`python3 sutra_scraper_enhanced.py "${sanitizedUrl}" --no-extract`, (error, stdout, stderr) => {
         if (error) {
@@ -186,6 +194,7 @@ app.get('/api/proxy-document', async (req, res) => {
       }
       
       // Stream the file directly without additional processing
+      // Add httpsAgent with rejectUnauthorized: false to ignore SSL certificate errors
       const response = await axios({
         method: 'GET',
         url: url,
@@ -194,7 +203,8 @@ app.get('/api/proxy-document', async (req, res) => {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
           'Accept': '*/*'
-        }
+        },
+        httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
       });
       
       // Pass through original headers that might help with format detection

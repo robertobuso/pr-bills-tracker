@@ -2876,3 +2876,1184 @@ relacionados.
 2025-03-20 16:33:53,361 - INFO - Status: None
 2025-03-20 16:33:53,361 - INFO - Events found: 4
 2025-03-20 16:33:53,361 - INFO - Commissions found: 0
+2025-03-20 17:06:44,793 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 17:06:44,795 - INFO - Skip document downloads: True
+2025-03-20 17:06:44,795 - INFO - Installing ChromeDriver...
+2025-03-20 17:06:44,796 - INFO - ====== WebDriver manager ======
+2025-03-20 17:06:45,327 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:06:45,561 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:06:45,729 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:06:45,729 - INFO - Creating ChromeService...
+2025-03-20 17:06:45,730 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:06:49,817 - INFO - Setting page load timeout...
+2025-03-20 17:06:49,821 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154194
+2025-03-20 17:06:50,761 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:06:50,927 - INFO - Page loaded successfully.
+2025-03-20 17:06:55,951 - INFO - Page source saved to page_source.html
+2025-03-20 17:06:55,972 - INFO - Found measure number: Proyecto del Senado (PS0413)
+2025-03-20 17:06:55,973 - INFO - Found filing date: 03/11/2025
+2025-03-20 17:06:55,974 - INFO - Found title: “Para establecer la “Ley del Expediente Digital Ún...
+2025-03-20 17:06:55,978 - INFO - Found documents tab
+2025-03-20 17:06:55,988 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:06:55,988 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:06:55,988 - INFO - Found 2 general documents
+2025-03-20 17:06:55,989 - INFO - Found 4 event items
+2025-03-20 17:06:55,991 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 17:06:56,195 - INFO - Found 2 documents
+2025-03-20 17:06:56,201 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:06:56,202 - INFO - Data structure collected from scraping:
+2025-03-20 17:06:56,202 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0413)",
+  "title": "“Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”\ny ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,\nimplementación y mantenimiento de un expediente digital centralizado que contenga\ninformación sobre los servicios prestados por el Departamento de Salud, el Departamento de\nEducación y la Administración de Rehabilitación Vocacional a personas con diversidad\nfuncional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”",
+  "status": null,
+  "filing_date": "03/11/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón María Martínez de Pérez Almiroty",
+      "fecha": "03/28/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "comision": "Comisión de Ciencia, Tecnología e Inteligencia Artificial",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/11/2025",
+      "documents": [],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:06:56,205 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:06:56,206 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:06:56,208 - INFO - Results saved to result.json
+2025-03-20 17:06:56,208 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:06:56,208 - INFO - Measure Number: Proyecto del Senado (PS0413)
+2025-03-20 17:06:56,208 - INFO - Title: “Para establecer la “Ley del Expediente Digital Único para Personas con Diversidad Funcional”
+y ordenar a la “Puerto Rico Innovation and Technology Service” (PRITS) la creación,
+implementación y mantenimiento de un expediente digital centralizado que contenga
+información sobre los servicios prestados por el Departamento de Salud, el Departamento de
+Educación y la Administración de Rehabilitación Vocacional a personas con diversidad
+funcional; establecer los deberes de las agencias concernidas; y para otros fines relacionados.”
+2025-03-20 17:06:56,209 - INFO - Status: None
+2025-03-20 17:06:56,209 - INFO - Events found: 4
+2025-03-20 17:06:56,209 - INFO - Commissions found: 0
+2025-03-20 17:06:56,209 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 17:07:15,739 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152680
+2025-03-20 17:07:15,739 - INFO - Skip document downloads: True
+2025-03-20 17:07:15,739 - INFO - Installing ChromeDriver...
+2025-03-20 17:07:15,739 - INFO - ====== WebDriver manager ======
+2025-03-20 17:07:16,350 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:07:16,533 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:07:16,692 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:07:16,693 - INFO - Creating ChromeService...
+2025-03-20 17:07:16,694 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:07:19,843 - INFO - Setting page load timeout...
+2025-03-20 17:07:19,846 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152680
+2025-03-20 17:07:20,725 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:07:20,832 - INFO - Page loaded successfully.
+2025-03-20 17:07:25,857 - INFO - Page source saved to page_source.html
+2025-03-20 17:07:25,880 - INFO - Found measure number: Proyecto del Senado (PS0145)
+2025-03-20 17:07:25,881 - INFO - Found filing date: 01/02/2025
+2025-03-20 17:07:25,883 - INFO - Found title: Para añadir un nuevo inciso (h) al Artículo 7 de l...
+2025-03-20 17:07:25,891 - INFO - Found documents tab
+2025-03-20 17:07:25,894 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:07:25,894 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:07:25,894 - INFO - Found 3 general documents
+2025-03-20 17:07:25,895 - INFO - Found 4 event items
+2025-03-20 17:07:25,897 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 17:07:26,069 - INFO - Found 4 documents
+2025-03-20 17:07:26,069 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:07:26,070 - INFO - Data structure collected from scraping:
+2025-03-20 17:07:26,074 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0145)",
+  "title": "Para añadir un nuevo inciso (h) al Artículo 7 de la Ley Núm. 94 de 22 de junio de 1977,\nsegún enmendada, conocida como “Ley de Establecimientos para Personas de Edad Avanzada”, a los propósitos de que se haga mandatorio, como parte del ingreso de una persona, indistintamente de su edad, a un asilo, centro de cuido o facilidad de cuidado prolongado, se incluya en su expediente un examen oral con un limite de 60 días de retroactividad al momento de ingresar y se cumpla con al menos una revisión bucal anual y se haga constar bajo la certificación de un cirujano dentista; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/02/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "03/21/2025",
+      "documents": [],
+      "comision": "Comisión de Familia, Asuntos de la Mujer, Personas de la Tercera Edad y Población con Diversidad Funcional",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión de Familia, Asuntos de la Mujer, Personas de la Tercera Edad y Población con Diversidad Funcional",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/02/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152680/ps0145-25.doc",
+          "description": "ps0145-25.doc"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:07:26,075 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:07:26,075 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:07:26,076 - INFO - Results saved to result.json
+2025-03-20 17:07:26,076 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:07:26,076 - INFO - Measure Number: Proyecto del Senado (PS0145)
+2025-03-20 17:07:26,076 - INFO - Title: Para añadir un nuevo inciso (h) al Artículo 7 de la Ley Núm. 94 de 22 de junio de 1977,
+según enmendada, conocida como “Ley de Establecimientos para Personas de Edad Avanzada”, a los propósitos de que se haga mandatorio, como parte del ingreso de una persona, indistintamente de su edad, a un asilo, centro de cuido o facilidad de cuidado prolongado, se incluya en su expediente un examen oral con un limite de 60 días de retroactividad al momento de ingresar y se cumpla con al menos una revisión bucal anual y se haga constar bajo la certificación de un cirujano dentista; y para otros fines relacionados.
+2025-03-20 17:07:26,076 - INFO - Status: None
+2025-03-20 17:07:26,076 - INFO - Events found: 4
+2025-03-20 17:07:26,077 - INFO - Commissions found: 0
+2025-03-20 17:07:26,077 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 17:12:29,789 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 17:12:29,790 - INFO - Skip document downloads: True
+2025-03-20 17:12:29,790 - INFO - Installing ChromeDriver...
+2025-03-20 17:12:29,790 - INFO - ====== WebDriver manager ======
+2025-03-20 17:12:30,440 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:12:30,619 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:12:30,784 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:12:30,785 - INFO - Creating ChromeService...
+2025-03-20 17:12:30,785 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:12:34,830 - INFO - Setting page load timeout...
+2025-03-20 17:12:34,845 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 17:12:35,820 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:12:35,968 - INFO - Page loaded successfully.
+2025-03-20 17:12:41,047 - INFO - Page source saved to page_source.html
+2025-03-20 17:12:41,084 - INFO - Found measure number: Proyecto del Senado (PS0043)
+2025-03-20 17:12:41,088 - INFO - Found filing date: 01/02/2025
+2025-03-20 17:12:41,091 - INFO - Found title: Para insertar un nuevo inciso (d) y renumerar los ...
+2025-03-20 17:12:41,100 - INFO - Found documents tab
+2025-03-20 17:12:41,105 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:12:41,105 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:12:41,106 - INFO - Found 3 general documents
+2025-03-20 17:12:41,107 - INFO - Found 4 event items
+2025-03-20 17:12:41,111 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 17:12:41,356 - INFO - Found 4 documents
+2025-03-20 17:12:41,357 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:12:41,358 - INFO - Data structure collected from scraping:
+2025-03-20 17:12:41,358 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0043)",
+  "title": "Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo\n1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como\n\"Código Civil de Puerto Rico\", a los fines de aclarar que las instituciones de cuidado\nde salud responderán vicariamente y no objetivamente por los daños que causan\npersonas que operan franquicias exclusivas de servicios de salud en dichas\ninstituciones o por los daños causados por personal de la institución a un paciente\nque accede directamente sin referido de un médico primario; y para otros fines\nrelacionados.",
+  "status": null,
+  "filing_date": "01/02/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
+      "fecha": "04/01/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/02/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf",
+          "description": "PS0043.pdf"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:12:41,361 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:12:41,361 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:12:41,372 - INFO - Results saved to result.json
+2025-03-20 17:12:41,373 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:12:41,373 - INFO - Measure Number: Proyecto del Senado (PS0043)
+2025-03-20 17:12:41,374 - INFO - Title: Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo
+1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como
+"Código Civil de Puerto Rico", a los fines de aclarar que las instituciones de cuidado
+de salud responderán vicariamente y no objetivamente por los daños que causan
+personas que operan franquicias exclusivas de servicios de salud en dichas
+instituciones o por los daños causados por personal de la institución a un paciente
+que accede directamente sin referido de un médico primario; y para otros fines
+relacionados.
+2025-03-20 17:12:41,374 - INFO - Status: None
+2025-03-20 17:12:41,374 - INFO - Events found: 4
+2025-03-20 17:12:41,375 - INFO - Commissions found: 0
+2025-03-20 17:12:41,375 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 17:28:18,060 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153139
+2025-03-20 17:28:18,065 - INFO - Skip document downloads: True
+2025-03-20 17:28:18,066 - INFO - Installing ChromeDriver...
+2025-03-20 17:28:18,067 - INFO - ====== WebDriver manager ======
+2025-03-20 17:28:18,701 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:28:18,940 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:28:19,118 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:28:19,119 - INFO - Creating ChromeService...
+2025-03-20 17:28:19,119 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:28:23,251 - INFO - Setting page load timeout...
+2025-03-20 17:28:23,254 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153139
+2025-03-20 17:28:24,216 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:28:24,349 - INFO - Page loaded successfully.
+2025-03-20 17:28:29,397 - INFO - Page source saved to page_source.html
+2025-03-20 17:28:29,566 - INFO - Found measure number: Resolución de la Cámara (RC0060)
+2025-03-20 17:28:29,568 - INFO - Found filing date: 01/15/2025
+2025-03-20 17:28:29,569 - INFO - Found title: Para ordenar a la Comisión de Hacienda de la Cámar...
+2025-03-20 17:28:29,584 - INFO - Found documents tab
+2025-03-20 17:28:29,592 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:28:29,595 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:28:29,596 - INFO - Found 7 general documents
+2025-03-20 17:28:29,601 - INFO - Found 12 event items
+2025-03-20 17:28:29,613 - INFO - Extracted 10 tramites and 2 votaciones
+2025-03-20 17:28:29,844 - INFO - Found 12 documents
+2025-03-20 17:28:29,845 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:28:29,848 - INFO - Data structure collected from scraping:
+2025-03-20 17:28:29,849 - INFO - {
+  "measure_number": "Resolución de la Cámara (RC0060)",
+  "title": "Para ordenar a la Comisión de Hacienda de la Cámara de Representantes de Puerto Rico, realizar una investigación sobre todo asunto relacionado con la situación fiscal del Gobierno, el ritmo de cumplimiento de las exigencias del Plan Fiscal Comprensivo exigido por la legislación “PROMESA”, las recaudaciones del Fondo General y los fondos especiales, el estimado de los recaudos e ingresos probables y el financiamiento mediante el uso de empréstitos; los estimados de ingresos, de inversiones y desembolsos de las corporaciones públicas; la legislación que liberalice o imponga contribuciones de cualquier tipo; la deuda pública del Gobierno de Puerto Rico y de las corporaciones públicas, así como las condiciones de pago para los empréstitos; la recaudación, custodia, depósito y contabilidad de los fondos públicos; la pre-intervención y el uso de los fondos públicos de acuerdo a los fines para los que se autorizaron; el estudio y la evaluación del Presupuesto General; las peticiones presupuestarias recomendadas por la Gobernadora para los departamentos, corporaciones públicas, agencias y demás instrumentalidades públicas, tomando en consideración todos los ingresos y recursos del Estado, los de la entidad evaluada, incluyendo fondos federales, fondos especiales y donaciones, así como cualquier otro ingreso y todo asunto relacionado a la otorgación de incentivos económicos que representen o conlleven impacto fiscal; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/15/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública:  Salón de Audiencias #1",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/31/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "01/28/2025",
+      "descripcion": "Aprobado por Cámara en Votación Final",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.pdf",
+          "description": "RC0060.pdf"
+        }
+      ],
+      "votes": {
+        "Votos a favor": ":49",
+        "Votos en contra": ":0",
+        "Votos abstenidos": ":0",
+        "Votos ausentes": ":4"
+      },
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "01/28/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final en Cámara",
+      "fecha": "01/28/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.doc",
+          "description": "RC0060.doc"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales de la Cámara",
+      "fecha": "01/28/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a Comisión de Calendarios de la Cámara",
+      "fecha": "01/22/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "01/22/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060-ee.doc",
+          "description": "RC0060-ee.doc"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "01/22/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060-i.docx",
+          "description": "RC0060-i.docx"
+        }
+      ],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/15/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.doc",
+          "description": "RC0060.doc"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:28:29,851 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:28:29,852 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:28:29,857 - INFO - Results saved to result.json
+2025-03-20 17:28:29,857 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:28:29,857 - INFO - Measure Number: Resolución de la Cámara (RC0060)
+2025-03-20 17:28:29,858 - INFO - Title: Para ordenar a la Comisión de Hacienda de la Cámara de Representantes de Puerto Rico, realizar una investigación sobre todo asunto relacionado con la situación fiscal del Gobierno, el ritmo de cumplimiento de las exigencias del Plan Fiscal Comprensivo exigido por la legislación “PROMESA”, las recaudaciones del Fondo General y los fondos especiales, el estimado de los recaudos e ingresos probables y el financiamiento mediante el uso de empréstitos; los estimados de ingresos, de inversiones y desembolsos de las corporaciones públicas; la legislación que liberalice o imponga contribuciones de cualquier tipo; la deuda pública del Gobierno de Puerto Rico y de las corporaciones públicas, así como las condiciones de pago para los empréstitos; la recaudación, custodia, depósito y contabilidad de los fondos públicos; la pre-intervención y el uso de los fondos públicos de acuerdo a los fines para los que se autorizaron; el estudio y la evaluación del Presupuesto General; las peticiones presupuestarias recomendadas por la Gobernadora para los departamentos, corporaciones públicas, agencias y demás instrumentalidades públicas, tomando en consideración todos los ingresos y recursos del Estado, los de la entidad evaluada, incluyendo fondos federales, fondos especiales y donaciones, así como cualquier otro ingreso y todo asunto relacionado a la otorgación de incentivos económicos que representen o conlleven impacto fiscal; y para otros fines relacionados.
+2025-03-20 17:28:29,860 - INFO - Status: None
+2025-03-20 17:28:29,860 - INFO - Events found: 12
+2025-03-20 17:28:29,861 - INFO - Commissions found: 0
+2025-03-20 17:28:29,861 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 17:48:58,927 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 17:48:58,929 - INFO - Skip document downloads: True
+2025-03-20 17:48:58,929 - INFO - Installing ChromeDriver...
+2025-03-20 17:48:58,929 - INFO - ====== WebDriver manager ======
+2025-03-20 17:48:59,434 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:48:59,677 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:48:59,832 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:48:59,832 - INFO - Creating ChromeService...
+2025-03-20 17:48:59,833 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:49:03,947 - INFO - Setting page load timeout...
+2025-03-20 17:49:03,949 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152433
+2025-03-20 17:49:05,086 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:49:05,247 - INFO - Page loaded successfully.
+2025-03-20 17:49:10,274 - INFO - Page source saved to page_source.html
+2025-03-20 17:49:10,303 - INFO - Found measure number: Proyecto del Senado (PS0043)
+2025-03-20 17:49:10,305 - INFO - Found filing date: 01/02/2025
+2025-03-20 17:49:10,306 - INFO - Found title: Para insertar un nuevo inciso (d) y renumerar los ...
+2025-03-20 17:49:10,309 - INFO - Found documents tab
+2025-03-20 17:49:10,313 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:49:10,314 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:49:10,315 - INFO - Found 3 general documents
+2025-03-20 17:49:10,321 - INFO - Found 4 event items
+2025-03-20 17:49:10,323 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-20 17:49:10,525 - INFO - Found 4 documents
+2025-03-20 17:49:10,525 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:49:10,526 - INFO - Data structure collected from scraping:
+2025-03-20 17:49:10,526 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0043)",
+  "title": "Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo\n1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como\n\"Código Civil de Puerto Rico\", a los fines de aclarar que las instituciones de cuidado\nde salud responderán vicariamente y no objetivamente por los daños que causan\npersonas que operan franquicias exclusivas de servicios de salud en dichas\ninstituciones o por los daños causados por personal de la institución a un paciente\nque accede directamente sin referido de un médico primario; y para otros fines\nrelacionados.",
+  "status": null,
+  "filing_date": "01/02/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
+      "fecha": "04/01/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/02/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf",
+          "description": "PS0043.pdf"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:49:10,528 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:49:10,528 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:49:10,530 - INFO - Results saved to result.json
+2025-03-20 17:49:10,530 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:49:10,530 - INFO - Measure Number: Proyecto del Senado (PS0043)
+2025-03-20 17:49:10,531 - INFO - Title: Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo
+1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como
+"Código Civil de Puerto Rico", a los fines de aclarar que las instituciones de cuidado
+de salud responderán vicariamente y no objetivamente por los daños que causan
+personas que operan franquicias exclusivas de servicios de salud en dichas
+instituciones o por los daños causados por personal de la institución a un paciente
+que accede directamente sin referido de un médico primario; y para otros fines
+relacionados.
+2025-03-20 17:49:10,531 - INFO - Status: None
+2025-03-20 17:49:10,531 - INFO - Events found: 4
+2025-03-20 17:49:10,531 - INFO - Commissions found: 0
+2025-03-20 17:49:10,531 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 17:51:47,104 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153139
+2025-03-20 17:51:47,106 - INFO - Skip document downloads: True
+2025-03-20 17:51:47,107 - INFO - Installing ChromeDriver...
+2025-03-20 17:51:47,107 - INFO - ====== WebDriver manager ======
+2025-03-20 17:51:48,452 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:51:48,784 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:51:48,939 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:51:48,939 - INFO - Creating ChromeService...
+2025-03-20 17:51:48,940 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:51:54,368 - INFO - Setting page load timeout...
+2025-03-20 17:51:54,373 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153139
+2025-03-20 17:51:55,666 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:51:55,831 - INFO - Page loaded successfully.
+2025-03-20 17:52:00,849 - INFO - Page source saved to page_source.html
+2025-03-20 17:52:00,875 - INFO - Found measure number: Resolución de la Cámara (RC0060)
+2025-03-20 17:52:00,876 - INFO - Found filing date: 01/15/2025
+2025-03-20 17:52:00,877 - INFO - Found title: Para ordenar a la Comisión de Hacienda de la Cámar...
+2025-03-20 17:52:00,886 - INFO - Found documents tab
+2025-03-20 17:52:00,890 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:52:00,891 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:52:00,891 - INFO - Found 7 general documents
+2025-03-20 17:52:00,892 - INFO - Found 12 event items
+2025-03-20 17:52:00,898 - INFO - Extracted 10 tramites and 2 votaciones
+2025-03-20 17:52:01,061 - INFO - Found 12 documents
+2025-03-20 17:52:01,062 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:52:01,063 - INFO - Data structure collected from scraping:
+2025-03-20 17:52:01,064 - INFO - {
+  "measure_number": "Resolución de la Cámara (RC0060)",
+  "title": "Para ordenar a la Comisión de Hacienda de la Cámara de Representantes de Puerto Rico, realizar una investigación sobre todo asunto relacionado con la situación fiscal del Gobierno, el ritmo de cumplimiento de las exigencias del Plan Fiscal Comprensivo exigido por la legislación “PROMESA”, las recaudaciones del Fondo General y los fondos especiales, el estimado de los recaudos e ingresos probables y el financiamiento mediante el uso de empréstitos; los estimados de ingresos, de inversiones y desembolsos de las corporaciones públicas; la legislación que liberalice o imponga contribuciones de cualquier tipo; la deuda pública del Gobierno de Puerto Rico y de las corporaciones públicas, así como las condiciones de pago para los empréstitos; la recaudación, custodia, depósito y contabilidad de los fondos públicos; la pre-intervención y el uso de los fondos públicos de acuerdo a los fines para los que se autorizaron; el estudio y la evaluación del Presupuesto General; las peticiones presupuestarias recomendadas por la Gobernadora para los departamentos, corporaciones públicas, agencias y demás instrumentalidades públicas, tomando en consideración todos los ingresos y recursos del Estado, los de la entidad evaluada, incluyendo fondos federales, fondos especiales y donaciones, así como cualquier otro ingreso y todo asunto relacionado a la otorgación de incentivos económicos que representen o conlleven impacto fiscal; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/15/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública:  Salón de Audiencias #1",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/31/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "01/28/2025",
+      "descripcion": "Aprobado por Cámara en Votación Final",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.pdf",
+          "description": "RC0060.pdf"
+        }
+      ],
+      "votes": {
+        "Votos a favor": ":49",
+        "Votos en contra": ":0",
+        "Votos abstenidos": ":0",
+        "Votos ausentes": ":4"
+      },
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "01/28/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final en Cámara",
+      "fecha": "01/28/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.doc",
+          "description": "RC0060.doc"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales de la Cámara",
+      "fecha": "01/28/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a Comisión de Calendarios de la Cámara",
+      "fecha": "01/22/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "01/22/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060-ee.doc",
+          "description": "RC0060-ee.doc"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "01/22/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060-i.docx",
+          "description": "RC0060-i.docx"
+        }
+      ],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/15/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.doc",
+          "description": "RC0060.doc"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:52:01,066 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:52:01,066 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:52:01,069 - INFO - Results saved to result.json
+2025-03-20 17:52:01,070 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:52:01,070 - INFO - Measure Number: Resolución de la Cámara (RC0060)
+2025-03-20 17:52:01,070 - INFO - Title: Para ordenar a la Comisión de Hacienda de la Cámara de Representantes de Puerto Rico, realizar una investigación sobre todo asunto relacionado con la situación fiscal del Gobierno, el ritmo de cumplimiento de las exigencias del Plan Fiscal Comprensivo exigido por la legislación “PROMESA”, las recaudaciones del Fondo General y los fondos especiales, el estimado de los recaudos e ingresos probables y el financiamiento mediante el uso de empréstitos; los estimados de ingresos, de inversiones y desembolsos de las corporaciones públicas; la legislación que liberalice o imponga contribuciones de cualquier tipo; la deuda pública del Gobierno de Puerto Rico y de las corporaciones públicas, así como las condiciones de pago para los empréstitos; la recaudación, custodia, depósito y contabilidad de los fondos públicos; la pre-intervención y el uso de los fondos públicos de acuerdo a los fines para los que se autorizaron; el estudio y la evaluación del Presupuesto General; las peticiones presupuestarias recomendadas por la Gobernadora para los departamentos, corporaciones públicas, agencias y demás instrumentalidades públicas, tomando en consideración todos los ingresos y recursos del Estado, los de la entidad evaluada, incluyendo fondos federales, fondos especiales y donaciones, así como cualquier otro ingreso y todo asunto relacionado a la otorgación de incentivos económicos que representen o conlleven impacto fiscal; y para otros fines relacionados.
+2025-03-20 17:52:01,070 - INFO - Status: None
+2025-03-20 17:52:01,070 - INFO - Events found: 12
+2025-03-20 17:52:01,070 - INFO - Commissions found: 0
+2025-03-20 17:52:01,070 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 17:52:25,812 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153047
+2025-03-20 17:52:25,813 - INFO - Skip document downloads: True
+2025-03-20 17:52:25,813 - INFO - Installing ChromeDriver...
+2025-03-20 17:52:25,813 - INFO - ====== WebDriver manager ======
+2025-03-20 17:52:26,207 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:52:26,383 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 17:52:26,543 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 17:52:26,543 - INFO - Creating ChromeService...
+2025-03-20 17:52:26,544 - INFO - Initializing Chrome WebDriver...
+2025-03-20 17:52:29,781 - INFO - Setting page load timeout...
+2025-03-20 17:52:29,786 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153047
+2025-03-20 17:52:30,795 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 17:52:31,064 - INFO - Page loaded successfully.
+2025-03-20 17:52:36,091 - INFO - Page source saved to page_source.html
+2025-03-20 17:52:36,114 - INFO - Found measure number: Resolución Conjunta de la Cámara (RCC0031)
+2025-03-20 17:52:36,115 - INFO - Found filing date: 01/13/2025
+2025-03-20 17:52:36,117 - INFO - Found title: Para ordenar al Departamento de Vivienda a transfe...
+2025-03-20 17:52:36,127 - INFO - Found documents tab
+2025-03-20 17:52:36,130 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:52:36,130 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 17:52:36,131 - INFO - Found 6 general documents
+2025-03-20 17:52:36,132 - INFO - Found 10 event items
+2025-03-20 17:52:36,135 - INFO - Extracted 7 tramites and 3 votaciones
+2025-03-20 17:52:36,253 - INFO - Found 10 documents
+2025-03-20 17:52:36,253 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 17:52:36,254 - INFO - Data structure collected from scraping:
+2025-03-20 17:52:36,254 - INFO - {
+  "measure_number": "Resolución Conjunta de la Cámara (RCC0031)",
+  "title": "Para ordenar al Departamento de Vivienda a transferir por el precio nominal de un dólar ($1.00) a la Junta de Residentes Preocupados por la Educación, Inc., el predio de terreno, así como la estructura ubicada en la Parcela Núm. 106 de la Comunidad Villa del Mar en el barrio Playa del Municipio de Santa Isabel, conocida como la Biblioteca Comunitaria Villa del Mar; sin sujeción a las disposiciones de la Ley 26-2017, según enmendada, mejor conocida como ‘’Ley de Cumplimiento con el Plan Fiscal’’; establecer restricciones a la variación de uso o enajenación de la propiedad sin el consentimiento expreso del Secretario del Departamento de Vivienda; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/13/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado por Cámara en Votación Final",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153047/RCC0031 votacion.pdf",
+          "description": "RCC0031 votacion.pdf"
+        }
+      ],
+      "votes": {
+        "Votos a favor": ":48",
+        "Votos en contra": ":0",
+        "Votos abstenidos": ":0",
+        "Votos ausentes": ":5"
+      },
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado con enmiendas en sala",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a Comisión de Calendarios de la Cámara",
+      "fecha": "03/17/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "03/17/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153047/RCC0031 -ee.docx",
+          "description": "RCC0031 -ee.docx"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "03/17/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153047/RCC0031 -i.docx",
+          "description": "RCC0031 -i.docx"
+        }
+      ],
+      "comision": "Comisión de Vivienda y Desarrollo Urbano",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión de Vivienda y Desarrollo Urbano",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/13/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153047/RCC0031.docx",
+          "description": "RCC0031.docx"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 17:52:36,256 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 17:52:36,257 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 17:52:36,262 - INFO - Results saved to result.json
+2025-03-20 17:52:36,262 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 17:52:36,263 - INFO - Measure Number: Resolución Conjunta de la Cámara (RCC0031)
+2025-03-20 17:52:36,263 - INFO - Title: Para ordenar al Departamento de Vivienda a transferir por el precio nominal de un dólar ($1.00) a la Junta de Residentes Preocupados por la Educación, Inc., el predio de terreno, así como la estructura ubicada en la Parcela Núm. 106 de la Comunidad Villa del Mar en el barrio Playa del Municipio de Santa Isabel, conocida como la Biblioteca Comunitaria Villa del Mar; sin sujeción a las disposiciones de la Ley 26-2017, según enmendada, mejor conocida como ‘’Ley de Cumplimiento con el Plan Fiscal’’; establecer restricciones a la variación de uso o enajenación de la propiedad sin el consentimiento expreso del Secretario del Departamento de Vivienda; y para otros fines relacionados.
+2025-03-20 17:52:36,264 - INFO - Status: None
+2025-03-20 17:52:36,264 - INFO - Events found: 10
+2025-03-20 17:52:36,264 - INFO - Commissions found: 0
+2025-03-20 17:52:36,264 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 18:02:17,909 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153139
+2025-03-20 18:02:17,910 - INFO - Skip document downloads: True
+2025-03-20 18:02:17,911 - INFO - Installing ChromeDriver...
+2025-03-20 18:02:17,911 - INFO - ====== WebDriver manager ======
+2025-03-20 18:02:31,287 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 18:02:31,501 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 18:02:31,662 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 18:02:31,663 - INFO - Creating ChromeService...
+2025-03-20 18:02:31,665 - INFO - Initializing Chrome WebDriver...
+2025-03-20 18:02:35,219 - INFO - Setting page load timeout...
+2025-03-20 18:02:35,223 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153139
+2025-03-20 18:02:36,094 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 18:02:36,331 - INFO - Page loaded successfully.
+2025-03-20 18:02:41,355 - INFO - Page source saved to page_source.html
+2025-03-20 18:02:41,388 - INFO - Found measure number: Resolución de la Cámara (RC0060)
+2025-03-20 18:02:41,389 - INFO - Found filing date: 01/15/2025
+2025-03-20 18:02:41,390 - INFO - Found title: Para ordenar a la Comisión de Hacienda de la Cámar...
+2025-03-20 18:02:41,400 - INFO - Found documents tab
+2025-03-20 18:02:41,409 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 18:02:41,409 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 18:02:41,409 - INFO - Found 7 general documents
+2025-03-20 18:02:41,412 - INFO - Found 12 event items
+2025-03-20 18:02:41,418 - INFO - Extracted 10 tramites and 2 votaciones
+2025-03-20 18:02:41,583 - INFO - Found 12 documents
+2025-03-20 18:02:41,583 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 18:02:41,584 - INFO - Data structure collected from scraping:
+2025-03-20 18:02:41,585 - INFO - {
+  "measure_number": "Resolución de la Cámara (RC0060)",
+  "title": "Para ordenar a la Comisión de Hacienda de la Cámara de Representantes de Puerto Rico, realizar una investigación sobre todo asunto relacionado con la situación fiscal del Gobierno, el ritmo de cumplimiento de las exigencias del Plan Fiscal Comprensivo exigido por la legislación “PROMESA”, las recaudaciones del Fondo General y los fondos especiales, el estimado de los recaudos e ingresos probables y el financiamiento mediante el uso de empréstitos; los estimados de ingresos, de inversiones y desembolsos de las corporaciones públicas; la legislación que liberalice o imponga contribuciones de cualquier tipo; la deuda pública del Gobierno de Puerto Rico y de las corporaciones públicas, así como las condiciones de pago para los empréstitos; la recaudación, custodia, depósito y contabilidad de los fondos públicos; la pre-intervención y el uso de los fondos públicos de acuerdo a los fines para los que se autorizaron; el estudio y la evaluación del Presupuesto General; las peticiones presupuestarias recomendadas por la Gobernadora para los departamentos, corporaciones públicas, agencias y demás instrumentalidades públicas, tomando en consideración todos los ingresos y recursos del Estado, los de la entidad evaluada, incluyendo fondos federales, fondos especiales y donaciones, así como cualquier otro ingreso y todo asunto relacionado a la otorgación de incentivos económicos que representen o conlleven impacto fiscal; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/15/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública:  Salón de Audiencias #1",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/31/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "01/28/2025",
+      "descripcion": "Aprobado por Cámara en Votación Final",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.pdf",
+          "description": "RC0060.pdf"
+        }
+      ],
+      "votes": {
+        "Votos a favor": ":49",
+        "Votos en contra": ":0",
+        "Votos abstenidos": ":0",
+        "Votos ausentes": ":4"
+      },
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "01/28/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final en Cámara",
+      "fecha": "01/28/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.doc",
+          "description": "RC0060.doc"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales de la Cámara",
+      "fecha": "01/28/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a Comisión de Calendarios de la Cámara",
+      "fecha": "01/22/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "01/22/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060-ee.doc",
+          "description": "RC0060-ee.doc"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "01/22/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060-i.docx",
+          "description": "RC0060-i.docx"
+        }
+      ],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/15/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153139/RC0060.doc",
+          "description": "RC0060.doc"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 18:02:41,585 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 18:02:41,586 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 18:02:41,588 - INFO - Results saved to result.json
+2025-03-20 18:02:41,589 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 18:02:41,589 - INFO - Measure Number: Resolución de la Cámara (RC0060)
+2025-03-20 18:02:41,589 - INFO - Title: Para ordenar a la Comisión de Hacienda de la Cámara de Representantes de Puerto Rico, realizar una investigación sobre todo asunto relacionado con la situación fiscal del Gobierno, el ritmo de cumplimiento de las exigencias del Plan Fiscal Comprensivo exigido por la legislación “PROMESA”, las recaudaciones del Fondo General y los fondos especiales, el estimado de los recaudos e ingresos probables y el financiamiento mediante el uso de empréstitos; los estimados de ingresos, de inversiones y desembolsos de las corporaciones públicas; la legislación que liberalice o imponga contribuciones de cualquier tipo; la deuda pública del Gobierno de Puerto Rico y de las corporaciones públicas, así como las condiciones de pago para los empréstitos; la recaudación, custodia, depósito y contabilidad de los fondos públicos; la pre-intervención y el uso de los fondos públicos de acuerdo a los fines para los que se autorizaron; el estudio y la evaluación del Presupuesto General; las peticiones presupuestarias recomendadas por la Gobernadora para los departamentos, corporaciones públicas, agencias y demás instrumentalidades públicas, tomando en consideración todos los ingresos y recursos del Estado, los de la entidad evaluada, incluyendo fondos federales, fondos especiales y donaciones, así como cualquier otro ingreso y todo asunto relacionado a la otorgación de incentivos económicos que representen o conlleven impacto fiscal; y para otros fines relacionados.
+2025-03-20 18:02:41,589 - INFO - Status: None
+2025-03-20 18:02:41,589 - INFO - Events found: 12
+2025-03-20 18:02:41,589 - INFO - Commissions found: 0
+2025-03-20 18:02:41,589 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 18:35:01,971 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154304
+2025-03-20 18:35:01,971 - INFO - Skip document downloads: True
+2025-03-20 18:35:01,971 - INFO - Installing ChromeDriver...
+2025-03-20 18:35:01,971 - INFO - ====== WebDriver manager ======
+2025-03-20 18:35:13,349 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 18:35:13,901 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 18:35:14,056 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 18:35:14,057 - INFO - Creating ChromeService...
+2025-03-20 18:35:14,058 - INFO - Initializing Chrome WebDriver...
+2025-03-20 18:35:16,617 - INFO - Setting page load timeout...
+2025-03-20 18:35:16,619 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154304
+2025-03-20 18:35:17,750 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 18:35:17,791 - INFO - Page loaded successfully.
+2025-03-20 18:35:22,802 - INFO - Page source saved to page_source.html
+2025-03-20 18:35:22,817 - INFO - Found measure number: Resolución Conjunta de la Cámara (RCC0080)
+2025-03-20 18:35:22,818 - INFO - Found filing date: 03/19/2025
+2025-03-20 18:35:22,818 - INFO - Found title: Para reasignar al Municipio Autónomo de Cataño, la...
+2025-03-20 18:35:22,822 - INFO - Found documents tab
+2025-03-20 18:35:22,824 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 18:35:22,824 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 18:35:22,824 - INFO - Found 3 general documents
+2025-03-20 18:35:22,825 - INFO - Found 3 event items
+2025-03-20 18:35:22,826 - INFO - Extracted 3 tramites and 0 votaciones
+2025-03-20 18:35:22,957 - INFO - Found 4 documents
+2025-03-20 18:35:22,957 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 18:35:22,958 - INFO - Data structure collected from scraping:
+2025-03-20 18:35:22,958 - INFO - {
+  "measure_number": "Resolución Conjunta de la Cámara (RCC0080)",
+  "title": "Para reasignar al Municipio Autónomo de Cataño, la cantidad de setenta y seis mil cuarenta y tres dólares con trece centavos ($76,043.13) provenientes de la Resoluciones Conjuntas: (1) R.C. de la C. 1166 del 8 de noviembre de 2005; (2) R.C. de la C. 2401 del 11 de marzo de 2008; (3) R.C. de la C. 982 del 11 de noviembre de 2010; (4) R.C. de la C. 2186 del 29 de octubre de 2007; (5) R.C. de la C. 4625 del 4 de marzo de 2004; (6) R.C. de la C. 4144 del 8 de diciembre de 2003; (7) R.C. de la C. 3641 del 25 de septiembre de 2003; (8) R.C. de la C. 3891 del 16 de octubre de 2003; (9) R.C. de la C. 3890 del 16 de octubre de 2003; (10) R.C. de la C. 3589 del 22 de septiembre de 2003; (11) R.C. de la C. 198 del 24 de junio de 2017 y (12) R.C. de la C. 198 del 24 de junio de 2017, a ser transferidos para llevar a cabo los propósitos que se describen en la Sección 1 de esta Resolución Conjunta; para autorizar la contratación de tales obras; autorizar el traspaso de fondos; autorizar el pareo de los fondos reasignados; y para otros fines.",
+  "status": null,
+  "filing_date": "03/19/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Hacienda",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/19/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/154304/RCC0080.docx",
+          "description": "RCC0080.docx"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 18:35:22,961 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 18:35:22,961 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 18:35:22,963 - INFO - Results saved to result.json
+2025-03-20 18:35:22,963 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 18:35:22,963 - INFO - Measure Number: Resolución Conjunta de la Cámara (RCC0080)
+2025-03-20 18:35:22,963 - INFO - Title: Para reasignar al Municipio Autónomo de Cataño, la cantidad de setenta y seis mil cuarenta y tres dólares con trece centavos ($76,043.13) provenientes de la Resoluciones Conjuntas: (1) R.C. de la C. 1166 del 8 de noviembre de 2005; (2) R.C. de la C. 2401 del 11 de marzo de 2008; (3) R.C. de la C. 982 del 11 de noviembre de 2010; (4) R.C. de la C. 2186 del 29 de octubre de 2007; (5) R.C. de la C. 4625 del 4 de marzo de 2004; (6) R.C. de la C. 4144 del 8 de diciembre de 2003; (7) R.C. de la C. 3641 del 25 de septiembre de 2003; (8) R.C. de la C. 3891 del 16 de octubre de 2003; (9) R.C. de la C. 3890 del 16 de octubre de 2003; (10) R.C. de la C. 3589 del 22 de septiembre de 2003; (11) R.C. de la C. 198 del 24 de junio de 2017 y (12) R.C. de la C. 198 del 24 de junio de 2017, a ser transferidos para llevar a cabo los propósitos que se describen en la Sección 1 de esta Resolución Conjunta; para autorizar la contratación de tales obras; autorizar el traspaso de fondos; autorizar el pareo de los fondos reasignados; y para otros fines.
+2025-03-20 18:35:22,963 - INFO - Status: None
+2025-03-20 18:35:22,964 - INFO - Events found: 3
+2025-03-20 18:35:22,964 - INFO - Commissions found: 0
+2025-03-20 18:35:22,964 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-20 18:36:03,472 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153531
+2025-03-20 18:36:03,472 - INFO - Skip document downloads: True
+2025-03-20 18:36:03,472 - INFO - Installing ChromeDriver...
+2025-03-20 18:36:03,472 - INFO - ====== WebDriver manager ======
+2025-03-20 18:36:04,036 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 18:36:04,206 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 18:36:04,372 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 18:36:04,372 - INFO - Creating ChromeService...
+2025-03-20 18:36:04,373 - INFO - Initializing Chrome WebDriver...
+2025-03-20 18:36:07,566 - INFO - Setting page load timeout...
+2025-03-20 18:36:07,572 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153531
+2025-03-20 18:36:08,503 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 18:36:08,661 - INFO - Page loaded successfully.
+2025-03-20 18:36:13,688 - INFO - Page source saved to page_source.html
+2025-03-20 18:36:13,707 - INFO - Found measure number: Resolución de la Cámara (RC0120)
+2025-03-20 18:36:13,722 - INFO - Found filing date: 02/03/2025
+2025-03-20 18:36:13,723 - INFO - Found title: Para ordenar a la Comisión de la Región Este de la...
+2025-03-20 18:36:13,729 - INFO - Found documents tab
+2025-03-20 18:36:13,732 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 18:36:13,732 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 18:36:13,733 - INFO - Found 5 general documents
+2025-03-20 18:36:13,735 - INFO - Found 11 event items
+2025-03-20 18:36:13,739 - INFO - Extracted 9 tramites and 2 votaciones
+2025-03-20 18:36:13,864 - INFO - Found 8 documents
+2025-03-20 18:36:13,864 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-20 18:36:13,865 - INFO - Data structure collected from scraping:
+2025-03-20 18:36:13,866 - INFO - {
+  "measure_number": "Resolución de la Cámara (RC0120)",
+  "title": "Para ordenar a la Comisión de la Región Este de la Cámara de Representantes del Gobierno de Puerto Rico, realizar un amplio y continuo análisis sobre todo asunto relacionado con el desarrollo socioeconómico del Distrito Representativo Núm. 33 que comprende los municipios de Las Piedras, Juncos, San Lorenzo y Gurabo; sobre todo asunto relacionado con los programas gubernamentales que inciden sobre los municipios bajo su jurisdicción; sobre los servicios que prestan esos gobiernos municipales a su ciudadanía; cuentas de todas las asignaciones de fondos estatales y federales asignados a las agencias y corporaciones públicas destinados a impactar directamente o que afectan a los municipios de Las Piedras, Juncos, San Lorenzo y Gurabo; cualquier otra entidad que reciba fondos públicos o incentivos, provenientes de fondos de asignaciones federales, mejoras municipales, transferencias intergubernamentales y asignaciones presupuestarias puntuales en su jurisdicción, ya sean para infraestructura, programas de bienestar social, iniciativas comunitarias, entre otras que impacten directamente a la población de los municipios bajo jurisdicción de la Comisión; evaluación de la implementación de los programas para lo que fueron asignados los fondos públicos; y auditorías de desempeño realizadas a programas gubernamentales y municipales que impacten directamente a la población bajo su jurisdicción, que operan programas con fondos federales enfatizando en la investigación de campo y en la citación de los directivos regionales de las entidades que implementen dichos fondos; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "02/03/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado con enmiendas en sala",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final en Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aprobada por Cámara por unanimidad",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a Comisión de Calendarios de la Cámara",
+      "fecha": "03/18/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "03/18/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153531/RC0120-ee.docx",
+          "description": "RC0120-ee.docx"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "03/18/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153531/RC0120 -i.doc",
+          "description": "RC0120 -i.doc"
+        }
+      ],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "02/06/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos Internos",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "02/06/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "02/03/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153531/RC0120.docx",
+          "description": "RC0120.docx"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 18:36:13,867 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 18:36:13,868 - INFO - Cleaned up debug file: page_source.html
+2025-03-20 18:36:13,869 - INFO - Results saved to result.json
+2025-03-20 18:36:13,870 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 18:36:13,870 - INFO - Measure Number: Resolución de la Cámara (RC0120)
+2025-03-20 18:36:13,870 - INFO - Title: Para ordenar a la Comisión de la Región Este de la Cámara de Representantes del Gobierno de Puerto Rico, realizar un amplio y continuo análisis sobre todo asunto relacionado con el desarrollo socioeconómico del Distrito Representativo Núm. 33 que comprende los municipios de Las Piedras, Juncos, San Lorenzo y Gurabo; sobre todo asunto relacionado con los programas gubernamentales que inciden sobre los municipios bajo su jurisdicción; sobre los servicios que prestan esos gobiernos municipales a su ciudadanía; cuentas de todas las asignaciones de fondos estatales y federales asignados a las agencias y corporaciones públicas destinados a impactar directamente o que afectan a los municipios de Las Piedras, Juncos, San Lorenzo y Gurabo; cualquier otra entidad que reciba fondos públicos o incentivos, provenientes de fondos de asignaciones federales, mejoras municipales, transferencias intergubernamentales y asignaciones presupuestarias puntuales en su jurisdicción, ya sean para infraestructura, programas de bienestar social, iniciativas comunitarias, entre otras que impacten directamente a la población de los municipios bajo jurisdicción de la Comisión; evaluación de la implementación de los programas para lo que fueron asignados los fondos públicos; y auditorías de desempeño realizadas a programas gubernamentales y municipales que impacten directamente a la población bajo su jurisdicción, que operan programas con fondos federales enfatizando en la investigación de campo y en la citación de los directivos regionales de las entidades que implementen dichos fondos; y para otros fines relacionados.
+2025-03-20 18:36:13,870 - INFO - Status: None
+2025-03-20 18:36:13,870 - INFO - Events found: 11
+2025-03-20 18:36:13,870 - INFO - Commissions found: 0
+2025-03-20 18:36:13,871 - INFO - NOTE: Document downloading was skipped due to --no-extract flag

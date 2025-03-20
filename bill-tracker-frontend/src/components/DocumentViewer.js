@@ -88,235 +88,288 @@ const DocumentViewer = ({ document }) => {
     setIsFullscreen(!isFullscreen);
     };
 
-    // Load DOCX documents
     useEffect(() => {
-    if (documentType === 'docx') {
+        if (documentType === 'docx' || documentType === 'doc') {
         const loadDocx = async () => {
             try {
-              setLoading(true);
-              
-              // Create a proxy URL
-              const proxyUrl = process.env.NODE_ENV === 'production'
-                ? `/api/proxy-document?url=${encodeURIComponent(document.link_url)}`
-                : `http://localhost:3001/api/proxy-document?url=${encodeURIComponent(document.link_url)}`;
-              
-              console.log(`Loading DOCX from proxy: ${proxyUrl}`);
-              
-              const response = await fetch(proxyUrl);
-              if (!response.ok) {
-                throw new Error(`HTTP error ${response.status}`);
-              }
-              
-              const blob = await response.blob();
-              console.log(`Received blob: ${blob.size} bytes, type: ${blob.type}`);
-              
-              if (containerRef.current) {
-                // Render the DOCX
-                await renderAsync(blob, containerRef.current, null, {
-                  className: 'docx-viewer'
-                });
-              }
-              setLoading(false);
-            } catch (err) {
-              console.error('Error loading DOCX:', err);
-              setError(`Failed to load document: ${err.message}`);
-              setLoading(false);
+            setLoading(true);
+            
+            // Create a proxy URL to handle CORS issues
+            let docUrl = document.link_url;
+            
+            // If it's a .doc file, treat it as .docx by adding 'x' to the extension
+            if (docUrl.toLowerCase().endsWith('.doc') && !docUrl.toLowerCase().endsWith('.docx')) {
+                console.log("Converting .doc URL to .docx for viewing:", docUrl);
+                docUrl = docUrl + 'x';
             }
-          };
+            
+            const proxyUrl = `/api/proxy-document?url=${encodeURIComponent(docUrl)}`;
+            console.log("Loading DOCX from proxy:", proxyUrl);
+            
+            // Add timeout to prevent hanging
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+            
+            const response = await fetch(proxyUrl, { 
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId); // Clear the timeout
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}`);
+            }
+            
+            const blob = await response.blob();
+            
+            if (containerRef.current) {
+                await renderAsync(blob, containerRef.current, null, {
+                className: 'docx-viewer'
+                });
+            }
+            setLoading(false);
+            } catch (err) {
+            // Handle AbortController timeout
+            if (err.name === 'AbortError') {
+                console.error('Request timed out loading DOCX');
+                setError('Request timed out. The document may be too large or the server is not responding.');
+            } else {
+                console.error('Error loading DOCX:', err);
+                setError(`Failed to load document: ${err.message}`);
+            }
+            setLoading(false);
+            }
+        };
         
         loadDocx();
-    }
+        }
     }, [documentType, document.link_url]);
 
     // Prepare the document display based on type
     const renderDocument = () => {
-    if (loading) {
-        return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-            <CircularProgress />
-        </Box>
-        );
-    }
-
-    if (error) {
-        return (
-        <Box sx={{ p: 2, bgcolor: 'error.light', borderRadius: 1 }}>
-            <Typography color="error">{error}</Typography>
-            <Button 
-            href={document.link_url} 
-            target="_blank" 
-            variant="contained" 
-            sx={{ mt: 2 }}
-            startIcon={<DownloadIcon />}
-            >
-            Download Original
-            </Button>
-        </Box>
-        );
-    }
-
-    switch (documentType) {
-        case 'pdf':
+        // First check if document URL is valid
+        if (!document.link_url || typeof document.link_url !== 'string') {
             return (
-              <Box sx={{ overflow: 'auto' }}>
-                <Document
-                  file={document.link_url}
-                  onLoadSuccess={onDocumentLoadSuccess}
-                  onLoadError={onDocumentLoadError}
-                  loading={
-                    <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-                      <CircularProgress />
-                    </Box>
-                  }
-                  options={{
-                    cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
-                    cMapPacked: true,
-                    withCredentials: false,
-                    disableStream: true,
-                    disableAutoFetch: true,
-                  }}
-                >
-                  {!error && (
-                    <Page 
-                      pageNumber={pageNumber} 
-                      scale={zoom}
-                      renderTextLayer={false}
-                      renderAnnotationLayer={false}
-                      error={
-                        <Typography color="error" align="center">
-                          Failed to load page.
-                        </Typography>
-                      }
-                    />
-                  )}
-                </Document>
-              </Box>
-            );
-       
-        case 'docx':
-        // DOCX is handled in the useEffect hook and renders into containerRef
-        return <Box ref={containerRef} sx={{ width: '100%', minHeight: '500px' }} />;
-        
-        default:
-        return (
             <Box sx={{ p: 3, textAlign: 'center' }}>
-            <Typography variant="h6" gutterBottom>
-                Document Preview Not Available
-            </Typography>
-            <Typography paragraph>
-                This document type ({documentType}) cannot be previewed directly.
-            </Typography>
-            <Button 
+                <Typography variant="h6" color="error" gutterBottom>
+                Invalid Document URL
+                </Typography>
+                <Typography paragraph>
+                The document URL is missing or invalid.
+                </Typography>
+            </Box>
+            );
+        }
+        
+        if (loading) {
+            return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                <CircularProgress />
+            </Box>
+            );
+        }
+
+        if (error) {
+            return (
+            <Box sx={{ p: 2, bgcolor: 'error.light', borderRadius: 1 }}>
+                <Typography color="error">{error}</Typography>
+                <Button 
                 href={document.link_url} 
                 target="_blank" 
                 variant="contained" 
-                color="primary"
+                sx={{ mt: 2 }}
                 startIcon={<DownloadIcon />}
-            >
-                Download Document
-            </Button>
+                >
+                Download Original
+                </Button>
             </Box>
-        );
-    }
-    };
+            );
+        }
 
-    return (
-    <Paper 
-        elevation={3} 
-        sx={{ 
-        p: 2, 
-        mb: 3, 
-        borderRadius: 2,
-        overflow: 'hidden'
-        }}
-        ref={containerRef}
-    >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6">
-            {document.description || 'Document'}
-        </Typography>
+        switch (documentType) {
+            case 'pdf':
+                return (
+                <Box sx={{ overflow: 'auto' }}>
+                    <Document
+                    file={document.link_url}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    onLoadError={onDocumentLoadError}
+                    loading={
+                        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                        <CircularProgress />
+                        </Box>
+                    }
+                    options={{
+                        cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
+                        cMapPacked: true,
+                        withCredentials: false,
+                        disableStream: true,
+                        disableAutoFetch: true,
+                    }}
+                    >
+                    {!error && (
+                        <Page 
+                        pageNumber={pageNumber} 
+                        scale={zoom}
+                        renderTextLayer={false}
+                        renderAnnotationLayer={false}
+                        error={
+                            <Typography color="error" align="center">
+                            Failed to load page.
+                            </Typography>
+                        }
+                        />
+                    )}
+                    </Document>
+                </Box>
+                );
         
-        <Box sx={{ display: 'flex', gap: 1 }}>
-            {documentType === 'pdf' && numPages > 0 && (
-            <>
-                <Tooltip title="Zoom Out">
-                <IconButton onClick={zoomOut} size="small">
-                    <ZoomOutIcon />
-                </IconButton>
-                </Tooltip>
+            case 'docx':
+            return (
+                <Box>
+                {loading && (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
+                    <CircularProgress sx={{ mb: 2 }} />
+                    <Typography variant="body2" color="text.secondary">
+                        Loading document...
+                    </Typography>
+                    <Button 
+                        href={document.link_url} 
+                        target="_blank" 
+                        variant="outlined" 
+                        sx={{ mt: 2 }}
+                        startIcon={<DownloadIcon />}
+                    >
+                        Download Original
+                    </Button>
+                    </Box>
+                )}
                 
-                <Typography sx={{ display: 'flex', alignItems: 'center', mx: 1 }}>
-                {Math.round(zoom * 100)}%
-                </Typography>
+                {error && (
+                    <Box sx={{ p: 3, textAlign: 'center' }}>
+                    <Typography variant="body1" color="error" gutterBottom>
+                        {error}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" paragraph>
+                        Document preview is unavailable. Please download the document directly.
+                    </Typography>
+                    <Button 
+                        href={document.link_url} 
+                        target="_blank" 
+                        variant="contained" 
+                        color="primary"
+                        startIcon={<DownloadIcon />}
+                    >
+                        Download Document
+                    </Button>
+                    </Box>
+                )}
                 
-                <Tooltip title="Zoom In">
-                <IconButton onClick={zoomIn} size="small">
-                    <ZoomInIcon />
-                </IconButton>
-                </Tooltip>
-            </>
-            )}
-            
-            <Tooltip title="Fullscreen">
-            <IconButton onClick={toggleFullscreen} size="small">
-                <FullscreenIcon />
-            </IconButton>
-            </Tooltip>
-            
-            <Tooltip title="Download Original">
-            <IconButton 
-                component="a" 
-                href={document.link_url} 
-                target="_blank" 
-                size="small"
-            >
-                <DownloadIcon />
-            </IconButton>
-            </Tooltip>
-        </Box>
-        </Box>
-        
-        {renderDocument()}
-        
-        {documentType === 'pdf' && numPages > 0 && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2 }}>
-            <Tooltip title="Previous Page">
-            <IconButton onClick={goToPrevPage} disabled={pageNumber <= 1}>
-                <ChevronLeftIcon />
-            </IconButton>
-            </Tooltip>
-            
-            <Box sx={{ mx: 2, display: 'flex', alignItems: 'center' }}>
-            <Typography>
-                Page {pageNumber} of {numPages}
+                {!loading && !error && (
+                    <Box ref={containerRef} sx={{ width: '100%', minHeight: '500px' }} />
+                )}
+                </Box>
+            );
+        }
+        };
+
+        return (
+        <Paper 
+            elevation={3} 
+            sx={{ 
+            p: 2, 
+            mb: 3, 
+            borderRadius: 2,
+            overflow: 'hidden'
+            }}
+            ref={containerRef}
+        >
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h6">
+                {document.description || 'Document'}
             </Typography>
             
-            <FormControl variant="outlined" size="small" sx={{ ml: 2, minWidth: 120 }}>
-                <InputLabel id="page-select-label">Go to</InputLabel>
-                <Select
-                labelId="page-select-label"
-                value={pageNumber}
-                onChange={(e) => setPageNumber(Number(e.target.value))}
-                label="Go to"
+            <Box sx={{ display: 'flex', gap: 1 }}>
+                {documentType === 'pdf' && numPages > 0 && (
+                <>
+                    <Tooltip title="Zoom Out">
+                    <IconButton onClick={zoomOut} size="small">
+                        <ZoomOutIcon />
+                    </IconButton>
+                    </Tooltip>
+                    
+                    <Typography sx={{ display: 'flex', alignItems: 'center', mx: 1 }}>
+                    {Math.round(zoom * 100)}%
+                    </Typography>
+                    
+                    <Tooltip title="Zoom In">
+                    <IconButton onClick={zoomIn} size="small">
+                        <ZoomInIcon />
+                    </IconButton>
+                    </Tooltip>
+                </>
+                )}
+                
+                <Tooltip title="Fullscreen">
+                <IconButton onClick={toggleFullscreen} size="small">
+                    <FullscreenIcon />
+                </IconButton>
+                </Tooltip>
+                
+                <Tooltip title="Download Original">
+                <IconButton 
+                    component="a" 
+                    href={document.link_url} 
+                    target="_blank" 
+                    size="small"
                 >
-                {[...Array(numPages).keys()].map(i => (
-                    <MenuItem key={i + 1} value={i + 1}>
-                    Page {i + 1}
-                    </MenuItem>
-                ))}
-                </Select>
-            </FormControl>
+                    <DownloadIcon />
+                </IconButton>
+                </Tooltip>
+            </Box>
             </Box>
             
-            <Tooltip title="Next Page">
-            <IconButton onClick={goToNextPage} disabled={pageNumber >= numPages}>
-                <ChevronRightIcon />
-            </IconButton>
-            </Tooltip>
-        </Box>
-        )}
-    </Paper>
-    );
+            {renderDocument()}
+            
+            {documentType === 'pdf' && numPages > 0 && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2 }}>
+                <Tooltip title="Previous Page">
+                <IconButton onClick={goToPrevPage} disabled={pageNumber <= 1}>
+                    <ChevronLeftIcon />
+                </IconButton>
+                </Tooltip>
+                
+                <Box sx={{ mx: 2, display: 'flex', alignItems: 'center' }}>
+                <Typography>
+                    Page {pageNumber} of {numPages}
+                </Typography>
+                
+                <FormControl variant="outlined" size="small" sx={{ ml: 2, minWidth: 120 }}>
+                    <InputLabel id="page-select-label">Go to</InputLabel>
+                    <Select
+                    labelId="page-select-label"
+                    value={pageNumber}
+                    onChange={(e) => setPageNumber(Number(e.target.value))}
+                    label="Go to"
+                    >
+                    {[...Array(numPages).keys()].map(i => (
+                        <MenuItem key={i + 1} value={i + 1}>
+                        Page {i + 1}
+                        </MenuItem>
+                    ))}
+                    </Select>
+                </FormControl>
+                </Box>
+                
+                <Tooltip title="Next Page">
+                <IconButton onClick={goToNextPage} disabled={pageNumber >= numPages}>
+                    <ChevronRightIcon />
+                </IconButton>
+                </Tooltip>
+            </Box>
+            )}
+        </Paper>
+        );
     };
 
 export default DocumentViewer;

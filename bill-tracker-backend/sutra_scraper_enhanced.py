@@ -17,6 +17,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import logging
 import concurrent.futures
 from functools import partial
+import sys
 
 # Set up logging
 logging.basicConfig(
@@ -660,6 +661,7 @@ def cleanup_debug_files():
 
 # --- Main Execution ---
 if __name__ == "__main__":
+    print("PYTHON SCRIPT STARTED WITH ARGS:", sys.argv, file=sys.stderr)
     import sys
     import argparse
     

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import {
   extractBestDate,
@@ -80,7 +80,7 @@ const API_KEY = 'afb43156-6854-44cf-8730-795c8c172990';
 const BASE_URL = 'https://v3.openstates.org';
 
 function App() {
-  const billDetailsCache = {};
+  const initialRenderRef = useRef(true);
   const [bills, setBills] = useState([]);
   const [selectedBill, setSelectedBill] = useState(null);
   const [open, setOpen] = useState(false);
@@ -187,7 +187,12 @@ function App() {
       }
       
       console.log('Fetching bills from OpenStates API:', url);
+      const requestId = Math.random().toString(36).substring(7);
+      console.log(`[${requestId}] Making API request to OpenStates:`, url);
+
       const response = await axios.get(url);
+      console.log(`[${requestId}] Received API response with ${response.data.results.length} bills`);
+
       setBills(response.data.results);
       
       // Calculate total pages
@@ -206,8 +211,17 @@ function App() {
   }, [page, searchTerm, filters.classification]);
 
   useEffect(() => {
+    // Skip the initial render to avoid duplicate calls
+    if (initialRenderRef.current) {
+      console.log('INITIAL RENDER - Skipping duplicate fetch');
+      initialRenderRef.current = false;
+      return;
+    }
+    
+    console.log('EFFECT TRIGGERED - Fetching bills with:', { page, searchTerm, classification: filters.classification });
     fetchBills();
-  }, [page, searchTerm, filters.classification]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, searchTerm, filters.classification]); 
   
   useEffect(() => {
     // Load bookmarked bills from localStorage on component mount
@@ -234,6 +248,7 @@ function App() {
   }, []);  // Empty dependency array ensures this only runs once on mount
 
   const handleOpen = async (billId) => {
+    console.log("handleOpen called with billId:", billId);
     setLoading(true);
     try {
       // Use the enhanced scraper to get bill details

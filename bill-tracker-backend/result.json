@@ -1,8 +1,8 @@
 {
-  "measure_number": "Proyecto del Senado (PS0043)",
-  "title": "Para insertar un nuevo inciso (d) y renumerar los incisos subsiguientes del Artículo\n1540 y para derogar el inciso (g) del Artículo 1541 de la Ley 55-2020, conocida como\n\"Código Civil de Puerto Rico\", a los fines de aclarar que las instituciones de cuidado\nde salud responderán vicariamente y no objetivamente por los daños que causan\npersonas que operan franquicias exclusivas de servicios de salud en dichas\ninstituciones o por los daños causados por personal de la institución a un paciente\nque accede directamente sin referido de un médico primario; y para otros fines\nrelacionados.",
+  "measure_number": "Resolución de la Cámara (RC0120)",
+  "title": "Para ordenar a la Comisión de la Región Este de la Cámara de Representantes del Gobierno de Puerto Rico, realizar un amplio y continuo análisis sobre todo asunto relacionado con el desarrollo socioeconómico del Distrito Representativo Núm. 33 que comprende los municipios de Las Piedras, Juncos, San Lorenzo y Gurabo; sobre todo asunto relacionado con los programas gubernamentales que inciden sobre los municipios bajo su jurisdicción; sobre los servicios que prestan esos gobiernos municipales a su ciudadanía; cuentas de todas las asignaciones de fondos estatales y federales asignados a las agencias y corporaciones públicas destinados a impactar directamente o que afectan a los municipios de Las Piedras, Juncos, San Lorenzo y Gurabo; cualquier otra entidad que reciba fondos públicos o incentivos, provenientes de fondos de asignaciones federales, mejoras municipales, transferencias intergubernamentales y asignaciones presupuestarias puntuales en su jurisdicción, ya sean para infraestructura, programas de bienestar social, iniciativas comunitarias, entre otras que impacten directamente a la población de los municipios bajo jurisdicción de la Comisión; evaluación de la implementación de los programas para lo que fueron asignados los fondos públicos; y auditorías de desempeño realizadas a programas gubernamentales y municipales que impacten directamente a la población bajo su jurisdicción, que operan programas con fondos federales enfatizando en la investigación de campo y en la citación de los directivos regionales de las entidades que implementen dichos fondos; y para otros fines relacionados.",
   "status": null,
-  "filing_date": "01/02/2025",
+  "filing_date": "02/03/2025",
   "authors": [],
   "origin_chamber": null,
   "current_chamber": null,
@@ -11,35 +11,88 @@
   "comisiones": [],
   "eventos": [
     {
-      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
-      "fecha": "04/01/2025",
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado con enmiendas en sala",
       "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "03/20/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final en Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aprobada por Cámara por unanimidad",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a Comisión de Calendarios de la Cámara",
+      "fecha": "03/18/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "03/18/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153531/RC0120-ee.docx",
+          "description": "RC0120-ee.docx"
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "03/18/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153531/RC0120 -i.doc",
+          "description": "RC0120 -i.doc"
+        }
+      ],
+      "comision": "Comisión de Asuntos Internos",
       "tipo": "tramite"
     },
     {
       "descripcion": "Referido a Comisión(es)",
-      "fecha": "01/16/2025",
+      "fecha": "02/06/2025",
       "documents": [],
-      "comision": "Comisión De Lo Jurídico",
+      "comision": "Comisión de Asuntos Internos",
       "tipo": "tramite"
     },
     {
-      "descripcion": "Aparece en Primera Lectura del Senado",
-      "fecha": "01/16/2025",
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "02/06/2025",
       "documents": [],
       "tipo": "tramite"
     },
     {
       "descripcion": "Radicado",
-      "fecha": "01/02/2025",
+      "fecha": "02/03/2025",
       "documents": [
         {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152433/PS0043.pdf",
-          "description": "PS0043.pdf",
-          "filepath": "scraped_data/PS0043.pdf",
-          "text_filepath": "scraped_data/PS0043.pdf.txt",
-          "downloaded": true,
-          "text_extracted": false
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153531/RC0120.docx",
+          "description": "RC0120.docx"
         }
       ],
       "tipo": "tramite"
