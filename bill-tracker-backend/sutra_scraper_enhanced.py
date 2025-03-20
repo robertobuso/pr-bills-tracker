@@ -508,30 +508,35 @@ def scrape_and_download(url, output_dir="scraped_data"):
     if driver:
         driver.quit()
 
-    # --- 7. Download Documents Only (No Text Extraction) ---
+    # --- 7. Prepare Documents (with optional downloading) ---
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     all_documents = data["documents"] + [doc for tramite in data["tramites"] for doc in tramite["documents"]] + [doc for votacion in data["votaciones"] for doc in votacion["documents"]] + [doc for comision in data["comisiones"] for doc in comision["documents"]]
-    
-    logger.info(f"Found {len(all_documents)} documents to download (text extraction deferred)")
 
-    # Use ThreadPoolExecutor to download files in parallel WITHOUT text extraction
-    logger.info(f"Starting parallel download of {len(all_documents)} documents (no text extraction)")
-    processed_documents = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        # Pass extract_text=False to skip text extraction
-        download_fn = partial(download_and_process_doc, output_dir=output_dir, extract_text=False)
-        # Process results as they complete to track errors
-        for i, doc_info in enumerate(executor.map(download_fn, all_documents)):
-            processed_documents.append(doc_info)
+    logger.info(f"Found {len(all_documents)} documents")
 
-            # If document had an error, add it to the data errors list
-            if 'error' in doc_info:
-                data.setdefault("errors", []).append(doc_info['error'])
-                del doc_info['error']  # Remove temporary error field
-                
-    logger.info(f"Completed downloading {len(processed_documents)} documents (text extraction deferred)")
+    # Check if we're applying the monkey patch 
+    if download_and_process_doc.__name__ == 'patched_download_func':
+        logger.info("Skipping document downloads due to --no-extract flag")
+        processed_documents = [download_and_process_doc(doc, output_dir) for doc in all_documents]
+    else:
+        # Use ThreadPoolExecutor to download files in parallel WITHOUT text extraction
+        logger.info(f"Starting parallel download of {len(all_documents)} documents (no text extraction)")
+        processed_documents = []
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            # Pass extract_text=False to skip text extraction
+            download_fn = partial(download_and_process_doc, output_dir=output_dir, extract_text=False)
+            # Process results as they complete to track errors
+            for i, doc_info in enumerate(executor.map(download_fn, all_documents)):
+                processed_documents.append(doc_info)
+
+                # If document had an error, add it to the data errors list
+                if 'error' in doc_info:
+                    data.setdefault("errors", []).append(doc_info['error'])
+                    del doc_info['error']  # Remove temporary error field
+                    
+        logger.info(f"Completed downloading {len(processed_documents)} documents")
 
     # Replace the all_documents list with the processed one
     all_documents = processed_documents
@@ -656,32 +661,65 @@ def cleanup_debug_files():
 # --- Main Execution ---
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) > 1:
-        url = sys.argv[1]
-        output_directory = "scraped_data"
+    import argparse
+    
+    # Setup argument parser for better command-line options
+    parser = argparse.ArgumentParser(description="Scrape bill data from SUTRA website")
+    parser.add_argument("url", help="URL of the bill page to scrape")
+    parser.add_argument("--no-extract", action="store_true", help="Skip document downloading and text extraction")
+    parser.add_argument("--output-dir", default="scraped_data", help="Directory to save scraped data")
+    
+    # Parse only known args to handle when called from Node.js
+    args, unknown = parser.parse_known_args()
+    
+    url = args.url
+    output_directory = args.output_dir
+    skip_downloads = args.no_extract
+    
+    logger.info(f"Starting scraper for URL: {url}")
+    logger.info(f"Skip document downloads: {skip_downloads}")
+    
+    # Modify the scrape_and_download function behavior based on the flag
+    if skip_downloads:
+        # Create a patched version of download_and_process_doc that just returns the URL info
+        original_download_func = download_and_process_doc
         
-        logger.info(f"Starting scraper for URL: {url}")
-        result = scrape_and_download(url, output_directory)
+        def patched_download_func(doc_info, output_dir, extract_text=False):
+            # Just return the document info without downloading
+            return {
+                "link_url": doc_info["link_url"],
+                "description": doc_info.get("description", "Document"),
+                "downloaded": False,
+                "text_extracted": False
+            }
+        
+        # Apply the monkey patch
+        import types
+        download_and_process_doc = patched_download_func
+    
+    # Call the scraper
+    result = scrape_and_download(url, output_directory)
 
-        if "error" in result:
-            logger.error(result["error"])
-            # Still output the result as JSON even on error
-            print(json.dumps(result))
-        else:
-            # Save the result to a JSON file
-            with open("result.json", "w", encoding="utf-8") as f:
-                json.dump(result, indent=2, ensure_ascii=False, fp=f)
-            logger.info("Results saved to result.json")
-            
-            # IMPORTANT: Print the result as JSON for the Node.js server to parse
-            print(json.dumps(result))
-            
-            # Also print summary to logger only, not to stdout
-            logger.info("\nSCRAPER SUMMARY:")
-            logger.info(f"Measure Number: {result.get('measure_number', 'Not found')}")
-            logger.info(f"Title: {result.get('title', 'Not found')}")
-            logger.info(f"Status: {result.get('status', 'Not found')}")
-            logger.info(f"Events found: {len(result.get('eventos', []))}")
-            logger.info(f"Commissions found: {len(result.get('comisiones', []))}")
+    if "error" in result:
+        logger.error(result["error"])
+        # Still output the result as JSON even on error
+        print(json.dumps(result))
     else:
-        print(json.dumps({"error": "Please provide a URL as a command-line argument."}))
+        # Save the result to a JSON file
+        with open("result.json", "w", encoding="utf-8") as f:
+            json.dump(result, indent=2, ensure_ascii=False, fp=f)
+        logger.info("Results saved to result.json")
+        
+        # IMPORTANT: Print the result as JSON for the Node.js server to parse
+        print(json.dumps(result))
+        
+        # Also print summary to logger only, not to stdout
+        logger.info("\nSCRAPER SUMMARY:")
+        logger.info(f"Measure Number: {result.get('measure_number', 'Not found')}")
+        logger.info(f"Title: {result.get('title', 'Not found')}")
+        logger.info(f"Status: {result.get('status', 'Not found')}")
+        logger.info(f"Events found: {len(result.get('eventos', []))}")
+        logger.info(f"Commissions found: {len(result.get('comisiones', []))}")
+        
+        if skip_downloads:
+            logger.info("NOTE: Document downloading was skipped due to --no-extract flag")

@@ -292,12 +292,20 @@ const EventosView = ({ eventos }) => {
                       <Box sx={{ px: 2, pb: 2 }}>
                         <Divider sx={{ mb: 2 }} />
                         {evento.documents.map((doc, docIndex) => (
-                          <DocumentViewer
-                            key={docIndex}
-                            document={doc}
-                            compact={true}
-                          />
-                        ))}
+                            <Box key={docIndex} sx={{ mb: 2 }}>
+                                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                                {doc.description || `Document ${docIndex + 1}`}
+                                </Typography>
+                                <Paper sx={{ p: 2, bgcolor: 'background.paper' }}>
+                                <DocumentViewer
+                                    key={docIndex}
+                                    document={doc}
+                                    compact={true}
+                                    onError={(error) => console.error(`Error displaying document: ${error}`)}
+                                />
+                                </Paper>
+                            </Box>
+                            ))}
                       </Box>
                     </Collapse>
                   </>

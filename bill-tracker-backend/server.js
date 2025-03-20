@@ -41,8 +41,8 @@ app.post('/api/download-documents', (req, res) => {
 
     console.log(`Executing Python scraper with URL: ${sanitizedUrl}`);
     
-    // Execute the ENHANCED Python scraper with better error handling
-    exec(`python3 sutra_scraper_enhanced.py "${sanitizedUrl}"`, (error, stdout, stderr) => {
+    // Execute the Python scraper with the --no-extract flag to skip text extraction
+    exec(`python3 sutra_scraper_enhanced.py "${sanitizedUrl}" --no-extract`, (error, stdout, stderr) => {
         if (error) {
             console.error(`Exec error: ${error}`);
             console.error(`Stderr: ${stderr}`);

@@ -186,6 +186,7 @@ function App() {
         url += `&classification=${encodeURIComponent(filters.classification)}`;
       }
       
+      console.log('Fetching bills from OpenStates API:', url);
       const response = await axios.get(url);
       setBills(response.data.results);
       
@@ -195,15 +196,18 @@ function App() {
       setTotalPages(Math.ceil(totalItems / perPage));
     } catch (err) {
       console.error('Error fetching bills:', err);
-      setError('Failed to load bills. Please try again later.');
+      setError({
+        severity: 'error',
+        message: 'Failed to load bills. Please try again later.'
+      });
     } finally {
       setLoading(false);
     }
-  }, [page, searchTerm, filters]);
+  }, [page, searchTerm, filters.classification]);
 
   useEffect(() => {
     fetchBills();
-  }, [fetchBills]);
+  }, [page, searchTerm, filters.classification]);
   
   useEffect(() => {
     // Load bookmarked bills from localStorage on component mount
@@ -347,46 +351,50 @@ function App() {
         ? '/api/download-documents'  // In production, use relative URL
         : 'http://localhost:3001/api/download-documents';  // In development
       
-      try {
-        const scraperResponse = await axios.post(backendUrl, {
-          sutraUrl: sutraUrl
-        });
+        try {
+          console.log(`Calling optimized scraper endpoint with URL: ${sutraUrl}`);
+          
+          const scraperResponse = await axios.post(backendUrl, {
+            sutraUrl: sutraUrl
+          }, {
+            timeout: 30000 // 30 second timeout
+          });
+                
+      // Step 4: Check if scraper response was successful
+      if (scraperResponse.data && scraperResponse.data.success !== false) {
+        console.log(`Successfully scraped additional data from SUTRA`);
         
-        // Step 4: Check if scraper response was successful
-        if (scraperResponse.data && scraperResponse.data.success !== false) {
-          console.log(`Successfully scraped additional data from SUTRA`);
-          
-          // Combine data from both sources
-          const combinedData = {
-            ...processedBill,
-            // Add scraped data with fallbacks
-            eventos: scraperResponse.data.eventos || [],
-            comisiones: scraperResponse.data.comisiones || processedBill.comisiones || [],
-          };
-          
-          console.log(`Combined data has ${combinedData.eventos?.length || 0} eventos`);
-          return combinedData;
+        // Combine data from both sources
+        const combinedData = {
+          ...processedBill,
+          // Add scraped data with fallbacks
+          eventos: scraperResponse.data.eventos || [],
+          comisiones: scraperResponse.data.comisiones || processedBill.comisiones || [],
+        };
+        
+        console.log(`Combined data has ${combinedData.eventos?.length || 0} eventos`);
+        return combinedData;
+      } else {
+        // If scraper failed but returned a response, log the error
+        if (scraperResponse.data && scraperResponse.data.error) {
+          console.error(`Scraper error: ${scraperResponse.data.error}`);
         } else {
-          // If scraper failed but returned a response, log the error
-          if (scraperResponse.data && scraperResponse.data.error) {
-            console.error(`Scraper error: ${scraperResponse.data.error}`);
-          } else {
-            console.error(`Scraper failed with unknown error`);
-          }
-          
-          // Use the fallback eventos array
-          processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
-            ? processedBill.actions.map(action => ({
-                descripcion: action.description,
-                fecha: action.date,
-                tipo: 'tramite',
-                comision: action.organization ? action.organization.name : null,
-                documents: []
-              }))
-            : [];
-          
-          return processedBill;
+          console.error(`Scraper failed with unknown error`);
         }
+        
+        // Use the fallback eventos array
+        processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
+          ? processedBill.actions.map(action => ({
+              descripcion: action.description,
+              fecha: action.date,
+              tipo: 'tramite',
+              comision: action.organization ? action.organization.name : null,
+              documents: []
+            }))
+          : [];
+        
+        return processedBill;
+      }
       } catch (scraperError) {
         console.error('Error calling scraper backend:', scraperError);
         
