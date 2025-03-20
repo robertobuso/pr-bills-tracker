@@ -1,8 +1,8 @@
 {
-  "measure_number": "Proyecto del Senado (PS0169)",
-  "title": "Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la\nLey 57-2023, conocida como \"Ley para la Prevención del Maltrato, Preservación de\nla Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores\",\ncon el propósito de establecer una \"orden de protección duradera\" en aquellos\ncasos de abuso sexual contra personas menores, cuya vigencia será hasta que la\nvictima cumpla la edad de dieciocho (18) años; y para otros fines.",
+  "measure_number": "Proyecto del Senado (PS0259)",
+  "title": "Para viabilizar la transferencia de las carreteras secundarias y su mantenimiento a los municipios de Puerto Rico, con el fin de que los municipios tengan mayor autonomía y puedan mejorar las fallas más apremiantes en cuanto a la infraestructura vial del país, y se expanda su capacidad para prestar servicios directos a la ciudadanía; enmendar el Artículo 1, añadir un nuevo inciso (d) y reenumerar los actuales incisos (d), (e) (f), (g), (h), (i) y (j), como los incisos (e), (f), (g), (h), (i), (j) y (k), respectivamente; enmendar los Artículos 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16 y 19 de la Ley 94-2013, conocida como “Ley para Traspasar las Carreteras Terciarias del Departamento de Transportación y Obras Públicas del Estado Libre Asociado de Puerto Rico a los Municipios”; y para otros fines relacionados.",
   "status": null,
-  "filing_date": "01/07/2025",
+  "filing_date": "01/15/2025",
   "authors": [],
   "origin_chamber": null,
   "current_chamber": null,
@@ -11,24 +11,111 @@
   "comisiones": [],
   "eventos": [
     {
-      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
-      "fecha": "04/11/2025",
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
       "documents": [],
-      "comision": "Comisión De Lo Jurídico",
+      "comision": "Comisión de Asuntos Municipales",
       "tipo": "tramite"
     },
     {
-      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
-      "fecha": "03/18/2025",
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
       "documents": [],
-      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "camara": "Senado",
+      "fecha": "03/13/2025",
+      "descripcion": "Aprobado por el Senado en Votación Final",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/MeasuresAndVotes (1)-4.pdf",
+          "description": "MeasuresAndVotes (1)-4.pdf",
+          "filepath": "scraped_data/MeasuresAndVotes (1)-4.pdf",
+          "text_filepath": "scraped_data/MeasuresAndVotes (1)-4.pdf.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "votes": {
+        "Votos a favor": ":25",
+        "Votos en contra": ":0",
+        "Votos abstenidos": ":0",
+        "Votos ausentes": ":3"
+      },
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "03/13/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final enviado a la Cámara",
+      "fecha": "03/13/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259a-25.doc",
+          "description": "ps0259a-25.doc",
+          "filepath": "scraped_data/ps0259a-25.doc",
+          "text_filepath": "scraped_data/ps0259a-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales del Senado",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a la Comisión de Reglas y Calendario del Senado",
+      "fecha": "03/12/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "03/12/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-ent.doc",
+          "description": "ps0259-ent.doc",
+          "filepath": "scraped_data/ps0259-ent.doc",
+          "text_filepath": "scraped_data/ps0259-ent.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "03/12/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-Inf..docx",
+          "description": "ps0259-Inf..docx",
+          "filepath": "scraped_data/ps0259-Inf..docx",
+          "text_filepath": "scraped_data/ps0259-Inf..docx.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "comision": "Comisión de Asuntos Municipales",
       "tipo": "tramite"
     },
     {
       "descripcion": "Referido a Comisión(es)",
       "fecha": "01/16/2025",
       "documents": [],
-      "comision": "Comisión De Lo Jurídico",
+      "comision": "Comisión de Asuntos Municipales",
       "tipo": "tramite"
     },
     {
@@ -39,14 +126,15 @@
     },
     {
       "descripcion": "Radicado",
-      "fecha": "01/07/2025",
+      "fecha": "01/15/2025",
       "documents": [
         {
-          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152744/ps0169-25.doc",
-          "description": "ps0169-25.doc",
-          "filepath": "scraped_data/ps0169-25.doc",
-          "text_filepath": "scraped_data/ps0169-25.doc.txt",
-          "extracted_text": "\n                    ESTADO LIBRE ASOCIADO DE PUERTO RICO\n\n20 ma.      Asamblea   1 ra. Sesión\n      Legislativa            Ordinaria\n\n                            SENADO DE PUERTO RICO\n                                P. del S. 169\n                             7 de enero de 2025\n                   Presentado por la señora Alvarez Conde\n                    Referido a la Comisión de lo Jurídico\n\n                                     LEY\n\nPara enmendar el inciso (hh) del Artículo  3  y  añadir  un  inciso  (d)  al\n    Artículo 69 de la Ley 57-2023, conocida como “Ley  para  la  Prevención\n    del Maltrato, Preservación de la Unidad Familiar y para  la  Seguridad,\n    Bienestar y Protección de los Menores”, con el propósito de  establecer\n    una “orden de protección duradera” en aquellos casos  de  abuso  sexual\n    contra personas menores, cuya vigencia será hasta que la víctima cumpla\n    la edad de dieciocho (18) años; y para otros fines.\n\n                            EXPOSICIÓN DE MOTIVOS\n\n\n      La protección de las personas menores es interés apremiante del Estado\nLibre Asociado de Puerto Rico. Por tal  razón,  los  procedimientos  en  los\ncuales está envuelto  una  persona  menor  están  revestidos  del  más  alto\ninterés público. En ese sentido, bajo el poder de parens patriae y bajo  ese\ninterés apremiante, el Gobierno tiene suficiente autoridad  para  tomar  las\nmedidas que considere necesarias en aras de su efectiva  protección.  Véase,\nEstrella v. Figueroa Guerra, 170 DPR 644 (2007).\n\n\n      El estado de derecho reconoce que  y  las  personas  menores  “…tienen\nderecho a la vida, a una buena calidad de vida y  a  un  ambiente  sano,  en\ncondiciones de dignidad y goce de todos sus derechos en  forma  prevalente”.\nVéase, Artículo 2, Ley 57-2023, conocida como “Ley para  la  Prevención  del\nMaltrato, Preservación de la Unidad Familiar y para la Seguridad,  Bienestar\ny Protección  de  los  Menores”.   Este  derecho  supone  la  generación  de\ncondiciones que les aseguren “…el cuidado, la  protección,  la  alimentación\nnutritiva y equilibrada, el acceso a los servicios de salud,  la  educación,\nel vestuario  adecuado,  la  recreación  y  la  vivienda  segura  dotada  de\nservicios públicos esenciales en un ambiente sano”. Ibid.  En  ese  sentido,\nla política  pública  del  Estado  Libre  Asociado  de  Puerto  Rico  brinda\natención prioritaria a las situaciones de personas menores en riesgo de  ser\nubicados en cuidado sustituto, riesgo inminente o que  hayan  sido  víctimas\nde   maltrato,   maltrato   institucional,   negligencia    o    negligencia\ninstitucional que advengan a su conocimiento. Ibid.  Bajo  ese  cuadro,  las\nagencias concernidas tienen el deber de coordinar  sus  esfuerzos  entre  sí\ncuando  se  requiera  la  prestación  de  servicios  relacionados   con   la\nidentificación, prevención o tratamiento de  las  personas  menores  que  se\nencuentren en estas circunstancias. Ibid.\n\n\n      Una de las circunstancias más graves que atiende la Ley 57,  supra,  y\nla Ley 146-2012, según enmendada, conocida  como  “Código  Penal  de  Puerto\nRico, son los abusos sexuales en contra de personas menores. La  ley,  entre\nsus disposiciones, establece los requisitos o procedimientos a  seguir  para\nemitir órdenes de protección a favor de esa persona  menor  de  edad  cuando\nhay alegaciones de  maltrato.  Ese  procedimiento  de  naturaleza  civil  es\nindependiente al proceso penal, por  lo  que  para  emitirse  una  orden  de\nprotección no es necesaria la convicción del alegado agresor. La mayoría  de\nlas veces en donde existen  alegaciones  de  abuso  sexual,  y  comienza  el\nproceso de investigación y procesamiento penal, ya la persona  menor  cuenta\ncon una orden de protección a su favor. Ahora bien, en  el  proceso  incoado\ntambién intervienen los “Centros de Servicios Integrados a Menores  Víctimas\nde Abuso Sexual” (CIMVAS). Los CIMVAS fueron creados por  la  Ley  158-2013,\nsegún  enmendada,  conocida  como  “Ley  Habilitadora  de  los  Centros   de\nServicios a Menores Víctimas de Abuso Sexual”, y su  propósito  es  evaluar,\nde manera interdisciplinaria, la situación referida sobre una persona  menor\na  través  de  entrevistas  forenses,  evaluación   médica   y   tratamiento\npsicológico, siempre enfocado en el  mejor  bienestar,  la  seguridad  y  la\nprotección del menor. Véase, Artículo 5, Ley 158, supra.\n\n\n      No obstante, se han dado instancias en las cuales se emiten órdenes de\nprotección en casos de abuso sexual, y  el  CIMVAS  valida  los  hechos  que\nconstituyen el abuso sexual durante la vigencia de la orden  de  protección.\nPero también se han dado instancias en la cual la validación  ocurre  cuando\nya la orden de protección ha vencido.  Ante ese escenario,  al  vencerse  la\norden de protección la persona menor  estaría  sin  remedio  alguno  que  lo\nproteja de ese agresor cuya validación fue emitida por los profesionales  de\nlos CIMVAS. Obviamente, si existe un  proceso  penal  iniciado,  la  persona\njuez que presida el caso pueda emitir las respectivas órdenes para  proteger\na la víctima, sin embargo, no siempre existe un proceso penal iniciado.\n\n\n      Así las cosas, en el supuesto anterior, a  pesar  de  que  existe  una\nevaluación científica interdisciplinaria que validó la existencia  de  abuso\nsexual, —independientemente  de  que  haya  un  procesamiento  criminal—  al\nmomento de vencer la orden de protección, alguien podría interpretar que  el\ntribunal  no  tiene  las  herramientas  jurídicas  para  evaluar  esa  nueva\ninformación y extender la orden de  protección  o  emitir  una  nueva.  Para\nello, esta Ley crea una “orden de protección  duradera”,  en  primer  lugar,\npara establecer una vigencia  hasta  que  la  víctima  cumpla   la  edad  de\ndieciocho (18) años, tomando en consideración la  definición   del  concepto\n“menor” de la  Ley 57, supra; y en segundo lugar, aclarando que el hecho  de\nque exista o haya existido una orden de protección  previa  por  las  mismas\nalegaciones  de  abuso  sexual,  no  impide  que  si  el  CIMVAS  emite  una\nvalidación posterior, el tribunal, —a solicitud de parte— pueda enmendar  la\norden  previa  para  hacerla  “duradera”,  o  emitir  una  nueva  “orden  de\nprotección duradera”, sin que ello constituya cosa juzgada.  Se enfatiza  el\nhecho de que las órdenes de protección son de naturaleza civil, por  lo  que\nno sería correcto hablar de doble exposición, en cuyo caso habría  oposición\nconstitucional. En ese aspecto, siendo las órdenes de protección un  proceso\ncivil, y en vista de que la protección de las personas  menores  es  interés\napremiante del Gobierno y está revestido de  un  alto  interés  público,  se\ndeclara que los tribunales  pueden  considerar  la  validación  emitida  por\nCIMVAS para emitir una “orden de  protección  duradera”,  independientemente\nhaya expirado una orden de protección previa.\n\n\n      La protección de la niñez en Puerto Rico es un  asunto  medular  y  de\nalta prioridad para esta Asamblea Legislativa. En ese aspecto en el  balance\nde intereses, y de acuerdo con la política pública  establecida  en  la  Ley\n57, supra, es el mejor  bienestar  de  la  niñez  el  cual  debe  prevalecer\nsiempre.\n\nDECRÉTASE POR LA ASAMBLEA LEGISLATIVA DE PUERTO RICO:\n   Sección 1.- Se añade un subinciso (1) al inciso (hh) del Artículo 3 de la\nLey 57-2023, para que lea como sigue:\n       “Artículo 3.- Definiciones.\n   A los efectos de esta Ley, los siguientes términos tendrán el significado\nque a continuación se expresa:\n          (a)     …\n          (b)     …\n          (c)     …\n          (d)     …\n          …\n          …\n          (aa) …\n          (bb) …\n          (cc) …\n          (dd) …\n          (ee) …\n          (ff) …\n          (gg) …\n          (hh) “Orden de Protección”— Mandato expedido por escrito  bajo  el\n               sello de un tribunal en la cual se dictan las medidas  a  una\n               persona maltratante de una persona menor para que se abstenga\n               de incurrir o llevar a cabo determinados  actos  o  conductas\n               constitutivas   de    maltrato,    maltrato    institucional,\n               negligencia o negligencia institucional.\n               (1)  “Orden  de  Protección  Duradera”—  Es  una   orden   de\n                   protección según definida en el  párrafo  anterior,  pero\n                   limitada a casos de abuso sexual, la cual deberá contener\n                   información sustentada o validada de abuso sexual por  el\n                   Centro  de  Servicios   Interdisciplinarios   a   Menores\n                   Víctimas de Agresión Sexual, o sustentada  por  cualquier\n                   otra  organización  que  realice  informes  forenses.  La\n                   vigencia de esta orden será hasta que  la  persona  menor\n                   cumpla la edad de dieciocho (18) años.\n          (ii)...\n          (jj) …\n          …\n          …\n          …\n          (yy) …\n          (zz) …\n          (aaa) …\n          (bbb)…\n          (ccc) …\n          …\n          …\n          …\n          (rrr) …”\n   Sección 2.- Se añade un inciso (d) al Artículo 69 de la Ley 57-2023, para\nque lea como sigue:\n   “Artículo 69.- Expedición de Órdenes de Protección\n          a) …\n          b) …\n          c) …\n          d) En aquellos casos en donde la alegación de  maltrato  conlleve\n             abuso sexual hacia la  persona  menor,  y  exista  información\n             sustentada o validada de abuso sexual emitida por el Centro de\n             Servicios Integrados a Menores Víctimas de Abuso Sexual, o por\n             cualquier otra organización que realice informes forenses,  el\n             tribunal podrá emitir una orden de protección  duradera,  cuya\n             vigencia será hasta que la persona menor  cumpla  la  edad  de\n             dieciocho (18) años. Si al momento de emitirse la  información\n             sustentada o validada,  ya  se  había  emitido  una  orden  de\n             protección, —aunque esté vencida  o  vigente—  la  información\n             sustentada  o  validada  será  suficiente   para   que   pueda\n             solicitarse  una  orden  de  protección   duradera,   ya   sea\n             enmendando la orden de  protección  vigente  o  emitiendo  una\n             nueva. De existir una orden de protección previa, el  tribunal\n             evaluará la información sustentada o validada de abuso  sexual\n             emitida como prueba adicional sin que la determinación inicial\n             constituya cosa  juzgada,  y  siempre  velando  por  el  mejor\n             bienestar de la persona menor”.\n   Sección 3.- Esta Ley comenzará  a  regir  inmediatamente  después  de  su\naprobación.\n\n\n"
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-25.doc",
+          "description": "ps0259-25.doc",
+          "filepath": "scraped_data/ps0259-25.doc",
+          "text_filepath": "scraped_data/ps0259-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
         }
       ],
       "tipo": "tramite"

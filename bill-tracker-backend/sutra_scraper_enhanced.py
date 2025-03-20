@@ -26,6 +26,151 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def extract_text_from_document(filepath, output_dir):
+    """
+    Extract text from a document based on its file type.
+    This function is separated to be called on-demand.
+    """
+    try:
+        extracted_text = ""
+        if filepath.lower().endswith('.docx'):
+            extracted_text = extract_text_from_docx(filepath)
+        elif filepath.lower().endswith('.pdf'):
+            extracted_text = extract_text_from_pdf(filepath)
+        elif filepath.lower().endswith('.doc'):
+            # Try LibreOffice first (more reliable than antiword)
+            try:
+                temp_output = os.path.join(output_dir, "temp_converted.txt")
+                command = ["soffice", "--headless", "--convert-to", "txt:Text", "--outdir", output_dir, filepath]
+                result = subprocess.run(command, capture_output=True, text=True, timeout=60)
+                if os.path.exists(temp_output):
+                    with open(temp_output, 'r', encoding='utf-8', errors='replace') as f:
+                        extracted_text = f.read()
+                    os.remove(temp_output)
+            except (subprocess.SubprocessError, FileNotFoundError):
+                # Fallback to antiword
+                command = ["antiword", filepath]
+                result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+                extracted_text = result.stdout
+        elif filepath.lower().endswith('.txt'):
+            with open(filepath, 'r', encoding='utf-8', errors='replace') as txt_file:
+                extracted_text = txt_file.read()
+        
+        return extracted_text
+    except FileNotFoundError:
+        return "Error: No conversion tool available. Please install LibreOffice or antiword."
+    except subprocess.SubprocessError as e:
+        return f"Error extracting text: {e}"
+    except Exception as e:
+        logger.error(f"Unexpected error extracting text from {filepath}: {e}")
+        return ""
+
+def download_and_process_doc(doc_info, output_dir, extract_text=False):
+    """
+    Downloads a document and optionally extracts text.
+    
+    Parameters:
+    - doc_info: Dictionary with document information
+    - output_dir: Directory to save files
+    - extract_text: If True, extract text from the document; if False, just download
+    """
+    doc_url = doc_info["link_url"]
+    filename = os.path.basename(doc_url)
+    
+    # Skip User-Manual files
+    if "User-Manual" in doc_url or "User-Manual" in filename:
+        logger.info(f"Skipping User-Manual file: {doc_url}")
+        return doc_info
+    
+    filepath = os.path.join(output_dir, filename)
+    text_filepath = os.path.join(output_dir, filename + ".txt")
+    doc_info["filepath"] = filepath
+    doc_info["text_filepath"] = text_filepath
+    doc_info["downloaded"] = os.path.exists(filepath)
+    doc_info["text_extracted"] = os.path.exists(text_filepath)
+
+    # If both files exist and we need text extraction, load the cached text
+    if os.path.exists(filepath) and os.path.exists(text_filepath) and extract_text:
+        logger.info(f"Using cached text for: {filename}")
+        try:
+            with open(text_filepath, 'r', encoding='utf-8', errors='replace') as f:
+                doc_info['extracted_text'] = f.read()
+        except Exception as e:
+            logger.warning(f"Error reading cached text for {filename}: {e}")
+            doc_info['extracted_text'] = ""
+        return doc_info
+
+    # If file exists but we don't need text, just return the info
+    if os.path.exists(filepath) and not extract_text:
+        logger.info(f"File exists, skipping download: {filename}")
+        return doc_info
+
+    # Use backoff strategy for downloads
+    max_retries = 3
+    for retry in range(max_retries):
+        try:
+            logger.info(f"Downloading: {doc_url}")
+            # Use a session with appropriate headers
+            session = requests.Session()
+            session.headers.update({
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Connection': 'keep-alive',
+                'Upgrade-Insecure-Requests': '1',
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'none',
+                'Sec-Fetch-User': '?1',
+                'Pragma': 'no-cache',
+                'Cache-Control': 'no-cache',
+            })
+            
+            response = session.get(doc_url, stream=True, timeout=60)
+            response.raise_for_status()
+
+            with open(filepath, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            doc_info["downloaded"] = True
+
+            # Only extract text if requested
+            if extract_text:
+                extracted_text = extract_text_from_document(filepath, output_dir)
+                
+                if extracted_text:
+                    with open(text_filepath, 'w', encoding='utf-8') as tf:
+                        tf.write(extracted_text)
+                    logger.info(f"Extracted text saved to: {text_filepath}")
+                    doc_info['extracted_text'] = extracted_text
+                    doc_info["text_extracted"] = True
+                else:
+                    logger.warning(f"No text extracted from {filename}")
+                    doc_info['extracted_text'] = ""
+                    doc_info["text_extracted"] = False
+
+            # Successful download, break the retry loop
+            break
+            
+        except requests.exceptions.RequestException as e:
+            if retry < max_retries - 1:
+                wait_time = (2 ** retry) * 5  # Exponential backoff
+                logger.warning(f"Error downloading {doc_url}: {e}. Retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
+            else:
+                logger.error(f"Failed to download {doc_url} after {max_retries} attempts: {e}")
+                doc_info['error'] = f"Error downloading {doc_url}: {e}"
+                doc_info["downloaded"] = False
+        except (OSError, IOError) as e:
+            logger.error(f"Error saving or processing {doc_url}: {e}")
+            doc_info['error'] = f"Error saving or processing {doc_url}: {e}"
+        except Exception as e:
+            logger.error(f"An unexpected error occurred processing {doc_url}: {e}")
+            doc_info['error'] = f"An unexpected error occurred processing {doc_url}: {e}"
+    
+    return doc_info
+
 def scrape_and_download(url, output_dir="scraped_data"):
     """Scrapes structured data and downloads/extracts text from documents."""
 
@@ -363,132 +508,20 @@ def scrape_and_download(url, output_dir="scraped_data"):
     if driver:
         driver.quit()
 
-    # --- 7. Download and Extract Text (Combined) ---
+    # --- 7. Download Documents Only (No Text Extraction) ---
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     all_documents = data["documents"] + [doc for tramite in data["tramites"] for doc in tramite["documents"]] + [doc for votacion in data["votaciones"] for doc in votacion["documents"]] + [doc for comision in data["comisiones"] for doc in comision["documents"]]
     
-    logger.info(f"Found {len(all_documents)} documents to download")
+    logger.info(f"Found {len(all_documents)} documents to download (text extraction deferred)")
 
-    def download_and_process_doc(doc_info, output_dir):
-        doc_url = doc_info["link_url"]
-        filename = os.path.basename(doc_url)
-        
-        # Skip User-Manual files
-        if "User-Manual" in doc_url or "User-Manual" in filename:
-            logger.info(f"Skipping User-Manual file: {doc_url}")
-            return doc_info
-        
-        filepath = os.path.join(output_dir, filename)
-        text_filepath = os.path.join(output_dir, filename + ".txt")
-        doc_info["filepath"] = filepath
-        doc_info["text_filepath"] = text_filepath
-
-        if os.path.exists(filepath) and os.path.exists(text_filepath):
-            logger.info(f"Skipping already downloaded: {filename}")
-            # Add the extracted text from file to the document info
-            try:
-                with open(text_filepath, 'r', encoding='utf-8', errors='replace') as f:
-                    doc_info['extracted_text'] = f.read()
-            except Exception as e:
-                logger.warning(f"Error reading cached text for {filename}: {e}")
-                doc_info['extracted_text'] = ""
-            return doc_info
-
-        # Use backoff strategy for downloads
-        max_retries = 3
-        for retry in range(max_retries):
-            try:
-                logger.info(f"Downloading: {doc_url}")
-                # Use a session with appropriate headers
-                session = requests.Session()
-                session.headers.update({
-                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-                    'Accept-Language': 'en-US,en;q=0.5',
-                    'Connection': 'keep-alive',
-                    'Upgrade-Insecure-Requests': '1',
-                    'Sec-Fetch-Dest': 'document',
-                    'Sec-Fetch-Mode': 'navigate',
-                    'Sec-Fetch-Site': 'none',
-                    'Sec-Fetch-User': '?1',
-                    'Pragma': 'no-cache',
-                    'Cache-Control': 'no-cache',
-                })
-                
-                response = session.get(doc_url, stream=True, timeout=60)
-                response.raise_for_status()
-
-                with open(filepath, 'wb') as f:
-                    for chunk in response.iter_content(chunk_size=8192):
-                        f.write(chunk)
-
-                extracted_text = ""
-                if filepath.lower().endswith('.docx'):
-                    extracted_text = extract_text_from_docx(filepath)
-                elif filepath.lower().endswith('.pdf'):
-                    extracted_text = extract_text_from_pdf(filepath)
-                elif filepath.lower().endswith('.doc'):
-                    try:
-                        # Try LibreOffice first (more reliable than antiword)
-                        try:
-                            temp_output = os.path.join(output_dir, "temp_converted.txt")
-                            command = ["soffice", "--headless", "--convert-to", "txt:Text", "--outdir", output_dir, filepath]
-                            result = subprocess.run(command, capture_output=True, text=True, timeout=60)
-                            if os.path.exists(temp_output):
-                                with open(temp_output, 'r', encoding='utf-8', errors='replace') as f:
-                                    extracted_text = f.read()
-                                os.remove(temp_output)
-                        except (subprocess.SubprocessError, FileNotFoundError):
-                            # Fallback to antiword
-                            command = ["antiword", filepath]
-                            result = subprocess.run(command, capture_output=True, text=True, timeout=30)
-                            extracted_text = result.stdout
-                    except FileNotFoundError:
-                        extracted_text = "Error: No doc conversion tool available. Please install LibreOffice or antiword."
-                    except subprocess.SubprocessError as e:
-                        extracted_text = f"Error extracting text from .doc: {e}"
-                elif filepath.lower().endswith('.txt'):
-                    with open(filepath, 'r', encoding='utf-8', errors='replace') as txt_file:
-                        extracted_text = txt_file.read()
-
-                if extracted_text:
-                    with open(text_filepath, 'w', encoding='utf-8') as tf:
-                        tf.write(extracted_text)
-                    logger.info(f"Extracted text saved to: {text_filepath}")
-                    doc_info['extracted_text'] = extracted_text  # Store extracted text
-                else:
-                    logger.warning(f"No text extracted from {filename}")
-                    doc_info['extracted_text'] = ""  # Store empty text
-
-                # Successful download, break the retry loop
-                break
-                
-            except requests.exceptions.RequestException as e:
-                if retry < max_retries - 1:
-                    wait_time = (2 ** retry) * 5  # Exponential backoff
-                    logger.warning(f"Error downloading {doc_url}: {e}. Retrying in {wait_time} seconds...")
-                    time.sleep(wait_time)
-                else:
-                    logger.error(f"Failed to download {doc_url} after {max_retries} attempts: {e}")
-                    # Can't modify data here in threads, so attach error to doc_info
-                    doc_info['error'] = f"Error downloading {doc_url}: {e}"
-            except (OSError, IOError) as e:
-                logger.error(f"Error saving or processing {doc_url}: {e}")
-                doc_info['error'] = f"Error saving or processing {doc_url}: {e}"
-            except Exception as e:
-                logger.error(f"An unexpected error occurred processing {doc_url}: {e}")
-                doc_info['error'] = f"An unexpected error occurred processing {doc_url}: {e}"
-        
-        # No sleep needed between downloads as they run in parallel
-        return doc_info
-
-    # Use ThreadPoolExecutor to download files in parallel
-    logger.info(f"Starting parallel download of {len(all_documents)} documents")
+    # Use ThreadPoolExecutor to download files in parallel WITHOUT text extraction
+    logger.info(f"Starting parallel download of {len(all_documents)} documents (no text extraction)")
     processed_documents = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        download_fn = partial(download_and_process_doc, output_dir=output_dir)
+        # Pass extract_text=False to skip text extraction
+        download_fn = partial(download_and_process_doc, output_dir=output_dir, extract_text=False)
         # Process results as they complete to track errors
         for i, doc_info in enumerate(executor.map(download_fn, all_documents)):
             processed_documents.append(doc_info)
@@ -497,7 +530,7 @@ def scrape_and_download(url, output_dir="scraped_data"):
                 data.setdefault("errors", []).append(doc_info['error'])
                 del doc_info['error']  # Remove temporary error field
                 
-    logger.info(f"Completed downloading {len(processed_documents)} documents")
+    logger.info(f"Completed downloading {len(processed_documents)} documents (text extraction deferred)")
 
     # Replace the all_documents list with the processed one
     all_documents = processed_documents
@@ -594,7 +627,6 @@ def extract_text_from_docx(docx_path):
     except Exception as e:
         logger.error(f"Error reading docx {docx_path}: {e}")
         return ""
-
 
 def extract_text_from_pdf(pdf_path):
     """Extracts text from a PDF file."""

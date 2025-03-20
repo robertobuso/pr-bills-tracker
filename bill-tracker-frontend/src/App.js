@@ -47,6 +47,7 @@ import {
   Alert
 } from '@mui/material';
 import EventosView from './components/EventosView';
+import DocumentViewer from './components/DocumentViewer';
 
 // Icons
 import SearchIcon from '@mui/icons-material/Search';
@@ -1552,22 +1553,15 @@ function App() {
               </Box>
 
               <Tabs
-                  value={tabValue}
-                  onChange={handleTabChange}
-                  aria-label="bill details tabs"
-                  sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}
-                >
-                  <Tab label="Overview" icon={<DescriptionIcon />} iconPosition="start" />
-                  <Tab label="Timeline" icon={<TimelineIcon />} iconPosition="start" />
-                  
-                  {/* Only show Eventos tab if there's data */}
-                  {selectedBill.eventos && selectedBill.eventos.length > 0 && (
-                    <Tab label="Eventos" icon={<EventIcon />} iconPosition="start" />
-                  )}
-
-                  <Tab label="Documents" icon={<ArticleIcon />} iconPosition="start" />
-                  <Tab label="Sponsors" icon={<PeopleIcon />} iconPosition="start" />
-                </Tabs>
+                value={tabValue}
+                onChange={handleTabChange}
+                aria-label="bill details tabs"
+                sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}
+              >
+                <Tab label="Overview" icon={<DescriptionIcon />} iconPosition="start" />
+                <Tab label="Timeline" icon={<TimelineIcon />} iconPosition="start" />
+                <Tab label="Sponsors" icon={<PeopleIcon />} iconPosition="start" />
+              </Tabs>
 
               {tabValue === 0 && (
                 <Grid container spacing={4}>
@@ -1643,186 +1637,12 @@ function App() {
                 </Grid>
               )}
 
-              {tabValue === 1 && (
-                <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Action Timeline
-                  </Typography>
-                  <Box sx={{ position: 'relative', ml: 2, pt: 1, pb: 1 }}>
-                    {/* Vertical timeline line */}
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        bottom: 0,
-                        width: 2,
-                        bgcolor: 'primary.main',
-                        ml: -10,
-                      }}
-                    />
-                    
-                    {selectedBill.actions && selectedBill.actions.map((action, index) => (
-                      <Box 
-                        key={index}
-                        sx={{ 
-                          mb: 3, 
-                          pb: 3, 
-                          position: 'relative',
-                          borderBottom: index < selectedBill.actions.length - 1 ? 1 : 0,
-                          borderColor: 'divider'
-                        }}
-                      >
-                        {/* Timeline node */}
-                        <Box
-                          sx={{
-                            position: 'absolute',
-                            left: -10,
-                            top: 10,
-                            width: 16,
-                            height: 16,
-                            borderRadius: '50%',
-                            bgcolor: 'primary.main',
-                            border: '2px solid',
-                            borderColor: 'background.paper',
-                            ml: -10,
-                          }}
-                        />
-                        
-                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                          {formatDate(action.date)}
-                        </Typography>
-                        <Typography variant="body1" sx={{ mt: 1 }}>
-                          {action.description}
-                        </Typography>
-                        {action.organization && (
-                          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                            {action.organization.name || "Unknown organization"}
-                          </Typography>
-                        )}
-                      </Box>
-                    ))}
-                    
-                    {(!selectedBill.actions || selectedBill.actions.length === 0) && (
-                      <Typography variant="body1">No actions recorded for this bill</Typography>
-                    )}
-                  </Box>
-                </Paper>
-              )}
 
-              {tabValue === 2 && selectedBill.eventos && (
-                <EventosView eventos={selectedBill.eventos} />
-              )}
+              {tabValue === 1 && selectedBill.eventos && (
+                              <EventosView eventos={selectedBill.eventos} />
+                            )}
               
-              {tabValue === 3 && (
-                <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Bill Documents & Versions
-                  </Typography>
-                  
-                  <Typography variant="subtitle1" gutterBottom sx={{ mt: 3 }}>
-                    Versions
-                  </Typography>
-                  <List>
-                    {selectedBill.versions && selectedBill.versions.map((version, index) => (
-                      <ListItem 
-                        key={index}
-                        sx={{ 
-                          p: 2, 
-                          mb: 2, 
-                          borderRadius: 1, 
-                          bgcolor: 'background.default'
-                        }}
-                      >
-                        <Grid container spacing={2} alignItems="center">
-                          <Grid item>
-                            <Avatar sx={{ bgcolor: 'primary.main' }}>
-                              <DescriptionIcon />
-                            </Avatar>
-                          </Grid>
-                          <Grid item xs>
-                            <Typography variant="subtitle2">
-                              {version.note || `Version ${index + 1}`}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {formatDate(version.date)}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Button 
-                              variant="outlined" 
-                              size="small" 
-                              component="a" 
-                              href={version.url} 
-                              target="_blank"
-                              startIcon={<DownloadIcon />}
-                            >
-                              View
-                            </Button>
-                          </Grid>
-                        </Grid>
-                      </ListItem>
-                    ))}
-                    {(!selectedBill.versions || selectedBill.versions.length === 0) && (
-                      <ListItem>
-                        <Typography variant="body1">No versions available</Typography>
-                      </ListItem>
-                    )}
-                  </List>
-                  
-                  <Typography variant="subtitle1" gutterBottom sx={{ mt: 4 }}>
-                    Other Documents
-                  </Typography>
-                  <List>
-                    {selectedBill.documents && selectedBill.documents.map((doc, index) => (
-                      <ListItem 
-                        key={index}
-                        sx={{ 
-                          p: 2, 
-                          mb: 2, 
-                          borderRadius: 1, 
-                          bgcolor: 'background.default'
-                        }}
-                      >
-                        <Grid container spacing={2} alignItems="center">
-                          <Grid item>
-                            <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                              <ArticleIcon />
-                            </Avatar>
-                          </Grid>
-                          <Grid item xs>
-                            <Typography variant="subtitle2">
-                              {doc.note || `Document ${index + 1}`}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {formatDate(doc.date)}
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Button 
-                              variant="outlined" 
-                              size="small" 
-                              component="a" 
-                              href={doc.url} 
-                              target="_blank"
-                              startIcon={<DownloadIcon />}
-                            >
-                              View
-                            </Button>
-                          </Grid>
-                        </Grid>
-                      </ListItem>
-                    ))}
-                    {(!selectedBill.documents || selectedBill.documents.length === 0) && (
-                      <ListItem>
-                        <Typography variant="body1">No documents available</Typography>
-                      </ListItem>
-                    )}
-                  </List>
-                </Paper>
-              )}
-              
-              {tabValue === 4 && (
+              {tabValue === 2 && (
                 <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
                   <Typography variant="h6" gutterBottom>
                     Bill Sponsors

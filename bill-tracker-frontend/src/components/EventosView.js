@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   Paper,
@@ -6,54 +6,62 @@ import {
   Grid,
   Chip,
   List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Link,
+  Card,
+  CardContent,
+  CardActions,
   Divider,
   IconButton,
-  Tooltip
+  Tooltip,
+  Collapse,
+  Button,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import EventIcon from '@mui/icons-material/Event';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import LinkIcon from '@mui/icons-material/Link';
 import BusinessIcon from '@mui/icons-material/Business';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import DocumentViewer from './DocumentViewer';
 
 // Format date function from your existing code
 const formatDate = (dateString) => {
-  if (!dateString) return 'N/A';
-  
-  try {
-    const date = new Date(dateString);
+    if (!dateString) return 'N/A';
     
-    // Check if date is valid
-    if (isNaN(date.getTime())) {
-      return 'Invalid Date';
+    try {
+      const date = new Date(dateString);
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        return 'Invalid Date';
+      }
+      
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch (error) {
+      console.error(`Error formatting date: ${dateString}`, error);
+      return 'Date Error';
     }
-    
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  } catch (error) {
-    console.error(`Error formatting date: ${dateString}`, error);
-    return 'Date Error';
-  }
-};
+  };
 
 const EventosView = ({ eventos }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [expandedEvents, setExpandedEvents] = useState({});
+
   if (!eventos || eventos.length === 0) {
     return (
       <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
         <Typography variant="h6" gutterBottom>
-          Eventos
+          Timeline
         </Typography>
         <Typography variant="body1">
-          No hay eventos registrados para esta medida.
+          No events are recorded for this bill.
         </Typography>
       </Paper>
     );
@@ -76,47 +84,145 @@ const EventosView = ({ eventos }) => {
     return dateB - dateA; // Newest first
   });
 
+  const toggleEventExpansion = (index) => {
+    setExpandedEvents(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   return (
-    <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
-      <Typography variant="h6" gutterBottom>
-        Eventos
+    <Box sx={{ position: 'relative' }}>
+      <Typography variant="h6" gutterBottom sx={{ mb: 4 }}>
+        Bill Timeline
       </Typography>
       
-      <List sx={{ width: '100%' }}>
-        {sortedEventos.map((evento, index) => (
-          <React.Fragment key={index}>
-            {index > 0 && <Divider sx={{ my: 2 }} />}
-            <ListItem 
-              alignItems="flex-start" 
+      {/* Vertical timeline line */}
+      {!isMobile && (
+        <Box
+          sx={{
+            position: 'absolute',
+            left: '120px',
+            top: 60,
+            bottom: 20,
+            width: 3,
+            bgcolor: theme.palette.primary.main,
+            opacity: 0.7,
+            zIndex: 0,
+          }}
+        />
+      )}
+      
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        gap: 4, 
+        position: 'relative', 
+        pl: isMobile ? 0 : '150px'
+      }}>
+        {sortedEventos.map((evento, index) => {
+          const isExpanded = !!expandedEvents[index];
+          const hasDocuments = evento.documents && evento.documents.length > 0;
+          
+          return (
+            <Box 
+              key={index}
               sx={{ 
-                p: 2, 
-                borderRadius: 1,
-                backgroundColor: index % 2 === 0 ? 'rgba(0, 0, 0, 0.03)' : 'transparent' 
+                position: 'relative',
+                zIndex: 1
               }}
             >
-              <Grid container spacing={2}>
-                {/* Icon based on event type */}
-                <Grid item xs={12} sm={1}>
+              {/* Timeline node (circle) */}
+              {!isMobile && (
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    left: -35,
+                    top: 20,
+                    width: 20,
+                    height: 20,
+                    borderRadius: '50%',
+                    bgcolor: evento.tipo === 'votacion' ? theme.palette.secondary.main : theme.palette.primary.main,
+                    boxShadow: 2,
+                    border: '3px solid',
+                    borderColor: theme.palette.background.paper,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff'
+                  }}
+                >
                   {evento.tipo === 'votacion' ? (
-                    <HowToVoteIcon color="primary" sx={{ fontSize: 28 }} />
+                    <HowToVoteIcon sx={{ fontSize: 12 }} />
                   ) : (
-                    <EventIcon color="primary" sx={{ fontSize: 28 }} />
+                    <EventIcon sx={{ fontSize: 12 }} />
                   )}
-                </Grid>
-                
-                {/* Event description and details */}
-                <Grid item xs={12} sm={11}>
-                  <Typography variant="subtitle1" component="div" gutterBottom fontWeight="bold">
-                    {evento.descripcion}
-                  </Typography>
-                  
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 1 }}>
-                    {/* Date */}
+                </Box>
+              )}
+
+              {/* Date label */}
+              {!isMobile && (
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    position: 'absolute',
+                    left: -140,
+                    top: 16,
+                    width: 90,
+                    textAlign: 'right',
+                    fontWeight: 'bold',
+                    fontSize: '0.85rem',
+                    color: theme.palette.text.secondary
+                  }}
+                >
+                  {formatDate(evento.fecha)}
+                </Typography>
+              )}
+              
+              <Card 
+                sx={{ 
+                  width: '100%',
+                  boxShadow: theme.shadows[3],
+                  borderLeft: '4px solid',
+                  borderColor: evento.tipo === 'votacion' ? theme.palette.secondary.main : theme.palette.primary.main,
+                  transition: 'transform 0.2s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-3px)',
+                    boxShadow: theme.shadows[6],
+                  }
+                }}
+              >
+                <CardContent sx={{ pb: hasDocuments ? 1 : 2 }}>
+                  {/* Mobile date display */}
+                  {isMobile && (
                     <Chip 
                       icon={<EventIcon />} 
                       label={formatDate(evento.fecha)} 
                       size="small" 
+                      sx={{ mb: 2 }}
                       variant="outlined"
+                    />
+                  )}
+                  
+                  <Typography 
+                    variant="h6" 
+                    component="h3" 
+                    gutterBottom
+                    sx={{ 
+                      color: evento.tipo === 'votacion' ? theme.palette.secondary.main : theme.palette.primary.main,
+                      fontWeight: 'bold',
+                      fontSize: '1.1rem'
+                    }}
+                  >
+                    {evento.descripcion}
+                  </Typography>
+                  
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+                    {/* Event type chip */}
+                    <Chip 
+                      label={evento.tipo === 'votacion' ? 'Vote' : 'Procedure'} 
+                      size="small" 
+                      color={evento.tipo === 'votacion' ? 'secondary' : 'primary'}
                     />
                     
                     {/* Chamber (if available) */}
@@ -126,7 +232,6 @@ const EventosView = ({ eventos }) => {
                         label={evento.camara} 
                         size="small" 
                         variant="outlined"
-                        color="primary"
                       />
                     )}
                     
@@ -137,18 +242,17 @@ const EventosView = ({ eventos }) => {
                         label={evento.comision} 
                         size="small" 
                         variant="outlined"
-                        color="secondary"
                       />
                     )}
                   </Box>
                   
-                  {/* Votes (if available) */}
+                  {/* Votes display (if available) */}
                   {evento.votes && (
-                    <Box sx={{ mt: 2, mb: 2 }}>
-                      <Typography variant="subtitle2" component="div">
-                        Resultado de la Votación:
+                    <Box sx={{ mt: 3, mb: 1 }}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Vote Results:
                       </Typography>
-                      <Grid container spacing={1} sx={{ mt: 1 }}>
+                      <Grid container spacing={1}>
                         {Object.entries(evento.votes).map(([key, value]) => (
                           <Grid item key={key}>
                             <Chip 
@@ -166,49 +270,44 @@ const EventosView = ({ eventos }) => {
                       </Grid>
                     </Box>
                   )}
-                  
-                  {/* Documents (if available) */}
-                  {evento.documents && evento.documents.length > 0 && (
-                    <Box sx={{ mt: 2 }}>
-                      <Typography variant="subtitle2" component="div">
-                        Documentos:
+                </CardContent>
+                
+                {/* Display documents if any */}
+                {hasDocuments && (
+                  <>
+                    <CardActions sx={{ justifyContent: 'space-between', px: 2 }}>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        Documents ({evento.documents.length})
                       </Typography>
-                      <List dense>
+                      <Button
+                        size="small"
+                        onClick={() => toggleEventExpansion(index)}
+                        endIcon={isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                      >
+                        {isExpanded ? 'Hide' : 'View'}
+                      </Button>
+                    </CardActions>
+                    
+                    <Collapse in={isExpanded}>
+                      <Box sx={{ px: 2, pb: 2 }}>
+                        <Divider sx={{ mb: 2 }} />
                         {evento.documents.map((doc, docIndex) => (
-                          <ListItem key={docIndex} sx={{ py: 0.5 }}>
-                            <ListItemIcon sx={{ minWidth: 36 }}>
-                              <InsertDriveFileIcon fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText 
-                              primary={
-                                <Link 
-                                  href={doc.link_url} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  underline="hover"
-                                  sx={{ display: 'flex', alignItems: 'center' }}
-                                >
-                                  {doc.description}
-                                  <Tooltip title="Abrir documento">
-                                    <IconButton size="small" sx={{ ml: 1 }}>
-                                      <LinkIcon fontSize="small" />
-                                    </IconButton>
-                                  </Tooltip>
-                                </Link>
-                              }
-                            />
-                          </ListItem>
+                          <DocumentViewer
+                            key={docIndex}
+                            document={doc}
+                            compact={true}
+                          />
                         ))}
-                      </List>
-                    </Box>
-                  )}
-                </Grid>
-              </Grid>
-            </ListItem>
-          </React.Fragment>
-        ))}
-      </List>
-    </Paper>
+                      </Box>
+                    </Collapse>
+                  </>
+                )}
+              </Card>
+            </Box>
+          );
+        })}
+      </Box>
+    </Box>
   );
 };
 

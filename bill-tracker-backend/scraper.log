@@ -1574,3 +1574,591 @@ victima cumpla la edad de dieciocho (18) años; y para otros fines.
 2025-03-20 14:24:29,802 - INFO - Waiting for elements to load (attempt 3/5)...
 2025-03-20 14:25:10,244 - WARNING - Timeout waiting for page to load. Retrying...
 2025-03-20 14:25:11,015 - INFO - Waiting for elements to load (attempt 4/5)...
+2025-03-20 14:26:31,442 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-20 14:26:32,078 - INFO - Waiting for elements to load (attempt 5/5)...
+2025-03-20 14:29:12,594 - ERROR - Selenium error: Message: 
+. Screenshot saved to error_screenshot.png
+2025-03-20 14:29:13,192 - ERROR - Selenium error: Message: 
+
+2025-03-20 15:16:14,774 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154297
+2025-03-20 15:16:14,774 - INFO - Installing ChromeDriver...
+2025-03-20 15:16:14,775 - INFO - ====== WebDriver manager ======
+2025-03-20 15:16:29,549 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:16:29,819 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:16:29,989 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 15:16:29,993 - INFO - Creating ChromeService...
+2025-03-20 15:16:29,993 - INFO - Initializing Chrome WebDriver...
+2025-03-20 15:16:33,576 - INFO - Setting page load timeout...
+2025-03-20 15:16:33,581 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154297
+2025-03-20 15:16:34,548 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 15:16:34,616 - INFO - Page loaded successfully.
+2025-03-20 15:16:39,651 - INFO - Page source saved to page_source.html
+2025-03-20 15:16:39,669 - INFO - Found measure number: Resolución de la Cámara (RC0205)
+2025-03-20 15:16:39,670 - INFO - Found filing date: 03/18/2025
+2025-03-20 15:16:39,671 - INFO - Found title: Para ordenar a la Comisión de Asuntos Federales y ...
+2025-03-20 15:16:39,679 - INFO - Found documents tab
+2025-03-20 15:16:39,682 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:16:39,683 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:16:39,683 - INFO - Found 3 general documents
+2025-03-20 15:16:39,684 - INFO - Found 3 event items
+2025-03-20 15:16:39,686 - INFO - Extracted 3 tramites and 0 votaciones
+2025-03-20 15:16:39,800 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 15:16:39,800 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 15:24:36,171 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154257
+2025-03-20 15:24:36,172 - INFO - Installing ChromeDriver...
+2025-03-20 15:24:36,172 - INFO - ====== WebDriver manager ======
+2025-03-20 15:24:36,767 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:24:37,182 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:24:37,379 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 15:24:37,380 - INFO - Creating ChromeService...
+2025-03-20 15:24:37,381 - INFO - Initializing Chrome WebDriver...
+2025-03-20 15:24:41,253 - INFO - Setting page load timeout...
+2025-03-20 15:24:41,255 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154257
+2025-03-20 15:24:42,607 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 15:24:42,796 - INFO - Page loaded successfully.
+2025-03-20 15:24:47,817 - INFO - Page source saved to page_source.html
+2025-03-20 15:24:47,834 - INFO - Found measure number: Proyecto de la Cámara (PC0412)
+2025-03-20 15:24:47,835 - INFO - Found filing date: 03/17/2025
+2025-03-20 15:24:47,836 - INFO - Found title: Para añadir un sexto párrafo al Artículo 6 de la L...
+2025-03-20 15:24:47,840 - INFO - Found documents tab
+2025-03-20 15:24:47,843 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:24:47,843 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:24:47,843 - INFO - Found 3 general documents
+2025-03-20 15:24:47,845 - INFO - Found 3 event items
+2025-03-20 15:24:47,850 - INFO - Extracted 3 tramites and 0 votaciones
+2025-03-20 15:24:48,145 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 15:24:48,146 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 15:24:48,149 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:24:48,149 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:24:48,150 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154257/PC0412.doc
+2025-03-20 15:24:48,151 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154257/PC0412.doc
+2025-03-20 15:24:48,925 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 15:24:48,926 - INFO - Data structure collected from scraping:
+2025-03-20 15:24:48,956 - INFO - {
+  "measure_number": "Proyecto de la Cámara (PC0412)",
+  "title": "Para añadir un sexto párrafo al Artículo 6 de la Ley 261-2004, según enmendada, conocida como \"Ley del Voluntariado de Puerto Rico\", a los fines de crear un programa de voluntariado adscrito al Departamento de Seguridad Pública para asistir en desastres y emergencias; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "03/17/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Seguridad Pública",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/17/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/154257/PC0412.doc",
+          "description": "PC0412.doc",
+          "filepath": "scraped_data/PC0412.doc",
+          "text_filepath": "scraped_data/PC0412.doc.txt",
+          "downloaded": true,
+          "text_extracted": false
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 15:24:48,966 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 15:24:48,970 - INFO - Results saved to result.json
+2025-03-20 15:24:48,970 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 15:24:48,970 - INFO - Measure Number: Proyecto de la Cámara (PC0412)
+2025-03-20 15:24:48,970 - INFO - Title: Para añadir un sexto párrafo al Artículo 6 de la Ley 261-2004, según enmendada, conocida como "Ley del Voluntariado de Puerto Rico", a los fines de crear un programa de voluntariado adscrito al Departamento de Seguridad Pública para asistir en desastres y emergencias; y para otros fines relacionados.
+2025-03-20 15:24:48,971 - INFO - Status: None
+2025-03-20 15:24:48,971 - INFO - Events found: 3
+2025-03-20 15:24:48,971 - INFO - Commissions found: 0
+2025-03-20 15:30:27,441 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152744
+2025-03-20 15:30:27,442 - INFO - Installing ChromeDriver...
+2025-03-20 15:30:27,442 - INFO - ====== WebDriver manager ======
+2025-03-20 15:30:28,055 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:30:28,226 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:30:28,377 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 15:30:28,378 - INFO - Creating ChromeService...
+2025-03-20 15:30:28,378 - INFO - Initializing Chrome WebDriver...
+2025-03-20 15:30:31,764 - INFO - Setting page load timeout...
+2025-03-20 15:30:31,766 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152744
+2025-03-20 15:30:32,856 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 15:30:32,996 - INFO - Page loaded successfully.
+2025-03-20 15:30:38,012 - INFO - Page source saved to page_source.html
+2025-03-20 15:30:38,024 - INFO - Found measure number: Proyecto del Senado (PS0169)
+2025-03-20 15:30:38,025 - INFO - Found filing date: 01/07/2025
+2025-03-20 15:30:38,025 - INFO - Found title: Para enmendar el inciso (hh) del Articulo 3 y añad...
+2025-03-20 15:30:38,029 - INFO - Found documents tab
+2025-03-20 15:30:38,031 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:30:38,031 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:30:38,032 - INFO - Found 3 general documents
+2025-03-20 15:30:38,032 - INFO - Found 5 event items
+2025-03-20 15:30:38,034 - INFO - Extracted 5 tramites and 0 votaciones
+2025-03-20 15:30:38,133 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 15:30:38,133 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 15:30:38,135 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:30:38,138 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:30:38,139 - INFO - File exists, skipping download: ps0169-25.doc
+2025-03-20 15:30:38,139 - INFO - File exists, skipping download: ps0169-25.doc
+2025-03-20 15:30:38,140 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 15:30:38,141 - INFO - Data structure collected from scraping:
+2025-03-20 15:30:38,141 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0169)",
+  "title": "Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la\nLey 57-2023, conocida como \"Ley para la Prevención del Maltrato, Preservación de\nla Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores\",\ncon el propósito de establecer una \"orden de protección duradera\" en aquellos\ncasos de abuso sexual contra personas menores, cuya vigencia será hasta que la\nvictima cumpla la edad de dieciocho (18) años; y para otros fines.",
+  "status": null,
+  "filing_date": "01/07/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "04/11/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "03/18/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/07/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152744/ps0169-25.doc",
+          "description": "ps0169-25.doc",
+          "filepath": "scraped_data/ps0169-25.doc",
+          "text_filepath": "scraped_data/ps0169-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 15:30:38,143 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 15:30:38,144 - INFO - Results saved to result.json
+2025-03-20 15:30:38,144 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 15:30:38,145 - INFO - Measure Number: Proyecto del Senado (PS0169)
+2025-03-20 15:30:38,145 - INFO - Title: Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la
+Ley 57-2023, conocida como "Ley para la Prevención del Maltrato, Preservación de
+la Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores",
+con el propósito de establecer una "orden de protección duradera" en aquellos
+casos de abuso sexual contra personas menores, cuya vigencia será hasta que la
+victima cumpla la edad de dieciocho (18) años; y para otros fines.
+2025-03-20 15:30:38,145 - INFO - Status: None
+2025-03-20 15:30:38,145 - INFO - Events found: 5
+2025-03-20 15:30:38,145 - INFO - Commissions found: 0
+2025-03-20 15:33:02,250 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152744
+2025-03-20 15:33:02,251 - INFO - Installing ChromeDriver...
+2025-03-20 15:33:02,251 - INFO - ====== WebDriver manager ======
+2025-03-20 15:33:02,838 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:33:03,012 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:33:03,175 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 15:33:03,176 - INFO - Creating ChromeService...
+2025-03-20 15:33:03,177 - INFO - Initializing Chrome WebDriver...
+2025-03-20 15:33:06,835 - INFO - Setting page load timeout...
+2025-03-20 15:33:06,844 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152744
+2025-03-20 15:33:07,821 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 15:33:08,071 - INFO - Page loaded successfully.
+2025-03-20 15:33:13,091 - INFO - Page source saved to page_source.html
+2025-03-20 15:33:13,104 - INFO - Found measure number: Proyecto del Senado (PS0169)
+2025-03-20 15:33:13,105 - INFO - Found filing date: 01/07/2025
+2025-03-20 15:33:13,106 - INFO - Found title: Para enmendar el inciso (hh) del Articulo 3 y añad...
+2025-03-20 15:33:13,110 - INFO - Found documents tab
+2025-03-20 15:33:13,112 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:33:13,112 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:33:13,112 - INFO - Found 3 general documents
+2025-03-20 15:33:13,113 - INFO - Found 5 event items
+2025-03-20 15:33:13,114 - INFO - Extracted 5 tramites and 0 votaciones
+2025-03-20 15:33:13,320 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 15:33:13,320 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 15:33:13,323 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:33:13,325 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:33:13,326 - INFO - File exists, skipping download: ps0169-25.doc
+2025-03-20 15:33:13,326 - INFO - File exists, skipping download: ps0169-25.doc
+2025-03-20 15:33:13,327 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 15:33:13,328 - INFO - Data structure collected from scraping:
+2025-03-20 15:33:13,328 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0169)",
+  "title": "Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la\nLey 57-2023, conocida como \"Ley para la Prevención del Maltrato, Preservación de\nla Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores\",\ncon el propósito de establecer una \"orden de protección duradera\" en aquellos\ncasos de abuso sexual contra personas menores, cuya vigencia será hasta que la\nvictima cumpla la edad de dieciocho (18) años; y para otros fines.",
+  "status": null,
+  "filing_date": "01/07/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "04/11/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "03/18/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/07/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152744/ps0169-25.doc",
+          "description": "ps0169-25.doc",
+          "filepath": "scraped_data/ps0169-25.doc",
+          "text_filepath": "scraped_data/ps0169-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 15:33:13,330 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 15:33:13,335 - INFO - Results saved to result.json
+2025-03-20 15:33:13,335 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 15:33:13,335 - INFO - Measure Number: Proyecto del Senado (PS0169)
+2025-03-20 15:33:13,335 - INFO - Title: Para enmendar el inciso (hh) del Articulo 3 y añadir un inciso (d) al Artlculo 69 de la
+Ley 57-2023, conocida como "Ley para la Prevención del Maltrato, Preservación de
+la Unidad Familiar y para la Seguridad, Bienestar y Protección de los Menores",
+con el propósito de establecer una "orden de protección duradera" en aquellos
+casos de abuso sexual contra personas menores, cuya vigencia será hasta que la
+victima cumpla la edad de dieciocho (18) años; y para otros fines.
+2025-03-20 15:33:13,336 - INFO - Status: None
+2025-03-20 15:33:13,336 - INFO - Events found: 5
+2025-03-20 15:33:13,336 - INFO - Commissions found: 0
+2025-03-20 15:35:34,112 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154290
+2025-03-20 15:35:34,114 - INFO - Installing ChromeDriver...
+2025-03-20 15:35:34,114 - INFO - ====== WebDriver manager ======
+2025-03-20 15:35:34,678 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:35:34,845 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:35:34,999 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 15:35:35,000 - INFO - Creating ChromeService...
+2025-03-20 15:35:35,001 - INFO - Initializing Chrome WebDriver...
+2025-03-20 15:35:38,617 - INFO - Setting page load timeout...
+2025-03-20 15:35:38,641 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154290
+2025-03-20 15:35:39,731 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 15:35:39,849 - INFO - Page loaded successfully.
+2025-03-20 15:35:44,865 - INFO - Page source saved to page_source.html
+2025-03-20 15:35:44,876 - INFO - Found measure number: Proyecto de la Cámara (PC0418)
+2025-03-20 15:35:44,877 - INFO - Found filing date: 03/18/2025
+2025-03-20 15:35:44,878 - INFO - Found title: Para enmendar el Artículo 6 de la Ley Núm. 194 - 2...
+2025-03-20 15:35:44,881 - INFO - Found documents tab
+2025-03-20 15:35:44,883 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:35:44,883 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:35:44,883 - INFO - Found 3 general documents
+2025-03-20 15:35:44,884 - INFO - Found 3 event items
+2025-03-20 15:35:44,885 - INFO - Extracted 3 tramites and 0 votaciones
+2025-03-20 15:35:44,989 - INFO - Found 4 documents to download (text extraction deferred)
+2025-03-20 15:35:44,990 - INFO - Starting parallel download of 4 documents (no text extraction)
+2025-03-20 15:35:44,992 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:35:44,992 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:35:44,993 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154290/PC0418 (A-018).docx
+2025-03-20 15:35:44,993 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154290/PC0418 (A-018).docx
+2025-03-20 15:35:46,056 - INFO - Completed downloading 4 documents (text extraction deferred)
+2025-03-20 15:35:46,057 - INFO - Data structure collected from scraping:
+2025-03-20 15:35:46,057 - INFO - {
+  "measure_number": "Proyecto de la Cámara (PC0418)",
+  "title": "Para enmendar el Artículo 6 de la Ley Núm. 194 - 2000, según enmendada, conocida como “Carta de Derechos y Responsabilidades del Paciente”; enmendar la Sección 8, del Artículo VI, de la Ley Núm. 72 - 1993, según enmendada, conocida como “Ley de Administración de Seguros de Salud de Puerto Rico”; enmendar los Artículos 30.020, 31.020 y 31.031 de la Ley Núm. 77 de 19 de junio de 1957, según enmendada, conocida como “Código de Seguros de Puerto Rico”; a los fines de garantizar el derecho de toda mujer a seleccionar y recibir atención directa de un ginecólogo-obstetra, en adición a su médico primario, bajo el plan de cuidado de salud al que esté acogida, hasta un (1) año después del parto; para disponer que las aseguradoras autoricen al obstetra a diagnosticar, manejar y tratar las condiciones de las pacientes durante el embarazo y el posparto, sin requerir un referido o autorización previa del médico primario; atemperar las disposiciones legales pertinentes; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "03/18/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Banca, Seguros y Comercio",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/18/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/154290/PC0418 (A-018).docx",
+          "description": "PC0418 (A-018).docx",
+          "filepath": "scraped_data/PC0418 (A-018).docx",
+          "text_filepath": "scraped_data/PC0418 (A-018).docx.txt",
+          "downloaded": true,
+          "text_extracted": false
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 15:35:46,059 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 15:35:46,061 - INFO - Results saved to result.json
+2025-03-20 15:35:46,061 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 15:35:46,061 - INFO - Measure Number: Proyecto de la Cámara (PC0418)
+2025-03-20 15:35:46,061 - INFO - Title: Para enmendar el Artículo 6 de la Ley Núm. 194 - 2000, según enmendada, conocida como “Carta de Derechos y Responsabilidades del Paciente”; enmendar la Sección 8, del Artículo VI, de la Ley Núm. 72 - 1993, según enmendada, conocida como “Ley de Administración de Seguros de Salud de Puerto Rico”; enmendar los Artículos 30.020, 31.020 y 31.031 de la Ley Núm. 77 de 19 de junio de 1957, según enmendada, conocida como “Código de Seguros de Puerto Rico”; a los fines de garantizar el derecho de toda mujer a seleccionar y recibir atención directa de un ginecólogo-obstetra, en adición a su médico primario, bajo el plan de cuidado de salud al que esté acogida, hasta un (1) año después del parto; para disponer que las aseguradoras autoricen al obstetra a diagnosticar, manejar y tratar las condiciones de las pacientes durante el embarazo y el posparto, sin requerir un referido o autorización previa del médico primario; atemperar las disposiciones legales pertinentes; y para otros fines relacionados.
+2025-03-20 15:35:46,062 - INFO - Status: None
+2025-03-20 15:35:46,062 - INFO - Events found: 3
+2025-03-20 15:35:46,062 - INFO - Commissions found: 0
+2025-03-20 15:35:51,833 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154290/PC0418A-018.docx
+2025-03-20 15:35:52,234 - WARNING - Error downloading https://sutra.oslpr.org/SutraFilesGen/154290/PC0418A-018.docx: 404 Client Error: Not Found for url: https://sutra.oslpr.org/SutraFiles/anejos/154290/PC0418A-018.docx. Retrying in 5 seconds...
+2025-03-20 15:35:57,239 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154290/PC0418A-018.docx
+2025-03-20 15:35:57,588 - WARNING - Error downloading https://sutra.oslpr.org/SutraFilesGen/154290/PC0418A-018.docx: 404 Client Error: Not Found for url: https://sutra.oslpr.org/SutraFiles/anejos/154290/PC0418A-018.docx. Retrying in 10 seconds...
+2025-03-20 15:36:07,589 - INFO - Downloading: https://sutra.oslpr.org/SutraFilesGen/154290/PC0418A-018.docx
+2025-03-20 15:36:07,937 - ERROR - Failed to download https://sutra.oslpr.org/SutraFilesGen/154290/PC0418A-018.docx after 3 attempts: 404 Client Error: Not Found for url: https://sutra.oslpr.org/SutraFiles/anejos/154290/PC0418A-018.docx
+2025-03-20 15:58:07,377 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153136
+2025-03-20 15:58:07,378 - INFO - Installing ChromeDriver...
+2025-03-20 15:58:07,378 - INFO - ====== WebDriver manager ======
+2025-03-20 15:58:20,350 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:58:20,589 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-20 15:58:20,835 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.90/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-20 15:58:20,835 - INFO - Creating ChromeService...
+2025-03-20 15:58:20,836 - INFO - Initializing Chrome WebDriver...
+2025-03-20 15:58:23,956 - INFO - Setting page load timeout...
+2025-03-20 15:58:23,966 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153136
+2025-03-20 15:58:24,455 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-20 15:58:25,002 - INFO - Page loaded successfully.
+2025-03-20 15:58:30,023 - INFO - Page source saved to page_source.html
+2025-03-20 15:58:30,045 - INFO - Found measure number: Proyecto del Senado (PS0259)
+2025-03-20 15:58:30,046 - INFO - Found filing date: 01/15/2025
+2025-03-20 15:58:30,047 - INFO - Found title: Para viabilizar la transferencia de las carreteras...
+2025-03-20 15:58:30,054 - INFO - Found documents tab
+2025-03-20 15:58:30,058 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:58:30,058 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-20 15:58:30,060 - INFO - Found 7 general documents
+2025-03-20 15:58:30,063 - INFO - Found 12 event items
+2025-03-20 15:58:30,075 - INFO - Extracted 10 tramites and 2 votaciones
+2025-03-20 15:58:30,299 - INFO - Found 12 documents to download (text extraction deferred)
+2025-03-20 15:58:30,299 - INFO - Starting parallel download of 12 documents (no text extraction)
+2025-03-20 15:58:30,303 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:58:30,304 - INFO - Skipping User-Manual file: https://sutra.oslpr.org/User-Manual.pdf
+2025-03-20 15:58:30,308 - INFO - File exists, skipping download: ps0259-25.doc
+2025-03-20 15:58:30,314 - INFO - File exists, skipping download: MeasuresAndVotes (1)-4.pdf
+2025-03-20 15:58:30,315 - INFO - File exists, skipping download: ps0259-ent.doc
+2025-03-20 15:58:30,316 - INFO - File exists, skipping download: ps0259-25.doc
+2025-03-20 15:58:30,316 - INFO - File exists, skipping download: ps0259-Inf..docx
+2025-03-20 15:58:30,317 - INFO - File exists, skipping download: ps0259a-25.doc
+2025-03-20 15:58:30,319 - INFO - File exists, skipping download: ps0259-Inf..docx
+2025-03-20 15:58:30,324 - INFO - File exists, skipping download: ps0259-ent.doc
+2025-03-20 15:58:30,325 - INFO - File exists, skipping download: ps0259a-25.doc
+2025-03-20 15:58:30,325 - INFO - File exists, skipping download: MeasuresAndVotes (1)-4.pdf
+2025-03-20 15:58:30,328 - INFO - Completed downloading 12 documents (text extraction deferred)
+2025-03-20 15:58:30,331 - INFO - Data structure collected from scraping:
+2025-03-20 15:58:30,332 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0259)",
+  "title": "Para viabilizar la transferencia de las carreteras secundarias y su mantenimiento a los municipios de Puerto Rico, con el fin de que los municipios tengan mayor autonomía y puedan mejorar las fallas más apremiantes en cuanto a la infraestructura vial del país, y se expanda su capacidad para prestar servicios directos a la ciudadanía; enmendar el Artículo 1, añadir un nuevo inciso (d) y reenumerar los actuales incisos (d), (e) (f), (g), (h), (i) y (j), como los incisos (e), (f), (g), (h), (i), (j) y (k), respectivamente; enmendar los Artículos 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16 y 19 de la Ley 94-2013, conocida como “Ley para Traspasar las Carreteras Terciarias del Departamento de Transportación y Obras Públicas del Estado Libre Asociado de Puerto Rico a los Municipios”; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/15/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos Municipales",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "camara": "Senado",
+      "fecha": "03/13/2025",
+      "descripcion": "Aprobado por el Senado en Votación Final",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/MeasuresAndVotes (1)-4.pdf",
+          "description": "MeasuresAndVotes (1)-4.pdf",
+          "filepath": "scraped_data/MeasuresAndVotes (1)-4.pdf",
+          "text_filepath": "scraped_data/MeasuresAndVotes (1)-4.pdf.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "votes": {
+        "Votos a favor": ":25",
+        "Votos en contra": ":0",
+        "Votos abstenidos": ":0",
+        "Votos ausentes": ":3"
+      },
+      "tipo": "votacion"
+    },
+    {
+      "camara": "Cámara",
+      "fecha": "03/13/2025",
+      "descripcion": "Aprobado con enmiendas del informe",
+      "documents": [],
+      "votes": null,
+      "tipo": "votacion"
+    },
+    {
+      "descripcion": "Texto de Aprobación Final enviado a la Cámara",
+      "fecha": "03/13/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259a-25.doc",
+          "description": "ps0259a-25.doc",
+          "filepath": "scraped_data/ps0259a-25.doc",
+          "text_filepath": "scraped_data/ps0259a-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "En el Calendario de Ordenes Especiales del Senado",
+      "fecha": "03/13/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Remitido a la Comisión de Reglas y Calendario del Senado",
+      "fecha": "03/12/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Entirillado del Informe",
+      "fecha": "03/12/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-ent.doc",
+          "description": "ps0259-ent.doc",
+          "filepath": "scraped_data/ps0259-ent.doc",
+          "text_filepath": "scraped_data/ps0259-ent.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "1er Informe Comisión rendido con enmiendas",
+      "fecha": "03/12/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-Inf..docx",
+          "description": "ps0259-Inf..docx",
+          "filepath": "scraped_data/ps0259-Inf..docx",
+          "text_filepath": "scraped_data/ps0259-Inf..docx.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "comision": "Comisión de Asuntos Municipales",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos Municipales",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/15/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153136/ps0259-25.doc",
+          "description": "ps0259-25.doc",
+          "filepath": "scraped_data/ps0259-25.doc",
+          "text_filepath": "scraped_data/ps0259-25.doc.txt",
+          "downloaded": true,
+          "text_extracted": true
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-20 15:58:30,339 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-20 15:58:30,341 - INFO - Results saved to result.json
+2025-03-20 15:58:30,341 - INFO - 
+SCRAPER SUMMARY:
+2025-03-20 15:58:30,341 - INFO - Measure Number: Proyecto del Senado (PS0259)
+2025-03-20 15:58:30,341 - INFO - Title: Para viabilizar la transferencia de las carreteras secundarias y su mantenimiento a los municipios de Puerto Rico, con el fin de que los municipios tengan mayor autonomía y puedan mejorar las fallas más apremiantes en cuanto a la infraestructura vial del país, y se expanda su capacidad para prestar servicios directos a la ciudadanía; enmendar el Artículo 1, añadir un nuevo inciso (d) y reenumerar los actuales incisos (d), (e) (f), (g), (h), (i) y (j), como los incisos (e), (f), (g), (h), (i), (j) y (k), respectivamente; enmendar los Artículos 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16 y 19 de la Ley 94-2013, conocida como “Ley para Traspasar las Carreteras Terciarias del Departamento de Transportación y Obras Públicas del Estado Libre Asociado de Puerto Rico a los Municipios”; y para otros fines relacionados.
+2025-03-20 15:58:30,341 - INFO - Status: None
+2025-03-20 15:58:30,342 - INFO - Events found: 12
+2025-03-20 15:58:30,342 - INFO - Commissions found: 0
