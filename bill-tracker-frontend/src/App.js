@@ -46,6 +46,7 @@ import {
   Tooltip,
   Alert
 } from '@mui/material';
+import EventosView from './components/EventosView';
 
 // Icons
 import SearchIcon from '@mui/icons-material/Search';
@@ -63,6 +64,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import PeopleIcon from '@mui/icons-material/People';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import EventIcon from '@mui/icons-material/Event';
 
 // Email Feature
 import Dialog from '@mui/material/Dialog';
@@ -77,6 +79,7 @@ const API_KEY = 'afb43156-6854-44cf-8730-795c8c172990';
 const BASE_URL = 'https://v3.openstates.org';
 
 function App() {
+  const billDetailsCache = {};
   const [bills, setBills] = useState([]);
   const [selectedBill, setSelectedBill] = useState(null);
   const [open, setOpen] = useState(false);
@@ -230,15 +233,6 @@ function App() {
     try {
       const detailsURL = `${BASE_URL}/bills/${billId}?include=sponsorships&include=abstracts&include=other_titles&include=other_identifiers&include=actions&include=sources&include=documents&include=versions&include=votes&include=related_bills&apikey=${API_KEY}`;
       const response = await axios.get(detailsURL);
-      setSelectedBill(response.data);
-      setOpen(true);
-
-      // Remove the billId parameter from URL without page refresh
-      if (window.history && window.history.replaceState) {
-        const url = new URL(window.location.href);
-        url.searchParams.delete('billId');
-        window.history.replaceState({}, document.title, url.toString());
-      }
       
       // Preprocess the bill data to extract and validate dates
       const billWithDates = {
@@ -254,6 +248,17 @@ function App() {
       // Sort actions array by date for timeline consistency
       if (billWithDates.actions && Array.isArray(billWithDates.actions)) {
         billWithDates.actions = sortActionsByDate(billWithDates.actions);
+      }
+      
+      // NEW: If there's no eventos array, create one from actions
+      if (!billWithDates.eventos && billWithDates.actions) {
+        billWithDates.eventos = billWithDates.actions.map(action => ({
+          descripcion: action.description,
+          fecha: action.date,
+          tipo: 'tramite',
+          comision: action.organization ? action.organization.name : null,
+          documents: [] // You might want to extract documents if available
+        }));
       }
       
       setSelectedBill(billWithDates);
@@ -272,11 +277,103 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   const handleClose = () => {
     setOpen(false);
     setTabValue(0); // Reset to All Bills tab when modal closes
+  };
+
+  const fetchBillDetailsWithScraper = async (billId) => {
+    try {
+      console.log(`Fetching detailed information for bill ID: ${billId}`);
+      
+      // Step 1: Get basic bill data from the OpenStates API
+      const detailsURL = `${BASE_URL}/bills/${billId}?include=sponsorships&include=abstracts&include=other_titles&include=other_identifiers&include=actions&include=sources&include=documents&include=versions&include=votes&include=related_bills&apikey=${API_KEY}`;
+      console.log(`Requesting OpenStates API: ${detailsURL}`);
+      
+      const response = await axios.get(detailsURL);
+      const openStatesBill = response.data;
+      console.log(`Successfully fetched basic bill data for ${billId}`);
+      
+      // Step 2: Find SUTRA URL from the sources array
+      let sutraUrl = null;
+      if (openStatesBill.sources && Array.isArray(openStatesBill.sources)) {
+        console.log(`Bill has ${openStatesBill.sources.length} source URLs to check`);
+        
+        // Look for URLs containing 'sutra' in the sources array
+        for (const source of openStatesBill.sources) {
+          if (source.url && typeof source.url === 'string' && 
+              (source.url.toLowerCase().includes('sutra') || 
+              source.url.toLowerCase().includes('oslpr'))) {
+            sutraUrl = source.url;
+            console.log(`Found SUTRA URL: ${sutraUrl}`);
+            break;
+          }
+        }
+      }
+      
+      // If we couldn't find a SUTRA URL, log and return basic data
+      if (!sutraUrl) {
+        console.warn(`No SUTRA URL found for bill ${billId}. Using only OpenStates data.`);
+        return openStatesBill;
+      }
+      
+      // Step 3: Call our backend scraper with the SUTRA URL
+      console.log(`Calling enhanced scraper with URL: ${sutraUrl}`);
+      const scraperResponse = await axios.post('http://localhost:3001/api/download-documents', {
+        sutraUrl: sutraUrl
+      });
+      
+      // Step 4: Check if scraper response was successful
+      if (scraperResponse.data && scraperResponse.data.success !== false) {
+        console.log(`Successfully scraped additional data from SUTRA`);
+        
+        // Combine data from both sources
+        const combinedData = {
+          ...openStatesBill,
+          // Add scraped data with fallbacks
+          eventos: scraperResponse.data.eventos || [],
+          comisiones: scraperResponse.data.comisiones || openStatesBill.comisiones || [],
+          // Add any other fields from the scraper that you want to use
+        };
+        
+        console.log(`Combined data has ${combinedData.eventos?.length || 0} eventos`);
+        return combinedData;
+      } else {
+        // If scraper failed but returned a response, log the error
+        if (scraperResponse.data && scraperResponse.data.error) {
+          console.error(`Scraper error: ${scraperResponse.data.error}`);
+        } else {
+          console.error(`Scraper failed with unknown error`);
+        }
+        
+        // Return the original data as fallback
+        return openStatesBill;
+      }
+    } catch (error) {
+      console.error('Error in fetchBillDetailsWithScraper:', error);
+      
+      // For debugging: log detailed error information
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Error response:', {
+          data: error.response.data,
+          status: error.response.status,
+          headers: error.response.headers
+        });
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error request:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error message:', error.message);
+      }
+      
+      // Re-throw the error so the calling function can handle it
+      throw error;
+    }
   };
 
   const formatDate = (dateString) => {
@@ -1423,16 +1520,17 @@ function App() {
               </Box>
 
               <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                aria-label="bill details tabs"
-                sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}
-              >
-                <Tab label="Overview" icon={<DescriptionIcon />} iconPosition="start" />
-                <Tab label="Timeline" icon={<TimelineIcon />} iconPosition="start" />
-                <Tab label="Documents" icon={<ArticleIcon />} iconPosition="start" />
-                <Tab label="Sponsors" icon={<PeopleIcon />} iconPosition="start" />
-              </Tabs>
+                  value={tabValue}
+                  onChange={handleTabChange}
+                  aria-label="bill details tabs"
+                  sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}
+                >
+                  <Tab label="Overview" icon={<DescriptionIcon />} iconPosition="start" />
+                  <Tab label="Timeline" icon={<TimelineIcon />} iconPosition="start" />
+                  <Tab label="Eventos" icon={<EventIcon />} iconPosition="start" />
+                  <Tab label="Documents" icon={<ArticleIcon />} iconPosition="start" />
+                  <Tab label="Sponsors" icon={<PeopleIcon />} iconPosition="start" />
+                </Tabs>
 
               {tabValue === 0 && (
                 <Grid container spacing={4}>
@@ -1508,258 +1606,262 @@ function App() {
                 </Grid>
               )}
 
-                {tabValue === 1 && (
-                  <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                      Action Timeline
-                    </Typography>
-                    <Box sx={{ position: 'relative', ml: 2, pt: 1, pb: 1 }}>
-                      {/* Vertical timeline line */}
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          left: 0,
-                          top: 0,
-                          bottom: 0,
-                          width: 2,
-                          bgcolor: 'primary.main',
-                          ml: -10,
+              {tabValue === 1 && (
+                <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Action Timeline
+                  </Typography>
+                  <Box sx={{ position: 'relative', ml: 2, pt: 1, pb: 1 }}>
+                    {/* Vertical timeline line */}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        width: 2,
+                        bgcolor: 'primary.main',
+                        ml: -10,
+                      }}
+                    />
+                    
+                    {selectedBill.actions && selectedBill.actions.map((action, index) => (
+                      <Box 
+                        key={index}
+                        sx={{ 
+                          mb: 3, 
+                          pb: 3, 
+                          position: 'relative',
+                          borderBottom: index < selectedBill.actions.length - 1 ? 1 : 0,
+                          borderColor: 'divider'
                         }}
-                      />
-                      
-                      {selectedBill.actions && selectedBill.actions.map((action, index) => (
-                        <Box 
-                          key={index}
-                          sx={{ 
-                            mb: 3, 
-                            pb: 3, 
-                            position: 'relative',
-                            borderBottom: index < selectedBill.actions.length - 1 ? 1 : 0,
-                            borderColor: 'divider'
+                      >
+                        {/* Timeline node */}
+                        <Box
+                          sx={{
+                            position: 'absolute',
+                            left: -10,
+                            top: 10,
+                            width: 16,
+                            height: 16,
+                            borderRadius: '50%',
+                            bgcolor: 'primary.main',
+                            border: '2px solid',
+                            borderColor: 'background.paper',
+                            ml: -10,
                           }}
-                        >
-                          {/* Timeline node */}
-                          <Box
-                            sx={{
-                              position: 'absolute',
-                              left: -10,
-                              top: 10,
-                              width: 16,
-                              height: 16,
-                              borderRadius: '50%',
-                              bgcolor: 'primary.main',
-                              border: '2px solid',
-                              borderColor: 'background.paper',
-                              ml: -10,
-                            }}
-                          />
-                          
-                          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                            {formatDate(action.date)}
+                        />
+                        
+                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                          {formatDate(action.date)}
+                        </Typography>
+                        <Typography variant="body1" sx={{ mt: 1 }}>
+                          {action.description}
+                        </Typography>
+                        {action.organization && (
+                          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            {action.organization.name || "Unknown organization"}
                           </Typography>
-                          <Typography variant="body1" sx={{ mt: 1 }}>
-                            {action.description}
-                          </Typography>
-                          {action.organization && (
-                            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                              {action.organization.name || "Unknown organization"}
+                        )}
+                      </Box>
+                    ))}
+                    
+                    {(!selectedBill.actions || selectedBill.actions.length === 0) && (
+                      <Typography variant="body1">No actions recorded for this bill</Typography>
+                    )}
+                  </Box>
+                </Paper>
+              )}
+
+              {tabValue === 2 && (
+                <EventosView eventos={selectedBill.eventos || []} />
+              )}
+              
+              {tabValue === 3 && (
+                <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Bill Documents & Versions
+                  </Typography>
+                  
+                  <Typography variant="subtitle1" gutterBottom sx={{ mt: 3 }}>
+                    Versions
+                  </Typography>
+                  <List>
+                    {selectedBill.versions && selectedBill.versions.map((version, index) => (
+                      <ListItem 
+                        key={index}
+                        sx={{ 
+                          p: 2, 
+                          mb: 2, 
+                          borderRadius: 1, 
+                          bgcolor: 'background.default'
+                        }}
+                      >
+                        <Grid container spacing={2} alignItems="center">
+                          <Grid item>
+                            <Avatar sx={{ bgcolor: 'primary.main' }}>
+                              <DescriptionIcon />
+                            </Avatar>
+                          </Grid>
+                          <Grid item xs>
+                            <Typography variant="subtitle2">
+                              {version.note || `Version ${index + 1}`}
                             </Typography>
-                          )}
-                        </Box>
-                      ))}
-                      
-                      {(!selectedBill.actions || selectedBill.actions.length === 0) && (
-                        <Typography variant="body1">No actions recorded for this bill</Typography>
-                      )}
-                    </Box>
-                  </Paper>
-                )}
-                
-                {tabValue === 2 && (
-                  <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                      Bill Documents & Versions
-                    </Typography>
-                    
-                    <Typography variant="subtitle1" gutterBottom sx={{ mt: 3 }}>
-                      Versions
-                    </Typography>
-                    <List>
-                      {selectedBill.versions && selectedBill.versions.map((version, index) => (
-                        <ListItem 
-                          key={index}
+                            <Typography variant="body2" color="text.secondary">
+                              {formatDate(version.date)}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Button 
+                              variant="outlined" 
+                              size="small" 
+                              component="a" 
+                              href={version.url} 
+                              target="_blank"
+                              startIcon={<DownloadIcon />}
+                            >
+                              View
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
+                    ))}
+                    {(!selectedBill.versions || selectedBill.versions.length === 0) && (
+                      <ListItem>
+                        <Typography variant="body1">No versions available</Typography>
+                      </ListItem>
+                    )}
+                  </List>
+                  
+                  <Typography variant="subtitle1" gutterBottom sx={{ mt: 4 }}>
+                    Other Documents
+                  </Typography>
+                  <List>
+                    {selectedBill.documents && selectedBill.documents.map((doc, index) => (
+                      <ListItem 
+                        key={index}
+                        sx={{ 
+                          p: 2, 
+                          mb: 2, 
+                          borderRadius: 1, 
+                          bgcolor: 'background.default'
+                        }}
+                      >
+                        <Grid container spacing={2} alignItems="center">
+                          <Grid item>
+                            <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                              <ArticleIcon />
+                            </Avatar>
+                          </Grid>
+                          <Grid item xs>
+                            <Typography variant="subtitle2">
+                              {doc.note || `Document ${index + 1}`}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {formatDate(doc.date)}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Button 
+                              variant="outlined" 
+                              size="small" 
+                              component="a" 
+                              href={doc.url} 
+                              target="_blank"
+                              startIcon={<DownloadIcon />}
+                            >
+                              View
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </ListItem>
+                    ))}
+                    {(!selectedBill.documents || selectedBill.documents.length === 0) && (
+                      <ListItem>
+                        <Typography variant="body1">No documents available</Typography>
+                      </ListItem>
+                    )}
+                  </List>
+                </Paper>
+              )}
+              
+              {tabValue === 4 && (
+                <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Bill Sponsors
+                  </Typography>
+                  <Grid container spacing={3}>
+                    {selectedBill.sponsorships && selectedBill.sponsorships.map((sponsor, index) => (
+                      <Grid item xs={12} sm={6} md={4} key={index}>
+                        <Paper 
+                          elevation={0} 
                           sx={{ 
                             p: 2, 
-                            mb: 2, 
-                            borderRadius: 1, 
-                            bgcolor: 'background.default'
+                            borderRadius: 2, 
+                            bgcolor: 'background.default',
+                            height: '100%'
                           }}
                         >
-                          <Grid container spacing={2} alignItems="center">
-                            <Grid item>
-                              <Avatar sx={{ bgcolor: 'primary.main' }}>
-                                <DescriptionIcon />
-                              </Avatar>
-                            </Grid>
-                            <Grid item xs>
-                              <Typography variant="subtitle2">
-                                {version.note || `Version ${index + 1}`}
-                              </Typography>
-                              <Typography variant="body2" color="text.secondary">
-                                {formatDate(version.date)}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Button 
-                                variant="outlined" 
-                                size="small" 
-                                component="a" 
-                                href={version.url} 
-                                target="_blank"
-                                startIcon={<DownloadIcon />}
-                              >
-                                View
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </ListItem>
-                      ))}
-                      {(!selectedBill.versions || selectedBill.versions.length === 0) && (
-                        <ListItem>
-                          <Typography variant="body1">No versions available</Typography>
-                        </ListItem>
-                      )}
-                    </List>
-                    
-                    <Typography variant="subtitle1" gutterBottom sx={{ mt: 4 }}>
-                      Other Documents
-                    </Typography>
-                    <List>
-                      {selectedBill.documents && selectedBill.documents.map((doc, index) => (
-                        <ListItem 
-                          key={index}
-                          sx={{ 
-                            p: 2, 
-                            mb: 2, 
-                            borderRadius: 1, 
-                            bgcolor: 'background.default'
-                          }}
-                        >
-                          <Grid container spacing={2} alignItems="center">
-                            <Grid item>
-                              <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                                <ArticleIcon />
-                              </Avatar>
-                            </Grid>
-                            <Grid item xs>
-                              <Typography variant="subtitle2">
-                                {doc.note || `Document ${index + 1}`}
-                              </Typography>
-                              <Typography variant="body2" color="text.secondary">
-                                {formatDate(doc.date)}
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Button 
-                                variant="outlined" 
-                                size="small" 
-                                component="a" 
-                                href={doc.url} 
-                                target="_blank"
-                                startIcon={<DownloadIcon />}
-                              >
-                                View
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </ListItem>
-                      ))}
-                      {(!selectedBill.documents || selectedBill.documents.length === 0) && (
-                        <ListItem>
-                          <Typography variant="body1">No documents available</Typography>
-                        </ListItem>
-                      )}
-                    </List>
-                  </Paper>
-                )}
-                
-                {tabValue === 3 && (
-                  <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                      Bill Sponsors
-                    </Typography>
-                    <Grid container spacing={3}>
-                      {selectedBill.sponsorships && selectedBill.sponsorships.map((sponsor, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                          <Paper 
-                            elevation={0} 
+                          <Box 
                             sx={{ 
-                              p: 2, 
-                              borderRadius: 2, 
-                              bgcolor: 'background.default',
+                              display: 'flex', 
+                              flexDirection: 'column',
                               height: '100%'
                             }}
                           >
                             <Box 
                               sx={{ 
                                 display: 'flex', 
-                                flexDirection: 'column',
-                                height: '100%'
+                                alignItems: 'center', 
+                                mb: 2 
                               }}
                             >
-                              <Box 
-                                sx={{ 
-                                  display: 'flex', 
-                                  alignItems: 'center', 
-                                  mb: 2 
+                              <Avatar
+                                sx={{
+                                  bgcolor: 'primary.main',
+                                  width: 40,
+                                  height: 40,
+                                  mr: 2,
                                 }}
                               >
-                                <Avatar
-                                  sx={{
-                                    bgcolor: 'primary.main',
-                                    width: 40,
-                                    height: 40,
-                                    mr: 2,
-                                  }}
-                                >
-                                  {sponsor.name && sponsor.name.charAt(0)}
-                                </Avatar>
-                                <Box>
-                                  <Typography variant="subtitle1">
-                                    {sponsor.name}
-                                  </Typography>
-                                  <Typography variant="body2" color="text.secondary">
-                                    {sponsor.classification || 'Sponsor'}
-                                  </Typography>
-                                </Box>
-                              </Box>
-                              
-                              {sponsor.primary && (
-                                <Chip 
-                                  label="Primary Sponsor" 
-                                  color="primary" 
-                                  size="small" 
-                                  sx={{ alignSelf: 'flex-start', mb: 1 }}
-                                />
-                              )}
-                              
-                              {sponsor.entity_type && (
-                                <Typography variant="body2" color="text.secondary">
-                                  <strong>Type:</strong> {sponsor.entity_type}
+                                {sponsor.name && sponsor.name.charAt(0)}
+                              </Avatar>
+                              <Box>
+                                <Typography variant="subtitle1">
+                                  {sponsor.name}
                                 </Typography>
-                              )}
+                                <Typography variant="body2" color="text.secondary">
+                                  {sponsor.classification || 'Sponsor'}
+                                </Typography>
+                              </Box>
                             </Box>
-                          </Paper>
-                        </Grid>
-                      ))}
-                      {(!selectedBill.sponsorships || selectedBill.sponsorships.length === 0) && (
-                        <Grid item xs={12}>
-                          <Typography variant="body1">No sponsor information available</Typography>
-                        </Grid>
-                      )}
-                    </Grid>
-                  </Paper>
-                )}
+                            
+                            {sponsor.primary && (
+                              <Chip 
+                                label="Primary Sponsor" 
+                                color="primary" 
+                                size="small" 
+                                sx={{ alignSelf: 'flex-start', mb: 1 }}
+                              />
+                            )}
+                            
+                            {sponsor.entity_type && (
+                              <Typography variant="body2" color="text.secondary">
+                                <strong>Type:</strong> {sponsor.entity_type}
+                              </Typography>
+                            )}
+                          </Box>
+                        </Paper>
+                      </Grid>
+                    ))}
+                    {(!selectedBill.sponsorships || selectedBill.sponsorships.length === 0) && (
+                      <Grid item xs={12}>
+                        <Typography variant="body1">No sponsor information available</Typography>
+                      </Grid>
+                    )}
+                  </Grid>
+                </Paper>
+              )}
               </Box>
             </>
           )}

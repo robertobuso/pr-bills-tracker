@@ -1,3 +1,4 @@
+// server.js update
 const express = require('express');
 const { exec } = require('child_process');
 const cors = require('cors');
@@ -17,8 +18,8 @@ app.post('/api/download-documents', (req, res) => {
     // Sanitize the URL to prevent command injection
     const sanitizedUrl = sutraUrl.replace(/[^a-zA-Z0-9/:.-]/g, '');
 
-    // Execute the Python script
-    exec(`python sutra_scraper.py "${sanitizedUrl}"`, (error, stdout, stderr) => {
+    // Execute the ENHANCED Python scraper
+    exec(`python sutra_scraper_enhanced.py "${sanitizedUrl}"`, (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return res.status(500).json({ success: false, error: 'Failed to download documents.' });
