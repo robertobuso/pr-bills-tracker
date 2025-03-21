@@ -32,11 +32,9 @@ const DocumentViewer = ({ document }) => {
     const [zoom, setZoom] = useState(1);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const containerRef = useRef(null);
+    const [documentData, setDocumentData] = useState(null);
+    const [retryCount, setRetryCount] = useState(0);
 
-    const proxyUrl = process.env.NODE_ENV === 'production'
-    ? `/api/proxy-document?url=${encodeURIComponent(document.link_url)}`
-    : `http://localhost:3001/api/proxy-document?url=${encodeURIComponent(document.link_url)}`;
-  
     // Determine document type from URL
     const getDocumentType = (url) => {
     if (!url) return 'unknown';
@@ -50,6 +48,12 @@ const DocumentViewer = ({ document }) => {
 
     return 'unknown';
     };
+
+    const getProxyUrl = (url) => {
+        return process.env.NODE_ENV === 'production'
+          ? `/api/proxy-document?url=${encodeURIComponent(url)}`
+          : `http://localhost:3001/api/proxy-document?url=${encodeURIComponent(url)}`;
+      };
 
     const documentType = getDocumentType(document.link_url);
 
@@ -89,62 +93,88 @@ const DocumentViewer = ({ document }) => {
     };
 
     useEffect(() => {
+        if (!document.link_url) {
+          setError('No document URL provided');
+          setLoading(false);
+          return;
+        }
+      
+        // Reset state when document changes
+        setLoading(true);
+        setError(null);
+        setNumPages(null);
+        setPageNumber(1);
+        setDocumentData(null);
+      
+        // For DOCX files, pre-load them using the proxy
         if (documentType === 'docx' || documentType === 'doc') {
-        const loadDocx = async () => {
+          const loadDocx = async () => {
             try {
-            setLoading(true);
-            
-            // Create a proxy URL to handle CORS issues
-            let docUrl = document.link_url;
-            
-            // If it's a .doc file, treat it as .docx by adding 'x' to the extension
-            if (docUrl.toLowerCase().endsWith('.doc') && !docUrl.toLowerCase().endsWith('.docx')) {
-                console.log("Converting .doc URL to .docx for viewing:", docUrl);
-                docUrl = docUrl + 'x';
-            }
-            
-            const proxyUrl = `/api/proxy-document?url=${encodeURIComponent(docUrl)}`;
-            console.log("Loading DOCX from proxy:", proxyUrl);
-            
-            // Add timeout to prevent hanging
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
-            
-            const response = await fetch(proxyUrl, { 
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId); // Clear the timeout
-            
-            if (!response.ok) {
+              setLoading(true);
+              
+              // Create proxy URL for the document
+              const proxyUrl = getProxyUrl(document.link_url);
+              
+              console.log(`Loading document: ${document.link_url} via proxy: ${proxyUrl}`);
+              
+              // Add timeout to prevent hanging
+              const controller = new AbortController();
+              const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+              
+              const response = await fetch(proxyUrl, { 
+                signal: controller.signal,
+                headers: {
+                  'Cache-Control': 'no-cache',
+                  'Pragma': 'no-cache'
+                }
+              });
+              
+              clearTimeout(timeoutId); // Clear the timeout
+              
+              if (!response.ok) {
                 throw new Error(`HTTP error ${response.status}`);
-            }
-            
-            const blob = await response.blob();
-            
-            if (containerRef.current) {
-                await renderAsync(blob, containerRef.current, null, {
-                className: 'docx-viewer'
-                });
-            }
-            setLoading(false);
+              }
+              
+              const blob = await response.blob();
+              
+              if (containerRef.current) {
+                try {
+                  await renderAsync(blob, containerRef.current, null, {
+                    className: 'docx-viewer'
+                  });
+                  setLoading(false);
+                } catch (renderError) {
+                  console.error('Error rendering DOCX:', renderError);
+                  throw new Error(`Failed to render document: ${renderError.message}`);
+                }
+              }
             } catch (err) {
-            // Handle AbortController timeout
-            if (err.name === 'AbortError') {
+              // Handle AbortController timeout
+              if (err.name === 'AbortError') {
                 console.error('Request timed out loading DOCX');
                 setError('Request timed out. The document may be too large or the server is not responding.');
-            } else {
+              } else {
                 console.error('Error loading DOCX:', err);
                 setError(`Failed to load document: ${err.message}`);
+              }
+              setLoading(false);
             }
-            setLoading(false);
-            }
-        };
-        
-        loadDocx();
+          };
+          
+          loadDocx();
+        } else if (documentType === 'pdf') {
+          // For PDFs, use the proxy URL with react-pdf
+          const proxyUrl = getProxyUrl(document.link_url);
+          console.log(`Loading PDF: ${document.link_url} via proxy: ${proxyUrl}`);
+          setDocumentData(proxyUrl); // Store the proxy URL to use in the Document component
+        } else {
+          // Unsupported document types
+          setError(`Document type ${documentType} is not supported for preview. Please download to view.`);
+          setLoading(false);
         }
-    }, [documentType, document.link_url]);
-
+      }, [document.link_url, documentType, retryCount]);
+      
+      
     // Prepare the document display based on type
     const renderDocument = () => {
         // First check if document URL is valid
@@ -171,16 +201,23 @@ const DocumentViewer = ({ document }) => {
 
         if (error) {
             return (
-            <Box sx={{ p: 2, bgcolor: 'error.light', borderRadius: 1 }}>
-                <Typography color="error">{error}</Typography>
+            <Box sx={{ p: 2, bgcolor: 'error.light', borderRadius: 1, textAlign: 'center' }}>
+                <Typography color="error" paragraph>{error}</Typography>
                 <Button 
                 href={document.link_url} 
                 target="_blank" 
                 variant="contained" 
-                sx={{ mt: 2 }}
+                sx={{ mt: 2, mr: 2 }}
                 startIcon={<DownloadIcon />}
                 >
-                Download Original
+                Download Document
+                </Button>
+                <Button 
+                variant="outlined" 
+                sx={{ mt: 2 }}
+                onClick={() => setRetryCount(prev => prev + 1)}
+                >
+                Retry Loading
                 </Button>
             </Box>
             );
@@ -191,7 +228,7 @@ const DocumentViewer = ({ document }) => {
                 return (
                 <Box sx={{ overflow: 'auto' }}>
                     <Document
-                    file={document.link_url}
+                    file={documentData}                  
                     onLoadSuccess={onDocumentLoadSuccess}
                     onLoadError={onDocumentLoadError}
                     loading={

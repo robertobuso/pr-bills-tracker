@@ -519,8 +519,10 @@ def scrape_and_download(url, output_dir="scraped_data"):
 
     # Check if we're applying the monkey patch 
     if download_and_process_doc.__name__ == 'patched_download_func':
-        logger.info("Skipping document downloads due to --no-extract flag")
+        logger.info("IMPORTANT: Document downloads SKIPPED due to --no-extract flag")
         processed_documents = [download_and_process_doc(doc, output_dir) for doc in all_documents]
+        # Add timing info
+        logger.info(f"Processed {len(processed_documents)} document metadata in NO DOWNLOAD mode")
     else:
         # Use ThreadPoolExecutor to download files in parallel WITHOUT text extraction
         logger.info(f"Starting parallel download of {len(all_documents)} documents (no text extraction)")

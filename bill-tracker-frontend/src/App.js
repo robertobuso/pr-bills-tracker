@@ -581,6 +581,7 @@ function App() {
     
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today.getTime() - (24 * 60 * 60 * 1000));
     
     return bills.reduce((groups, bill) => {
       // Extract the best date for this bill with rich metadata
@@ -589,24 +590,28 @@ function App() {
       let dateStr = 'No Date Available';
       
       if (dateObj && isValid(dateObj)) {
-        // Format the date for display
-        dateStr = formatBillDate(dateObj);
+        // Normalize dates to midnight for comparison
+        const dateMidnight = new Date(dateObj);
+        dateMidnight.setHours(0, 0, 0, 0);
         
-        // Categorize very recent dates as "Today" or "Yesterday"
-        const billDate = new Date(dateObj);
-        billDate.setHours(0, 0, 0, 0);
+        // Today's date at midnight
+        const todayMidnight = new Date(today);
+        todayMidnight.setHours(0, 0, 0, 0);
         
-        if (billDate.getTime() === today.getTime()) {
+        // Yesterday's date at midnight
+        const yesterdayMidnight = new Date(yesterday);
+        yesterdayMidnight.setHours(0, 0, 0, 0);
+        
+        // Compare dates using time values for precise equality
+        if (dateMidnight.getTime() === todayMidnight.getTime()) {
           dateStr = 'Today';
+        } else if (dateMidnight.getTime() === yesterdayMidnight.getTime()) {
+          dateStr = 'Yesterday';
         } else {
-          const yesterday = new Date(today);
-          yesterday.setDate(yesterday.getDate() - 1);
-          
-          if (billDate.getTime() === yesterday.getTime()) {
-            dateStr = 'Yesterday';
-          }
+          // For older dates, format by date
+          dateStr = formatBillDate(dateObj);
         }
-      }
+      }      
       
       // Add metadata for sorting and display
       const billWithMeta = {

@@ -20,26 +20,53 @@ const PUERTO_RICO_TIMEZONE = 'America/Puerto_Rico'; // AST (UTC-4)
 const extractBestDate = (bill, type = 'latest') => {
   if (!bill) return { date: null, source: 'no_bill' };
 
-  // For latest action date, try multiple sources in order of reliability
+  // Helper function to validate date is in a reasonable range
+  const isReasonableDate = (dateObj) => {
+    if (!dateObj || isNaN(dateObj.getTime())) return false;
+    const year = dateObj.getFullYear();
+    // Check year is reasonable (between 1900 and 2050)
+    if (year < 1900 || year > 2050) {
+      // Try to fix obviously wrong years (like 8019 → 2019)
+      if (year > 2100) {
+        const fixedYear = year.toString().substring(1);
+        if (fixedYear >= 1900 && fixedYear <= 2050) {
+          // Create new date with fixed year
+          dateObj.setFullYear(parseInt(fixedYear));
+          return true;
+        }
+      }
+      return false;
+    }
+    return true;
+  };
+  
+  // Process dates with validation
   if (type === 'latest') {
     // 1. First check the actions array (most reliable source)
     if (bill.actions && bill.actions.length > 0) {
-      // Sort actions by date descending to ensure we get the latest
       const sortedActions = [...bill.actions].sort((a, b) => {
-        const dateA = a.date ? parseISO(a.date) : null;
-        const dateB = b.date ? parseISO(b.date) : null;
+        if (!a.date && !b.date) return 0;
+        if (!a.date) return 1;
+        if (!b.date) return -1;
         
-        if (!dateA && !dateB) return 0;
-        if (!dateA) return 1;
-        if (!dateB) return -1;
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
         
-        return compareDesc(dateA, dateB);
+        // Validate dates are reasonable
+        const validA = isReasonableDate(dateA);
+        const validB = isReasonableDate(dateB);
+        
+        if (!validA && !validB) return 0;
+        if (!validA) return 1;
+        if (!validB) return -1;
+        
+        return dateB - dateA; // Newest first
       });
       
       const latestAction = sortedActions[0];
       if (latestAction && latestAction.date) {
-        const date = parseISO(latestAction.date);
-        if (isValid(date) && !isFuture(date)) {
+        const date = new Date(latestAction.date);
+        if (isReasonableDate(date)) {
           return { 
             date, 
             source: 'actions_array',

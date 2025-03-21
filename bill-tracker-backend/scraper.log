@@ -4057,3 +4057,279 @@ SCRAPER SUMMARY:
 2025-03-20 18:36:13,870 - INFO - Events found: 11
 2025-03-20 18:36:13,870 - INFO - Commissions found: 0
 2025-03-20 18:36:13,871 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-21 13:16:37,437 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/153856
+2025-03-21 13:16:37,438 - INFO - Skip document downloads: True
+2025-03-21 13:16:37,439 - INFO - Installing ChromeDriver...
+2025-03-21 13:16:37,439 - INFO - ====== WebDriver manager ======
+2025-03-21 13:16:56,184 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:16:56,450 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:16:56,607 - INFO - There is no [mac64] chromedriver "134.0.6998.165" for browser google-chrome "134.0.6998" in cache
+2025-03-21 13:16:56,628 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:16:57,268 - INFO - WebDriver version 134.0.6998.165 selected
+2025-03-21 13:16:57,327 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/134.0.6998.165/mac-x64/chromedriver-mac-x64.zip
+2025-03-21 13:16:57,335 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/134.0.6998.165/mac-x64/chromedriver-mac-x64.zip
+2025-03-21 13:16:57,611 - INFO - Driver downloading response is 200
+2025-03-21 13:16:57,999 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:16:58,315 - INFO - Driver has been saved in cache [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.165]
+2025-03-21 13:16:58,319 - INFO - Creating ChromeService...
+2025-03-21 13:16:58,319 - INFO - Initializing Chrome WebDriver...
+2025-03-21 13:17:03,685 - INFO - Setting page load timeout...
+2025-03-21 13:17:03,694 - INFO - Loading URL: https://sutra.oslpr.org/medidas/153856
+2025-03-21 13:17:04,246 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-21 13:17:05,211 - INFO - Page loaded successfully.
+2025-03-21 13:17:10,227 - INFO - Page source saved to page_source.html
+2025-03-21 13:17:10,242 - INFO - Found measure number: Proyecto del Senado (PS0348)
+2025-03-21 13:17:10,243 - INFO - Found filing date: 02/19/2025
+2025-03-21 13:17:10,244 - INFO - Found title: Para crear la “Ley de Inteligencia Artificial como...
+2025-03-21 13:17:10,248 - INFO - Found documents tab
+2025-03-21 13:17:10,250 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-21 13:17:10,251 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-21 13:17:10,251 - INFO - Found 3 general documents
+2025-03-21 13:17:10,252 - INFO - Found 4 event items
+2025-03-21 13:17:10,253 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-21 13:17:10,385 - INFO - Found 4 documents
+2025-03-21 13:17:10,385 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-21 13:17:10,393 - INFO - Data structure collected from scraping:
+2025-03-21 13:17:10,393 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0348)",
+  "title": "Para crear la “Ley de Inteligencia Artificial como herramienta de trabajo e instruccional para estudiantes y maestros en el Departamento de Educación de Puerto Rico” y establecer el marco legal; para el uso ético y responsable de la inteligencia artificial (IA) en el sistema educativo de Puerto Rico, con el objetivo de mejorar la calidad de la enseñanza; personalizar el aprendizaje y preparar a los estudiantes para un futuro impulsado por la IA; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "02/19/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Luis A. Negrón López",
+      "fecha": "03/28/2025",
+      "documents": [],
+      "comision": "Comisión de Educación, Arte y Cultura",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "02/20/2025",
+      "documents": [],
+      "comision": "Comisión de Educación, Arte y Cultura",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "02/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "02/19/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/153856/ps0348-25.doc",
+          "description": "ps0348-25.doc"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-21 13:17:10,396 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-21 13:17:10,397 - INFO - Cleaned up debug file: page_source.html
+2025-03-21 13:17:10,398 - INFO - Results saved to result.json
+2025-03-21 13:17:10,398 - INFO - 
+SCRAPER SUMMARY:
+2025-03-21 13:17:10,399 - INFO - Measure Number: Proyecto del Senado (PS0348)
+2025-03-21 13:17:10,399 - INFO - Title: Para crear la “Ley de Inteligencia Artificial como herramienta de trabajo e instruccional para estudiantes y maestros en el Departamento de Educación de Puerto Rico” y establecer el marco legal; para el uso ético y responsable de la inteligencia artificial (IA) en el sistema educativo de Puerto Rico, con el objetivo de mejorar la calidad de la enseñanza; personalizar el aprendizaje y preparar a los estudiantes para un futuro impulsado por la IA; y para otros fines relacionados.
+2025-03-21 13:17:10,399 - INFO - Status: None
+2025-03-21 13:17:10,399 - INFO - Events found: 4
+2025-03-21 13:17:10,399 - INFO - Commissions found: 0
+2025-03-21 13:17:10,399 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-21 13:30:49,812 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/154327
+2025-03-21 13:30:49,813 - INFO - Skip document downloads: True
+2025-03-21 13:30:49,813 - INFO - Installing ChromeDriver...
+2025-03-21 13:30:49,814 - INFO - ====== WebDriver manager ======
+2025-03-21 13:30:51,093 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:30:51,334 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:30:51,493 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.165/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-21 13:30:51,494 - INFO - Creating ChromeService...
+2025-03-21 13:30:51,495 - INFO - Initializing Chrome WebDriver...
+2025-03-21 13:30:58,960 - INFO - Setting page load timeout...
+2025-03-21 13:30:58,963 - INFO - Loading URL: https://sutra.oslpr.org/medidas/154327
+2025-03-21 13:30:59,583 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-21 13:31:00,860 - INFO - Page loaded successfully.
+2025-03-21 13:31:05,888 - INFO - Page source saved to page_source.html
+2025-03-21 13:31:05,909 - INFO - Found measure number: Proyecto de la Cámara (PC0425)
+2025-03-21 13:31:05,910 - INFO - Found filing date: 03/19/2025
+2025-03-21 13:31:05,914 - INFO - Found title: Para adoptar la “Ley para el Fomento del Uso de Co...
+2025-03-21 13:31:05,921 - INFO - Found documents tab
+2025-03-21 13:31:05,924 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-21 13:31:05,924 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-21 13:31:05,925 - INFO - Found 3 general documents
+2025-03-21 13:31:05,926 - INFO - Found 3 event items
+2025-03-21 13:31:05,928 - INFO - Extracted 3 tramites and 0 votaciones
+2025-03-21 13:31:06,225 - INFO - Found 4 documents
+2025-03-21 13:31:06,225 - INFO - Skipping document downloads due to --no-extract flag
+2025-03-21 13:31:06,226 - INFO - Data structure collected from scraping:
+2025-03-21 13:31:06,226 - INFO - {
+  "measure_number": "Proyecto de la Cámara (PC0425)",
+  "title": "Para adoptar la “Ley para el Fomento del Uso de Controles Parentales Digitales en Puerto Rico” con el propósito de asignar deberes y responsabilidades al Departamento de Asuntos del Consumidor (DACO), al Puerto Rico Innovation and Technology Service (PRITS) y a la Junta Reglamentadora del Servicio Público de Puerto Rico a los fines de orientar y promover activamente entre la ciudadanía el uso de controles parentales en dispositivos electrónicos y proteger a los menores de edad que navegan en internet y utilizan otras tecnologías digitales; y para otros fines.",
+  "status": null,
+  "filing_date": "03/19/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "comision": "Comisión de Asuntos del Consumidor",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura de la Cámara",
+      "fecha": "03/20/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "03/19/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/154327/PC0425.docx",
+          "description": "PC0425.docx"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-21 13:31:06,232 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-21 13:31:06,232 - INFO - Cleaned up debug file: page_source.html
+2025-03-21 13:31:06,241 - INFO - Results saved to result.json
+2025-03-21 13:31:06,242 - INFO - 
+SCRAPER SUMMARY:
+2025-03-21 13:31:06,242 - INFO - Measure Number: Proyecto de la Cámara (PC0425)
+2025-03-21 13:31:06,242 - INFO - Title: Para adoptar la “Ley para el Fomento del Uso de Controles Parentales Digitales en Puerto Rico” con el propósito de asignar deberes y responsabilidades al Departamento de Asuntos del Consumidor (DACO), al Puerto Rico Innovation and Technology Service (PRITS) y a la Junta Reglamentadora del Servicio Público de Puerto Rico a los fines de orientar y promover activamente entre la ciudadanía el uso de controles parentales en dispositivos electrónicos y proteger a los menores de edad que navegan en internet y utilizan otras tecnologías digitales; y para otros fines.
+2025-03-21 13:31:06,242 - INFO - Status: None
+2025-03-21 13:31:06,242 - INFO - Events found: 3
+2025-03-21 13:31:06,242 - INFO - Commissions found: 0
+2025-03-21 13:31:06,242 - INFO - NOTE: Document downloading was skipped due to --no-extract flag
+2025-03-21 13:35:23,511 - INFO - Starting scraper for URL: https://sutra.oslpr.org/osl/esutra/MedidaReg.aspx?rid=129800
+2025-03-21 13:35:23,518 - INFO - Skip document downloads: True
+2025-03-21 13:35:23,518 - INFO - Installing ChromeDriver...
+2025-03-21 13:35:23,518 - INFO - ====== WebDriver manager ======
+2025-03-21 13:35:24,792 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:35:24,997 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 13:35:25,162 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.165/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-21 13:35:25,163 - INFO - Creating ChromeService...
+2025-03-21 13:35:25,163 - INFO - Initializing Chrome WebDriver...
+2025-03-21 13:35:31,407 - INFO - Setting page load timeout...
+2025-03-21 13:35:31,412 - INFO - Loading URL: https://sutra.oslpr.org/osl/esutra/MedidaReg.aspx?rid=129800
+2025-03-21 13:35:32,791 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-21 13:35:42,925 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-21 13:35:43,541 - INFO - Waiting for elements to load (attempt 2/5)...
+2025-03-21 13:36:03,707 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-21 13:36:04,379 - INFO - Waiting for elements to load (attempt 3/5)...
+2025-03-21 13:36:44,608 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-21 13:36:45,205 - INFO - Waiting for elements to load (attempt 4/5)...
+2025-03-21 13:38:05,599 - WARNING - Timeout waiting for page to load. Retrying...
+2025-03-21 13:38:06,365 - INFO - Waiting for elements to load (attempt 5/5)...
+2025-03-21 13:40:46,933 - ERROR - Selenium error: Message: 
+. Screenshot saved to error_screenshot.png
+2025-03-21 13:40:47,284 - ERROR - Selenium error: Message: 
+
+2025-03-21 14:01:16,949 - INFO - Starting scraper for URL: https://sutra.oslpr.org/medidas/152670
+2025-03-21 14:01:16,957 - INFO - Skip document downloads: True
+2025-03-21 14:01:16,958 - INFO - Installing ChromeDriver...
+2025-03-21 14:01:16,958 - INFO - ====== WebDriver manager ======
+2025-03-21 14:01:29,763 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 14:01:29,992 - INFO - Get LATEST chromedriver version for google-chrome
+2025-03-21 14:01:30,146 - INFO - Driver [/Users/flatironschool/.wdm/drivers/chromedriver/mac64/134.0.6998.165/chromedriver-mac-x64/chromedriver] found in cache
+2025-03-21 14:01:30,147 - INFO - Creating ChromeService...
+2025-03-21 14:01:30,149 - INFO - Initializing Chrome WebDriver...
+2025-03-21 14:01:32,605 - INFO - Setting page load timeout...
+2025-03-21 14:01:32,607 - INFO - Loading URL: https://sutra.oslpr.org/medidas/152670
+2025-03-21 14:01:33,404 - INFO - Waiting for elements to load (attempt 1/5)...
+2025-03-21 14:01:33,449 - INFO - Page loaded successfully.
+2025-03-21 14:01:38,465 - INFO - Page source saved to page_source.html
+2025-03-21 14:01:38,484 - INFO - Found measure number: Proyecto del Senado (PS0136)
+2025-03-21 14:01:38,485 - INFO - Found filing date: 01/02/2025
+2025-03-21 14:01:38,487 - INFO - Found title: Para crear la “Ley de Entrevista Forense Grabada”;...
+2025-03-21 14:01:38,491 - INFO - Found documents tab
+2025-03-21 14:01:38,492 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-21 14:01:38,492 - INFO - Skipping User-Manual file in extraction: /User-Manual.pdf
+2025-03-21 14:01:38,492 - INFO - Found 3 general documents
+2025-03-21 14:01:38,493 - INFO - Found 4 event items
+2025-03-21 14:01:38,495 - INFO - Extracted 4 tramites and 0 votaciones
+2025-03-21 14:01:38,673 - INFO - Found 4 documents
+2025-03-21 14:01:38,673 - INFO - IMPORTANT: Document downloads SKIPPED due to --no-extract flag
+2025-03-21 14:01:38,673 - INFO - Processed 4 document metadata in NO DOWNLOAD mode
+2025-03-21 14:01:38,674 - INFO - Data structure collected from scraping:
+2025-03-21 14:01:38,674 - INFO - {
+  "measure_number": "Proyecto del Senado (PS0136)",
+  "title": "Para crear la “Ley de Entrevista Forense Grabada”; y para enmendar la Regla 131.1 de las de Procedimiento Criminal de 1963, según enmendadas, con el propósito de establecer como política pública del Estado Libre Asociado de Puerto Rico el uso de entrevistas forenses grabadas en las etapas investigativas y preliminares al juicio cuando exista alegaciones sobre maltrato o abuso sexual contra menores de edad; evitar la revictimización de las víctimas; y para otros fines relacionados.",
+  "status": null,
+  "filing_date": "01/02/2025",
+  "authors": [],
+  "origin_chamber": null,
+  "current_chamber": null,
+  "topic": null,
+  "other_data": {},
+  "comisiones": [],
+  "eventos": [
+    {
+      "descripcion": "Vista Pública: Salón Miguel Angel García Méndez",
+      "fecha": "04/04/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Referido a Comisión(es)",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "comision": "Comisión De Lo Jurídico",
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Aparece en Primera Lectura del Senado",
+      "fecha": "01/16/2025",
+      "documents": [],
+      "tipo": "tramite"
+    },
+    {
+      "descripcion": "Radicado",
+      "fecha": "01/02/2025",
+      "documents": [
+        {
+          "link_url": "https://sutra.oslpr.org/SutraFilesGen/152670/ps0136-25.doc",
+          "description": "ps0136-25.doc"
+        }
+      ],
+      "tipo": "tramite"
+    }
+  ]
+}
+2025-03-21 14:01:38,677 - INFO - Saved structured data to scraped_data/scraped_data.json
+2025-03-21 14:01:38,677 - INFO - Cleaned up debug file: page_source.html
+2025-03-21 14:01:38,677 - INFO - Cleaned up debug file: error_screenshot.png
+2025-03-21 14:01:38,678 - INFO - Cleaned up debug file: loading_attempt_1.png
+2025-03-21 14:01:38,678 - INFO - Cleaned up debug file: loading_attempt_2.png
+2025-03-21 14:01:38,679 - INFO - Cleaned up debug file: loading_attempt_3.png
+2025-03-21 14:01:38,680 - INFO - Cleaned up debug file: loading_attempt_4.png
+2025-03-21 14:01:38,682 - INFO - Results saved to result.json
+2025-03-21 14:01:38,683 - INFO - 
+SCRAPER SUMMARY:
+2025-03-21 14:01:38,683 - INFO - Measure Number: Proyecto del Senado (PS0136)
+2025-03-21 14:01:38,683 - INFO - Title: Para crear la “Ley de Entrevista Forense Grabada”; y para enmendar la Regla 131.1 de las de Procedimiento Criminal de 1963, según enmendadas, con el propósito de establecer como política pública del Estado Libre Asociado de Puerto Rico el uso de entrevistas forenses grabadas en las etapas investigativas y preliminares al juicio cuando exista alegaciones sobre maltrato o abuso sexual contra menores de edad; evitar la revictimización de las víctimas; y para otros fines relacionados.
+2025-03-21 14:01:38,683 - INFO - Status: None
+2025-03-21 14:01:38,683 - INFO - Events found: 4
+2025-03-21 14:01:38,683 - INFO - Commissions found: 0
+2025-03-21 14:01:38,684 - INFO - NOTE: Document downloading was skipped due to --no-extract flag

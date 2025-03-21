@@ -7,13 +7,12 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-// Improved CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://your-production-domain.com', 'http://localhost:3000'] 
     : 'http://localhost:3000',
   methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control', 'Pragma']
 }));
 
 app.use(express.json());
