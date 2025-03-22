@@ -299,26 +299,24 @@ app.post('/api/process-document', (req, res) => {
   const { documentUrl } = req.body;
 
   if (!documentUrl) {
-      console.error("Missing documentUrl parameter");
-      return res.status(400).json({ success: false, error: 'Document URL is required.' });
+    console.error("Missing documentUrl parameter");
+    return res.status(400).json({ success: false, error: 'Document URL is required.' });
   }
 
   // Sanitize the URL
-  // Allow spaces, parentheses, and brackets in URLs by using encodeURIComponent instead of sanitization
   const safeUrl = encodeURIComponent(documentUrl);
-  // When passing to Python, we need to decode it again so Python can use it
   const decodedForPython = decodeURIComponent(safeUrl);
-  
+
   console.log(`Processing document on demand: ${safeUrl}`);
-  
+
   // Create a temporary Python script to process just this document
   const tempFileName = path.join(__dirname, 'temp', `process_doc_${Date.now()}.py`);
   const tempDir = path.join(__dirname, 'temp');
-  
+
   if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir);
+    fs.mkdirSync(tempDir);
   }
-  
+
   // Write Python code to process just this document
   const pythonCode = `
 import sys
@@ -342,41 +340,54 @@ print(json.dumps(result))
 `;
 
   fs.writeFileSync(tempFileName, pythonCode);
-  
+
   // Execute the Python code with a reasonable timeout
   exec(`python3 ${tempFileName}`, { timeout: 30000 }, (error, stdout, stderr) => {
-      // Clean up the temp file
-      try {
-        // Parse the result
-        if (!stdout || stdout.trim() === '') {
-            console.error('Document processor returned empty output');
-            return res.status(500).json({ 
-                success: false, 
-                error: 'Document processor returned empty output.'
-            });
+    // Clean up the temp file
+    try {
+      // Parse the result
+      if (!stdout || stdout.trim() === '') {
+        console.error('Document processor returned empty output');
+        return res.status(500).json({
+          success: false,
+          error: 'Document processor returned empty output.'
+        });
+      }
+
+      // Log the raw output for debugging
+      console.log("Raw Python output:", stdout);
+
+      // Clean the output - find the first { and last } to extract valid JSON
+      let jsonStr = stdout.trim();
+      const firstBrace = jsonStr.indexOf('{');
+      const lastBrace = jsonStr.lastIndexOf('}');
+
+      if (firstBrace !== -1 && lastBrace !== -1) {
+        jsonStr = jsonStr.substring(firstBrace, lastBrace + 1);
+      }
+
+      // Try parsing the cleaned JSON
+      const result = JSON.parse(jsonStr);
+      console.log(`Successfully processed document: ${documentUrl}`);
+
+      // **CHANGE: Send the PDF file instead of the JSON result**
+      if (result && result.downloaded && result.filepath) {
+        const filePath = result.filepath;
+
+        if (fs.existsSync(filePath)) {
+          res.setHeader('Content-Type', 'application/pdf');
+          fs.createReadStream(filePath).pipe(res);
+        } else {
+          console.error(`PDF file not found: ${filePath}`);
+          res.status(404).json({ success: false, error: 'PDF file not found.' });
         }
-        
-        // Log the raw output for debugging
-        console.log("Raw Python output:", stdout);
-        
-        // Clean the output - find the first { and last } to extract valid JSON
-        let jsonStr = stdout.trim();
-        const firstBrace = jsonStr.indexOf('{');
-        const lastBrace = jsonStr.lastIndexOf('}');
-        
-        if (firstBrace !== -1 && lastBrace !== -1) {
-            jsonStr = jsonStr.substring(firstBrace, lastBrace + 1);
-        }
-        
-        // Try parsing the cleaned JSON
-        const result = JSON.parse(jsonStr);
-        console.log(`Successfully processed document: ${documentUrl}`);
-        
-        // Send the result to the client
-        res.json(result);
+      } else {
+        console.error('PDF processing failed or filepath missing.');
+        res.status(500).json({ success: false, error: 'PDF processing failed.' });
+      }
     } catch (parseError) {
-        console.error(`JSON parse error: ${parseError}`);
-        console.error(`Raw Python output: ${stdout}`);
+      console.error(`JSON parse error: ${parseError}`);
+      console.error(`Raw Python output: ${stdout}`);
         
         // Try to extract the JSON manually as a fallback
         try {

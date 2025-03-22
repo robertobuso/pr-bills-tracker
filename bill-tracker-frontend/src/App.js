@@ -274,17 +274,20 @@ function App() {
     }
   }, [handleOpen]);  // Empty dependency array ensures this only runs once on mount
 
-  // Handles on-demand document loading
   const handleDocumentLoad = async (documentUrl) => {
+    return handleDocumentLoadParent(documentUrl); // Simply call the parent handler
+  };
+
+  const handleDocumentLoadParent = async (documentUrl) => {
     try {
       // If document is already downloaded, just return it
       if (selectedBill?.eventos) {
         // Check if this document is already loaded in any evento
         for (const evento of selectedBill.eventos) {
           if (evento.documents) {
-            const existingDoc = evento.documents.find(doc => 
+            const existingDoc = evento.documents.find(doc =>
               doc.link_url === documentUrl && doc.downloaded);
-            
+
             if (existingDoc) {
               console.log(`Document already downloaded: ${documentUrl}`);
               return existingDoc;
@@ -292,22 +295,22 @@ function App() {
           }
         }
       }
-      
+
       // Document not loaded, fetch it now
       console.log(`Loading document on demand: ${documentUrl}`);
-      
+
       // Call our new document loading function
       const result = await loadDocumentOnDemand(documentUrl);
-      
+
       if (!result.error) {
         // Update the document in all eventos where it appears
         const updatedBill = { ...selectedBill };
         let updatedAnyDocument = false;
-        
+
         if (updatedBill.eventos) {
           updatedBill.eventos = updatedBill.eventos.map(evento => {
             if (!evento.documents) return evento;
-            
+
             const updatedDocuments = evento.documents.map(doc => {
               if (doc.link_url === documentUrl) {
                 updatedAnyDocument = true;
@@ -315,16 +318,16 @@ function App() {
               }
               return doc;
             });
-            
+
             return { ...evento, documents: updatedDocuments };
           });
         }
-        
+
         if (updatedAnyDocument) {
           setSelectedBill(updatedBill);
         }
       }
-      
+
       return result;
     } catch (error) {
       console.error(`Error loading document: ${error.message}`);
@@ -1729,12 +1732,12 @@ function App() {
               )}
 
               {tabValue === 1 && selectedBill && (
-                <EventosView 
-                  eventos={selectedBill.eventos} 
-                  isLoading={selectedBill.loading?.timeline}
-                  onDocumentLoad={handleDocumentLoad}  // This calls loadDocumentOnDemand
-                />
-              )}
+                  <EventosView 
+                    eventos={selectedBill.eventos} 
+                    isLoading={selectedBill.loading?.timeline}
+                    onDocumentLoad={handleDocumentLoadParent} // Use the new parent handler
+                  />
+                )}
               
               {tabValue === 2 && (
                 <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>
