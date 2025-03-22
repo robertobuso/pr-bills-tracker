@@ -29,3 +29,52 @@
 2025-03-22 10:13:25,158 - INFO - Found 4 event items
 2025-03-22 10:13:25,159 - INFO - Processed 4 events in 0.46 seconds
 2025-03-22 10:13:25,159 - INFO - FAST SCRAPE: Completed in 0.46 seconds
+2025-03-22 10:21:19,533 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153856
+2025-03-22 10:21:19,949 - INFO - Found 4 event items
+2025-03-22 10:21:19,955 - INFO - Processed 4 events in 0.42 seconds
+2025-03-22 10:21:19,957 - INFO - FAST SCRAPE: Completed in 0.42 seconds
+2025-03-22 10:21:27,010 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/153856/ps0348-25.doc
+2025-03-22 10:21:27,651 - INFO - Successfully downloaded document to scraped_data/046f2655a6d9c2a05b0557a52aee8ea2.doc
+2025-03-22 10:31:18,336 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153856
+2025-03-22 10:31:18,890 - INFO - Found 4 event items
+2025-03-22 10:31:18,891 - INFO - Processed 4 events in 0.55 seconds
+2025-03-22 10:31:18,891 - INFO - FAST SCRAPE: Completed in 0.55 seconds
+2025-03-22 10:39:55,981 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153856
+2025-03-22 10:39:56,599 - INFO - Found 4 event items
+2025-03-22 10:39:56,600 - INFO - Processed 4 events in 0.62 seconds
+2025-03-22 10:39:56,600 - INFO - FAST SCRAPE: Completed in 0.62 seconds
+2025-03-22 10:44:56,937 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153856
+2025-03-22 10:44:57,355 - INFO - Found 4 event items
+2025-03-22 10:44:57,356 - INFO - Processed 4 events in 0.42 seconds
+2025-03-22 10:44:57,357 - INFO - FAST SCRAPE: Completed in 0.42 seconds
+2025-03-22 10:45:37,757 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154361
+2025-03-22 10:45:38,261 - INFO - Found 1 event items
+2025-03-22 10:45:38,262 - INFO - Processed 1 events in 0.50 seconds
+2025-03-22 10:45:38,262 - INFO - FAST SCRAPE: Completed in 0.50 seconds
+2025-03-22 10:45:55,366 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154314
+2025-03-22 10:45:55,704 - INFO - Found 3 event items
+2025-03-22 10:45:55,705 - INFO - Processed 3 events in 0.34 seconds
+2025-03-22 10:45:55,706 - INFO - FAST SCRAPE: Completed in 0.34 seconds
+2025-03-22 10:46:02,289 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/154314/RC0208.docx
+2025-03-22 10:46:02,814 - INFO - Successfully downloaded document to scraped_data/fdafb4f7ca09eefcbe6adab61a697198.docx
+2025-03-22 10:46:17,484 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152791
+2025-03-22 10:46:17,867 - INFO - Found 5 event items
+2025-03-22 10:46:17,868 - INFO - Processed 5 events in 0.38 seconds
+2025-03-22 10:46:17,868 - INFO - FAST SCRAPE: Completed in 0.38 seconds
+2025-03-22 10:46:25,855 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/152791/ps0180-25.doc
+2025-03-22 10:46:26,388 - INFO - Successfully downloaded document to scraped_data/206fc2e720fc2aed3aca7ad8f1e7b151.doc
+2025-03-22 10:46:52,533 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153567
+2025-03-22 10:46:52,968 - INFO - Found 18 event items
+2025-03-22 10:46:52,975 - INFO - Processed 15 events in 0.44 seconds
+2025-03-22 10:46:52,975 - INFO - Processing 3 additional events with remaining time
+2025-03-22 10:46:52,976 - INFO - FAST SCRAPE: Completed in 0.44 seconds
+2025-03-22 10:47:07,796 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/153567/rs0038-Inf (1er Parcial).doc
+2025-03-22 10:47:08,601 - INFO - Successfully downloaded document to scraped_data/3dc1e8713bb92e564a741d72b84c5c84.doc
+2025-03-22 10:47:16,119 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/153567/MeasuresAndVotes (1)-9.pdf
+2025-03-22 10:47:16,617 - INFO - Successfully downloaded document to scraped_data/dd82d1457f51cf724bf90f3cab884d3b.pdf
+2025-03-22 10:47:28,358 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/153567/rs0038a-25.doc
+2025-03-22 10:47:28,886 - INFO - Successfully downloaded document to scraped_data/dcb92bca45ab1a8c85e7b8644f00a5a3.doc
+2025-03-22 10:47:35,318 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/153567/rs0038-Inf.docx
+2025-03-22 10:47:35,740 - INFO - Successfully downloaded document to scraped_data/ad79bc999919bb6f70a5dd979f26a4db.docx
+2025-03-22 10:47:43,634 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/153567/rs0038-ent.doc
+2025-03-22 10:47:44,147 - INFO - Successfully downloaded document to scraped_data/32393d2664fe6be0e1ecd54c018fc00f.doc

@@ -238,6 +238,8 @@ app.post('/api/fast-bill-info', (req, res) => {
       return res.status(400).json({ success: false, error: 'Sutra URL is required.' });
   }
 
+  const sanitizedUrl = sutraUrl.replace(/[^\w\-\:\/\.\?\=\&\%]/g, '');
+
   if (sanitizedUrl !== sutraUrl) {
       console.warn(`URL was sanitized: ${sutraUrl} -> ${sanitizedUrl}`);
   }
@@ -307,7 +309,7 @@ app.post('/api/process-document', (req, res) => {
   // When passing to Python, we need to decode it again so Python can use it
   const decodedForPython = decodeURIComponent(safeUrl);
   
-  console.log(`Processing document on demand: ${sanitizedUrl}`);
+  console.log(`Processing document on demand: ${safeUrl}`);
   
   // Create a temporary Python script to process just this document
   const tempFileName = path.join(__dirname, 'temp', `process_doc_${Date.now()}.py`);
@@ -342,46 +344,59 @@ print(json.dumps(result))
   fs.writeFileSync(tempFileName, pythonCode);
   
   // Execute the Python code with a reasonable timeout
-  exec(`python3 ${tempFileName}`, { timeout: 15000 }, (error, stdout, stderr) => {
+  exec(`python3 ${tempFileName}`, { timeout: 30000 }, (error, stdout, stderr) => {
       // Clean up the temp file
       try {
-          fs.unlinkSync(tempFileName);
-      } catch (err) {
-          console.error(`Error removing temp file: ${err}`);
-      }
-      
-      if (error) {
-          console.error(`Document processing error: ${error}`);
-          console.error(`Stderr: ${stderr}`);
-          return res.status(500).json({ 
-              success: false, 
-              error: 'Failed to process document.', 
-              details: stderr 
-          });
-      }
-
-      try {
-          // Parse the result
-          if (!stdout || stdout.trim() === '') {
-              console.error('Document processor returned empty output');
-              return res.status(500).json({ 
-                  success: false, 
-                  error: 'Document processor returned empty output.'
-              });
-          }
-          
-          const result = JSON.parse(stdout);
-          console.log(`Successfully processed document: ${sanitizedUrl}`);
-          res.json(result);
-      } catch (parseError) {
-          console.error(`JSON parse error: ${parseError}`);
-          console.error(`Raw Python output: ${stdout}`);
-          res.status(500).json({ 
-              success: false, 
-              error: 'Failed to parse document processor output.', 
-              rawOutput: stdout.substring(0, 1000)
-          });
-      }
+        // Parse the result
+        if (!stdout || stdout.trim() === '') {
+            console.error('Document processor returned empty output');
+            return res.status(500).json({ 
+                success: false, 
+                error: 'Document processor returned empty output.'
+            });
+        }
+        
+        // Log the raw output for debugging
+        console.log("Raw Python output:", stdout);
+        
+        // Clean the output - find the first { and last } to extract valid JSON
+        let jsonStr = stdout.trim();
+        const firstBrace = jsonStr.indexOf('{');
+        const lastBrace = jsonStr.lastIndexOf('}');
+        
+        if (firstBrace !== -1 && lastBrace !== -1) {
+            jsonStr = jsonStr.substring(firstBrace, lastBrace + 1);
+        }
+        
+        // Try parsing the cleaned JSON
+        const result = JSON.parse(jsonStr);
+        console.log(`Successfully processed document: ${documentUrl}`);
+        
+        // Send the result to the client
+        res.json(result);
+    } catch (parseError) {
+        console.error(`JSON parse error: ${parseError}`);
+        console.error(`Raw Python output: ${stdout}`);
+        
+        // Try to extract the JSON manually as a fallback
+        try {
+            // The rawOutput seems to contain valid JSON, let's extract it with a regex
+            const jsonMatch = stdout.match(/{[\s\S]*}/);
+            if (jsonMatch) {
+                const extractedJson = JSON.parse(jsonMatch[0]);
+                console.log("Successfully extracted JSON from output.");
+                return res.json(extractedJson);
+            }
+        } catch (extractError) {
+            console.error("Failed to extract JSON: ", extractError);
+        }
+        
+        return res.status(500).json({ 
+            success: false, 
+            error: 'Failed to parse document processor output.', 
+            rawOutput: stdout.substring(0, 1000)
+        });
+    }
   });
 });
 
