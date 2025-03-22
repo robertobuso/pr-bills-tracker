@@ -169,64 +169,79 @@ print(json.dumps(result))
 });
 
 app.get('/api/proxy-document', async (req, res) => {
-    const { url } = req.query;
-    
-    if (!url) {
-      return res.status(400).json({ error: 'URL parameter is required' });
-    }
-    
-    console.log(`Proxying document: ${url}`);
-    
-    try {
-    // Use the URL as-is without sanitization
-    const response = await axios({
-      method: 'GET',
-      url: url,
-      responseType: 'stream',
-      timeout: 30000,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': '*/*',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      },
-      httpsAgent: new (require('https').Agent)({ 
-        rejectUnauthorized: false
-      })
-    });
-
-      // Set headers to avoid caching issues
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.setHeader('Pragma', 'no-cache');
-      res.setHeader('Expires', '0');
+  const { url } = req.query;
+  
+  if (!url) {
+    return res.status(400).json({ error: 'URL parameter is required' });
+  }
+  
+  console.log(`Proxying document: ${url}`);
+  
+  try {
+      // Use node-fetch (or native http) for better binary handling
+      const https = require('https');
+      const http = require('http');
       
-      // Set appropriate content type based on file extension
-      if (url.toLowerCase().endsWith('.pdf')) {
-        res.setHeader('Content-Type', 'application/pdf');
-      } else if (url.toLowerCase().endsWith('.docx')) {
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-      } else if (url.toLowerCase().endsWith('.doc')) {
-        res.setHeader('Content-Type', 'application/msword');
-      }
+      // Determine which protocol to use
+      const protocol = url.startsWith('https') ? https : http;
       
-      // Pass through original headers that might help with format detection
-      const contentType = response.headers['content-type'];
-      if (contentType) {
-        res.setHeader('Content-Type', contentType);
-      }
-      
-      // Pipe the document stream to the response
-      response.data.pipe(res);
-      
-    } catch (error) {
-      console.error('Error proxying document:', error.message);
-      res.status(500).json({ 
-        error: 'Failed to proxy document', 
-        details: error.message,
-        url: url
+      // Make a request using the native Node.js HTTP(S) module
+      const request = protocol.get(url, {
+          headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+              'Accept': '*/*',
+          },
+          rejectUnauthorized: false, // Allow self-signed certificates
+      }, (response) => {
+          // Log the received headers
+          console.log(`Received response from upstream with status ${response.statusCode}`);
+          console.log(`Content-Type: ${response.headers['content-type']}`);
+          console.log(`Content-Length: ${response.headers['content-length'] || 'unknown'}`);
+          
+          // Set appropriate response headers
+          res.setHeader('Content-Type', response.headers['content-type'] || 'application/pdf');
+          
+          // Pass other important headers
+          if (response.headers['content-length']) {
+              res.setHeader('Content-Length', response.headers['content-length']);
+          }
+          
+          // Set caching headers (to prevent caching issues)
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+          res.setHeader('Pragma', 'no-cache');
+          res.setHeader('Expires', '0');
+          
+          // Pipe the response directly to the client
+          response.pipe(res);
+          
+          // Handle end of response
+          response.on('end', () => {
+              console.log('Proxy document streaming completed successfully');
+          });
       });
-    }
-  });
+      
+      // Handle request errors
+      request.on('error', (err) => {
+          console.error('Document proxy request error:', err);
+          res.status(500).json({ error: err.message });
+      });
+      
+      // Set a timeout for the request
+      request.setTimeout(30000, () => {
+          request.destroy();
+          console.error('Document proxy request timeout');
+          res.status(504).json({ error: 'Request timed out' });
+      });
+      
+  } catch (error) {
+      console.error('Error proxying document:', error);
+      res.status(500).json({ 
+          error: 'Failed to proxy document', 
+          details: error.message,
+          url: url
+      });
+  }
+});
 
 // Fast document loading
 app.post('/api/fast-bill-info', (req, res) => {
@@ -407,6 +422,52 @@ print(json.dumps(result))
             error: 'Failed to parse document processor output.', 
             rawOutput: stdout.substring(0, 1000)
         });
+    }
+  });
+});
+
+app.get('/api/serve-document/:filename', (req, res) => {
+  const { filename } = req.params;
+  
+  // Sanitize filename to prevent directory traversal attacks
+  const sanitizedFilename = filename.replace(/[^a-zA-Z0-9_.-]/g, '');
+  
+  // Construct the full file path
+  const filePath = path.join(__dirname, 'scraped_data', sanitizedFilename);
+  
+  console.log(`Serving document from path: ${filePath}`);
+  
+  // Check if file exists
+  if (!fs.existsSync(filePath)) {
+    console.error(`File not found: ${filePath}`);
+    return res.status(404).json({ error: 'File not found' });
+  }
+  
+  // Determine content type based on extension
+  const ext = path.extname(filePath).toLowerCase();
+  let contentType = 'application/octet-stream'; // Default
+  
+  if (ext === '.pdf') {
+    contentType = 'application/pdf';
+  } else if (ext === '.docx') {
+    contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  } else if (ext === '.doc') {
+    contentType = 'application/msword';
+  }
+  
+  // Set headers
+  res.setHeader('Content-Type', contentType);
+  res.setHeader('Content-Disposition', `inline; filename="${sanitizedFilename}"`);
+  
+  // Stream the file
+  const fileStream = fs.createReadStream(filePath);
+  fileStream.pipe(res);
+  
+  // Handle errors
+  fileStream.on('error', (err) => {
+    console.error(`Error streaming file: ${err.message}`);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Error serving file' });
     }
   });
 });

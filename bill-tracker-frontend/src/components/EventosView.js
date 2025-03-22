@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Typography,
   Paper,
@@ -51,10 +51,11 @@ const formatDate = (dateString) => {
 };
 
 const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const [expandedEvents, setExpandedEvents] = useState({});
-  const [documentStates, setDocumentStates] = useState({}); // Track document loading states
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [expandedEvents, setExpandedEvents] = useState({});
+    const [documentStates, setDocumentStates] = useState({}); 
+    const requestsRef = useRef({});
   
   // Initialize document loading states
   useEffect(() => {
@@ -132,10 +133,15 @@ const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
       [index]: !prev[index]
     }));
   };
-  
-  // Handle document download/loading on demand
+
   const handleDocumentLoad = async (eventoIndex, docIndex, documentUrl) => {
     const docKey = `${eventoIndex}-${docIndex}`;
+    
+    // Check if we're already loading this document using the ref
+    if (requestsRef.current[documentUrl]) {
+      console.log(`Already loading document: ${documentUrl}, skipping duplicate request`);
+      return requestsRef.current[documentUrl];
+    }
     
     // Set loading state
     setDocumentStates(prev => ({
@@ -143,47 +149,58 @@ const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
       [docKey]: { ...prev[docKey], loading: true, error: null }
     }));
     
-    try {
-      // Call the parent's document loading function
-      const result = await onDocumentLoad(documentUrl);
-      
-      // Update document states based on result
-      setDocumentStates(prev => ({
-        ...prev,
-        [docKey]: { 
-          loading: false, 
-          loaded: !result.error, 
-          error: result.error || null
-        }
-      }));
-      
-      // Also update the document in the eventos array
-      if (!result.error) {
-        const updatedEventos = [...sortedEventos];
-        updatedEventos[eventoIndex].documents[docIndex] = {
-          ...updatedEventos[eventoIndex].documents[docIndex],
-          ...result
-        };
+    // Create a promise for this request
+    const requestPromise = (async () => {
+      try {
+        console.log(`Loading document: ${documentUrl}`);
         
-        // We would need to update the parent state here, but we'll rely on the 
-        // parent component having already updated its state in onDocumentLoad
+        // Call the parent's document loading function
+        const result = await onDocumentLoad(documentUrl);
+        
+        // Update document states based on result
+        setDocumentStates(prev => ({
+          ...prev,
+          [docKey]: { 
+            loading: false, 
+            loaded: !result.error, 
+            error: result.error || null
+          }
+        }));
+        
+        console.log(`Document loading complete for ${documentUrl}:`, result);
+        
+        // Remove from pending requests
+        delete requestsRef.current[documentUrl];
+        
+        return result;
+      } catch (error) {
+        // Handle error
+        console.error(`Error loading document ${documentUrl}:`, error);
+        
+        setDocumentStates(prev => ({
+          ...prev,
+          [docKey]: { 
+            loading: false, 
+            loaded: false, 
+            error: error.message || 'Failed to load document'
+          }
+        }));
+        
+        // Remove from pending requests
+        delete requestsRef.current[documentUrl];
+        
+        return {
+          link_url: documentUrl,
+          error: error.message || 'Failed to load document',
+          downloaded: false
+        };
       }
-      
-      return result;
-    } catch (error) {
-      // Handle error
-      setDocumentStates(prev => ({
-        ...prev,
-        [docKey]: { 
-          loading: false, 
-          loaded: false, 
-          error: error.message || 'Failed to load document'
-        }
-      }));
-      
-      console.error('Error loading document:', error);
-      return null;
-    }
+    })();
+    
+    // Save the promise to our tracking ref
+    requestsRef.current[documentUrl] = requestPromise;
+    
+    return requestPromise;
   };
 
   return (
