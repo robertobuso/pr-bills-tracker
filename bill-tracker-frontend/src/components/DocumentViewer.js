@@ -177,32 +177,32 @@ const DocumentViewer = ({ document }) => {
 
     // Helper function to render PDF in an iframe
     const renderPdfWithIframe = () => {
-        // Check if we have a direct file URL from the server's filesystem
         const directFileUrl = getDirectFileUrl();
-        
-        // Use the direct file URL if available, otherwise use the proxy URL
         const iframeUrl = directFileUrl || getProxyUrl(document.link_url);
-        
-        console.log(`Rendering PDF with iframe URL: ${iframeUrl}`);
-        
-        return (
-          <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
-            <iframe
-              src={iframeUrl}
-              style={{
-                width: '100%',
-                height: '100%',
-                border: 'none',
-                overflow: 'hidden'
-              }}
-              title="PDF Document"
-              onLoad={() => console.log('PDF iframe loaded successfully')}
-              onError={(e) => console.error('PDF iframe loading error:', e)}
-            />
-          </Box>
-        );
-      };
 
+        console.log("[renderPdfWithIframe] Function called. Iframe URL:", iframeUrl); // Log iframe URL
+
+        const iframeJSX = ( // Store JSX in a variable
+            <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
+                <iframe
+                    src={iframeUrl}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        overflow: 'hidden'
+                    }}
+                    title="PDF Document"
+                    onLoad={() => console.log('[renderPdfWithIframe] Iframe loaded successfully')}
+                    onError={(e) => console.error('[renderPdfWithIframe] Iframe loading error:', e)}
+                />
+            </Box>
+        );
+
+        console.log("[renderPdfWithIframe] Returning JSX:", iframeJSX); // Log returned JSX
+        return iframeJSX; // Return the JSX variable
+    };
+    
     useEffect(() => {
         // Add a request tracking flag to prevent duplicate requests
         let isCurrentRequest = true;
@@ -338,6 +338,7 @@ const DocumentViewer = ({ document }) => {
     
     // Prepare the document display based on type
     const renderDocument = () => {
+        console.log("[renderDocument] Function called. Document type:", documentType);
         // First check if document URL is valid
         if (!document.link_url || typeof document.link_url !== 'string') {
             return (
@@ -414,112 +415,112 @@ const DocumentViewer = ({ document }) => {
 
         switch (documentType) {
             case 'pdf':
-                // First check if we have a direct file URL (most reliable)
-                const directFileUrl = getDirectFileUrl();
-                
-                // If we have a direct file URL, use a simple iframe approach
-                if (directFileUrl) {
-                    return (
-                    <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
-                        <iframe
-                        src={directFileUrl}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            border: 'none',
-                            overflow: 'hidden'
-                        }}
-                        title={document.description || "PDF Document"}
-                        />
-                    </Box>
-                    );
-                }
-                
-                // If user clicked to use iframe instead (for proxy approach)
-                if (useIframeInstead) {
-                    return renderPdfWithIframe();
-                }
-                
+            // First check if we have a direct file URL (most reliable)
+            const directFileUrl = getDirectFileUrl();
+            
+            // If we have a direct file URL, use a simple iframe approach
+            if (directFileUrl) {
                 return (
-                    <Box sx={{ overflow: 'auto' }}>
-                        {documentData ? (
-                            // First try with object tag (most compatible)
-                            <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
-                                <object
-                                    data={URL.createObjectURL(documentData)}
-                                    type="application/pdf"
-                                    width="100%"
-                                    height="100%"
-                                    style={{ border: 'none' }}
-                                >
-                                    {/* Fallback to react-pdf if object tag fails */}
-                                    <Document
-                                        file={documentData}                  
-                                        onLoadSuccess={onDocumentLoadSuccess}
-                                        onLoadError={(error) => {
-                                            console.error('Error in react-pdf:', error);
-                                            // If react-pdf fails, suggest using iframe
-                                            setError(`PDF viewer error: ${error.message}. Try the iframe viewer instead.`);
-                                        }}
-                                        loading={
-                                            <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-                                                <CircularProgress />
-                                            </Box>
-                                        }
-                                        options={{
-                                            cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
-                                            cMapPacked: true,
-                                            withCredentials: false,
-                                            disableStream: true,
-                                            disableAutoFetch: true,
-                                        }}
-                                    >
-                                        <Page 
-                                            pageNumber={pageNumber} 
-                                            scale={zoom}
-                                            renderTextLayer={false}
-                                            renderAnnotationLayer={false}
-                                            error={
-                                                <Typography color="error" align="center">
-                                                    Failed to load page.
-                                                </Typography>
-                                            }
-                                        />
-                                    </Document>
-                                </object>
-                            </Box>
-                        ) : (
-                            <Box sx={{ p: 4, textAlign: 'center' }}>
-                                <Typography color="error">
-                                    No document data available.
-                                </Typography>
-                                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
-                                    <Button 
-                                        variant="outlined" 
-                                        onClick={handleRetry}
-                                        startIcon={<RefreshIcon />}
-                                    >
-                                        Retry
-                                    </Button>
-                                    <Button 
-                                        variant="outlined"
-                                        onClick={() => setUseIframeInstead(true)}
-                                    >
-                                        Try Iframe Viewer
-                                    </Button>
-                                    <Button 
-                                        href={document.link_url} 
-                                        target="_blank"
-                                        variant="contained" 
-                                        startIcon={<DownloadIcon />}
-                                    >
-                                        Download PDF
-                                    </Button>
-                                </Box>
-                            </Box>
-                        )}
-                    </Box>
+                <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
+                    <iframe
+                    src={directFileUrl}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                        overflow: 'hidden'
+                    }}
+                    title={document.description || "PDF Document"}
+                    />
+                </Box>
                 );
+            }
+            
+            // If user clicked to use iframe instead (for proxy approach)
+            if (useIframeInstead) {
+                return renderPdfWithIframe();
+            }
+            
+            return (
+                <Box sx={{ overflow: 'auto' }}>
+                    {documentData ? (
+                        // First try with object tag (most compatible)
+                        <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
+                            <object
+                                data={URL.createObjectURL(documentData)}
+                                type="application/pdf"
+                                width="100%"
+                                height="100%"
+                                style={{ border: 'none' }}
+                            >
+                                {/* Fallback to react-pdf if object tag fails */}
+                                <Document
+                                    file={documentData}                  
+                                    onLoadSuccess={onDocumentLoadSuccess}
+                                    onLoadError={(error) => {
+                                        console.error('Error in react-pdf:', error);
+                                        // If react-pdf fails, suggest using iframe
+                                        setError(`PDF viewer error: ${error.message}. Try the iframe viewer instead.`);
+                                    }}
+                                    loading={
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                                            <CircularProgress />
+                                        </Box>
+                                    }
+                                    options={{
+                                        cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
+                                        cMapPacked: true,
+                                        withCredentials: false,
+                                        disableStream: true,
+                                        disableAutoFetch: true,
+                                    }}
+                                >
+                                    <Page 
+                                        pageNumber={pageNumber} 
+                                        scale={zoom}
+                                        renderTextLayer={false}
+                                        renderAnnotationLayer={false}
+                                        error={
+                                            <Typography color="error" align="center">
+                                                Failed to load page.
+                                            </Typography>
+                                        }
+                                    />
+                                </Document>
+                            </object>
+                        </Box>
+                    ) : (
+                        <Box sx={{ p: 4, textAlign: 'center' }}>
+                            <Typography color="error">
+                                No document data available.
+                            </Typography>
+                            <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
+                                <Button 
+                                    variant="outlined" 
+                                    onClick={handleRetry}
+                                    startIcon={<RefreshIcon />}
+                                >
+                                    Retry
+                                </Button>
+                                <Button 
+                                    variant="outlined"
+                                    onClick={() => setUseIframeInstead(true)}
+                                >
+                                    Try Iframe Viewer
+                                </Button>
+                                <Button 
+                                    href={document.link_url} 
+                                    target="_blank"
+                                    variant="contained" 
+                                    startIcon={<DownloadIcon />}
+                                >
+                                    Download PDF
+                                </Button>
+                            </Box>
+                        </Box>
+                    )}
+                </Box>
+            );
         
             case 'docx':
                 return (
@@ -698,7 +699,8 @@ const DocumentViewer = ({ document }) => {
                     </Tooltip>
                 </Box>
             </Box>
-            
+
+            {console.log("[DocumentViewer] Rendering renderDocument result")}
             {renderDocument()}
             
             {documentType === 'pdf' && numPages > 0 && !useIframeInstead && (

@@ -170,76 +170,59 @@ print(json.dumps(result))
 
 app.get('/api/proxy-document', async (req, res) => {
   const { url } = req.query;
-  
+
   if (!url) {
     return res.status(400).json({ error: 'URL parameter is required' });
   }
-  
+
   console.log(`Proxying document: ${url}`);
-  
+
   try {
-      // Use node-fetch (or native http) for better binary handling
-      const https = require('https');
-      const http = require('http');
-      
-      // Determine which protocol to use
-      const protocol = url.startsWith('https') ? https : http;
-      
-      // Make a request using the native Node.js HTTP(S) module
-      const request = protocol.get(url, {
-          headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-              'Accept': '*/*',
-          },
-          rejectUnauthorized: false, // Allow self-signed certificates
-      }, (response) => {
-          // Log the received headers
-          console.log(`Received response from upstream with status ${response.statusCode}`);
-          console.log(`Content-Type: ${response.headers['content-type']}`);
-          console.log(`Content-Length: ${response.headers['content-length'] || 'unknown'}`);
-          
-          // Set appropriate response headers
-          res.setHeader('Content-Type', response.headers['content-type'] || 'application/pdf');
-          
-          // Pass other important headers
-          if (response.headers['content-length']) {
-              res.setHeader('Content-Length', response.headers['content-length']);
-          }
-          
-          // Set caching headers (to prevent caching issues)
-          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-          res.setHeader('Pragma', 'no-cache');
-          res.setHeader('Expires', '0');
-          
-          // Pipe the response directly to the client
-          response.pipe(res);
-          
-          // Handle end of response
-          response.on('end', () => {
-              console.log('Proxy document streaming completed successfully');
-          });
-      });
-      
-      // Handle request errors
-      request.on('error', (err) => {
-          console.error('Document proxy request error:', err);
-          res.status(500).json({ error: err.message });
-      });
-      
-      // Set a timeout for the request
-      request.setTimeout(30000, () => {
-          request.destroy();
-          console.error('Document proxy request timeout');
-          res.status(504).json({ error: 'Request timed out' });
-      });
-      
+    const response = await axios.get(url, { // Use axios.get instead of http/https.get
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': '*/*',
+      },
+      responseType: 'stream', // Important:  Get response as a stream for piping
+      validateStatus: status => status >= 200 && status < 400, // Ensure axios doesn't throw error for 3xx redirects (it will follow them)
+      httpsAgent: new require('https').Agent({ rejectUnauthorized: false }), // Keep rejectUnauthorized: false
+    });
+
+    console.log(`Received response from upstream with status ${response.status}`);
+    console.log(`Content-Type: ${response.headers['content-type']}`);
+    console.log(`Content-Length: ${response.headers['content-length'] || 'unknown'}`);
+
+    // Set appropriate response headers from the upstream response
+    res.setHeader('Content-Type', response.headers['content-type'] || 'application/pdf');
+    if (response.headers['content-length']) {
+      res.setHeader('Content-Length', response.headers['content-length']);
+    }
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+
+
+    // Pipe the response stream directly to the client
+    response.data.pipe(res); // Pipe response.data (which is a stream from axios)
+
+    response.data.on('end', () => {
+      console.log('Proxy document streaming completed successfully');
+    });
+    response.data.on('error', (err) => {
+      console.error('Upstream document stream error:', err);
+      if (!res.headersSent) {
+        res.status(500).json({ error: 'Upstream stream error', details: err.message });
+      }
+    });
+
+
   } catch (error) {
-      console.error('Error proxying document:', error);
-      res.status(500).json({ 
-          error: 'Failed to proxy document', 
-          details: error.message,
-          url: url
-      });
+    console.error('Error proxying document:', error);
+    res.status(500).json({
+      error: 'Failed to proxy document',
+      details: error.message,
+      url: url
+    });
   }
 });
 
