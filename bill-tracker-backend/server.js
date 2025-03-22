@@ -17,7 +17,6 @@ app.use(cors({
 
 app.use(express.json());
 
-// Add a health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({ 
       status: 'up', 
@@ -37,6 +36,7 @@ app.post('/api/download-documents', (req, res) => {
 
     // Improved sanitization that allows more URL characters
     const sanitizedUrl = sutraUrl.replace(/[^\w\-\:\/\.\?\=\&\%]/g, '');
+    
     
     if (sanitizedUrl !== sutraUrl) {
         console.warn(`URL was sanitized: ${sutraUrl} -> ${sanitizedUrl}`);
@@ -178,6 +178,23 @@ app.get('/api/proxy-document', async (req, res) => {
     console.log(`Proxying document: ${url}`);
     
     try {
+    // Use the URL as-is without sanitization
+    const response = await axios({
+      method: 'GET',
+      url: url,
+      responseType: 'stream',
+      timeout: 30000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': '*/*',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      },
+      httpsAgent: new (require('https').Agent)({ 
+        rejectUnauthorized: false
+      })
+    });
+
       // Set headers to avoid caching issues
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.setHeader('Pragma', 'no-cache');
@@ -191,20 +208,6 @@ app.get('/api/proxy-document', async (req, res) => {
       } else if (url.toLowerCase().endsWith('.doc')) {
         res.setHeader('Content-Type', 'application/msword');
       }
-      
-      // Stream the file directly without additional processing
-      // Add httpsAgent with rejectUnauthorized: false to ignore SSL certificate errors
-      const response = await axios({
-        method: 'GET',
-        url: url,
-        responseType: 'stream',
-        timeout: 30000,
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': '*/*'
-        },
-        httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
-      });
       
       // Pass through original headers that might help with format detection
       const contentType = response.headers['content-type'];
@@ -224,6 +227,163 @@ app.get('/api/proxy-document', async (req, res) => {
       });
     }
   });
+
+// Fast document loading
+app.post('/api/fast-bill-info', (req, res) => {
+  console.log("Received fast bill info request:", req.body);
+  const { sutraUrl } = req.body;
+
+  if (!sutraUrl) {
+      console.error("Missing sutraUrl parameter");
+      return res.status(400).json({ success: false, error: 'Sutra URL is required.' });
+  }
+
+  if (sanitizedUrl !== sutraUrl) {
+      console.warn(`URL was sanitized: ${sutraUrl} -> ${sanitizedUrl}`);
+  }
+
+  console.log(`Executing fast Python scraper with URL: ${sanitizedUrl}`);
+  
+  // Execute our new optimized fast scraper with a timeout
+  exec(`python3 fast_scraper.py "${sanitizedUrl}" --fast`, { timeout: 3000 }, (error, stdout, stderr) => {
+      if (error) {
+          console.error(`Fast scraper exec error: ${error}`);
+          console.error(`Stderr: ${stderr}`);
+          return res.status(500).json({ 
+              success: false, 
+              error: 'Fast scraping failed.', 
+              details: stderr,
+              errorCode: error.code === 'ETIMEDOUT' ? 'TIMEOUT' : error.code
+          });
+      }
+
+      try {
+          // Parse the JSON output from the Python script
+          console.log("Fast scraper completed successfully");
+          
+          // Check if stdout is empty
+          if (!stdout || stdout.trim() === '') {
+              console.error('Fast scraper returned empty output');
+              return res.status(500).json({ 
+                  success: false, 
+                  error: 'Fast scraper returned empty output.'
+              });
+          }
+          
+          const result = JSON.parse(stdout);
+          console.log(`Fast scraper parsed result with ${result.eventos?.length || 0} eventos`);
+          
+          // Add timing info if not already present
+          if (!result.scrape_time) {
+              result.scrape_time = 'unknown';
+          }
+          
+          // Send the result to the client
+          res.json(result);
+      } catch (parseError) {
+          console.error(`JSON parse error: ${parseError}`);
+          console.error(`Raw Python output: ${stdout}`);
+          res.status(500).json({ 
+              success: false, 
+              error: 'Failed to parse Python script output.', 
+              rawOutput: stdout.substring(0, 1000) // Limit output size
+          });
+      }
+  });
+});
+
+// On-demand document processing
+app.post('/api/process-document', (req, res) => {
+  const { documentUrl } = req.body;
+
+  if (!documentUrl) {
+      console.error("Missing documentUrl parameter");
+      return res.status(400).json({ success: false, error: 'Document URL is required.' });
+  }
+
+  // Sanitize the URL
+  // Allow spaces, parentheses, and brackets in URLs by using encodeURIComponent instead of sanitization
+  const safeUrl = encodeURIComponent(documentUrl);
+  // When passing to Python, we need to decode it again so Python can use it
+  const decodedForPython = decodeURIComponent(safeUrl);
+  
+  console.log(`Processing document on demand: ${sanitizedUrl}`);
+  
+  // Create a temporary Python script to process just this document
+  const tempFileName = path.join(__dirname, 'temp', `process_doc_${Date.now()}.py`);
+  const tempDir = path.join(__dirname, 'temp');
+  
+  if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir);
+  }
+  
+  // Write Python code to process just this document
+  const pythonCode = `
+import sys
+sys.path.append('.')
+from fast_scraper import on_demand_document_processor
+import json
+import urllib3
+import urllib.parse
+
+# Disable SSL warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# URL needs to be raw - we'll decode it in Python
+url = """${documentUrl}"""
+
+# Process just this document
+result = on_demand_document_processor(url, "scraped_data")
+
+# Print the result as JSON
+print(json.dumps(result))
+`;
+
+  fs.writeFileSync(tempFileName, pythonCode);
+  
+  // Execute the Python code with a reasonable timeout
+  exec(`python3 ${tempFileName}`, { timeout: 15000 }, (error, stdout, stderr) => {
+      // Clean up the temp file
+      try {
+          fs.unlinkSync(tempFileName);
+      } catch (err) {
+          console.error(`Error removing temp file: ${err}`);
+      }
+      
+      if (error) {
+          console.error(`Document processing error: ${error}`);
+          console.error(`Stderr: ${stderr}`);
+          return res.status(500).json({ 
+              success: false, 
+              error: 'Failed to process document.', 
+              details: stderr 
+          });
+      }
+
+      try {
+          // Parse the result
+          if (!stdout || stdout.trim() === '') {
+              console.error('Document processor returned empty output');
+              return res.status(500).json({ 
+                  success: false, 
+                  error: 'Document processor returned empty output.'
+              });
+          }
+          
+          const result = JSON.parse(stdout);
+          console.log(`Successfully processed document: ${sanitizedUrl}`);
+          res.json(result);
+      } catch (parseError) {
+          console.error(`JSON parse error: ${parseError}`);
+          console.error(`Raw Python output: ${stdout}`);
+          res.status(500).json({ 
+              success: false, 
+              error: 'Failed to parse document processor output.', 
+              rawOutput: stdout.substring(0, 1000)
+          });
+      }
+  });
+});
 
 app.listen(port, () => {
     console.log(`Bill Tracker server listening at http://localhost:${port}`);

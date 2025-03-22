@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Paper,
   Box,
   Grid,
   Chip,
-  List,
   Card,
   CardContent,
   CardActions,
   Divider,
-  IconButton,
-  Tooltip,
   Collapse,
   Button,
+  CircularProgress,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Skeleton
 } from '@mui/material';
 import DescriptionIcon from '@mui/icons-material/Description';
 import EventIcon from '@mui/icons-material/Event';
@@ -24,35 +23,78 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import BusinessIcon from '@mui/icons-material/Business';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import DocumentViewer from './DocumentViewer';
 
 // Format date function from your existing code
 const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
+  if (!dateString) return 'N/A';
+  
+  try {
+    const date = new Date(dateString);
     
-    try {
-      const date = new Date(dateString);
-      
-      // Check if date is valid
-      if (isNaN(date.getTime())) {
-        return 'Invalid Date';
-      }
-      
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    } catch (error) {
-      console.error(`Error formatting date: ${dateString}`, error);
-      return 'Date Error';
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+      return 'Invalid Date';
     }
-  };
+    
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  } catch (error) {
+    console.error(`Error formatting date: ${dateString}`, error);
+    return 'Date Error';
+  }
+};
 
-const EventosView = ({ eventos }) => {
+const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [expandedEvents, setExpandedEvents] = useState({});
+  const [documentStates, setDocumentStates] = useState({}); // Track document loading states
+  
+  // Initialize document loading states
+  useEffect(() => {
+    if (eventos && eventos.length > 0) {
+      const initialDocumentStates = {};
+      
+      eventos.forEach((evento, eventoIndex) => {
+        if (evento.documents && evento.documents.length > 0) {
+          evento.documents.forEach((doc, docIndex) => {
+            const docKey = `${eventoIndex}-${docIndex}`;
+            initialDocumentStates[docKey] = {
+              loading: false,
+              loaded: !!doc.downloaded,
+              error: doc.error || null
+            };
+          });
+        }
+      });
+      
+      setDocumentStates(initialDocumentStates);
+    }
+  }, [eventos]);
+
+  if (isLoading) {
+    // Show skeleton loaders during loading
+    return (
+      <Box sx={{ position: 'relative' }}>
+        <Typography variant="h6" gutterBottom sx={{ mb: 4 }}>
+          Bill Timeline
+        </Typography>
+        
+        {/* Skeleton loaders for events */}
+        {Array(5).fill().map((_, index) => (
+          <Box key={index} sx={{ mb: 4 }}>
+            <Skeleton variant="rectangular" width="100%" height={120} sx={{ borderRadius: 2 }} />
+          </Box>
+        ))}
+      </Box>
+    );
+  }
 
   if (!eventos || eventos.length === 0) {
     return (
@@ -89,6 +131,59 @@ const EventosView = ({ eventos }) => {
       ...prev,
       [index]: !prev[index]
     }));
+  };
+  
+  // Handle document download/loading on demand
+  const handleDocumentLoad = async (eventoIndex, docIndex, documentUrl) => {
+    const docKey = `${eventoIndex}-${docIndex}`;
+    
+    // Set loading state
+    setDocumentStates(prev => ({
+      ...prev,
+      [docKey]: { ...prev[docKey], loading: true, error: null }
+    }));
+    
+    try {
+      // Call the parent's document loading function
+      const result = await onDocumentLoad(documentUrl);
+      
+      // Update document states based on result
+      setDocumentStates(prev => ({
+        ...prev,
+        [docKey]: { 
+          loading: false, 
+          loaded: !result.error, 
+          error: result.error || null
+        }
+      }));
+      
+      // Also update the document in the eventos array
+      if (!result.error) {
+        const updatedEventos = [...sortedEventos];
+        updatedEventos[eventoIndex].documents[docIndex] = {
+          ...updatedEventos[eventoIndex].documents[docIndex],
+          ...result
+        };
+        
+        // We would need to update the parent state here, but we'll rely on the 
+        // parent component having already updated its state in onDocumentLoad
+      }
+      
+      return result;
+    } catch (error) {
+      // Handle error
+      setDocumentStates(prev => ({
+        ...prev,
+        [docKey]: { 
+          loading: false, 
+          loaded: false, 
+          error: error.message || 'Failed to load document'
+        }
+      }));
+      
+      console.error('Error loading document:', error);
+      return null;
+    }
   };
 
   return (
@@ -272,7 +367,7 @@ const EventosView = ({ eventos }) => {
                   )}
                 </CardContent>
                 
-                {/* Display documents if any */}
+                {/* Display documents if any - with lazy loading */}
                 {hasDocuments && (
                   <>
                     <CardActions sx={{ justifyContent: 'space-between', px: 2 }}>
@@ -291,21 +386,104 @@ const EventosView = ({ eventos }) => {
                     <Collapse in={isExpanded}>
                       <Box sx={{ px: 2, pb: 2 }}>
                         <Divider sx={{ mb: 2 }} />
-                        {evento.documents.map((doc, docIndex) => (
-                            <Box key={docIndex} sx={{ mb: 2 }}>
-                                <Typography variant="subtitle2" sx={{ mb: 1 }}>
+                        {evento.documents.map((doc, docIndex) => {
+                          const docKey = `${index}-${docIndex}`;
+                          const docState = documentStates[docKey] || { loading: false, loaded: !!doc.downloaded, error: null };
+                          
+                          return (
+                            <Box key={docIndex} sx={{ mb: 3 }}>
+                              <Typography variant="subtitle2" sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
+                                <DescriptionIcon sx={{ mr: 1, fontSize: '1rem' }} />
                                 {doc.description || `Document ${docIndex + 1}`}
-                                </Typography>
+                              </Typography>
+                              
+                              {docState.loading ? (
+                                <Box sx={{ p: 3, textAlign: 'center', bgcolor: 'background.paper', borderRadius: 1 }}>
+                                  <CircularProgress size={24} sx={{ mb: 1 }} />
+                                  <Typography variant="body2" color="text.secondary">
+                                    Loading document...
+                                  </Typography>
+                                </Box>
+                              ) : docState.error ? (
+                                <Paper sx={{ p: 3, bgcolor: 'error.light', color: 'error.main', borderRadius: 1 }}>
+                                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                                    <ErrorOutlineIcon sx={{ mr: 1 }} />
+                                    <Typography variant="body2" fontWeight="bold">
+                                      Error loading document
+                                    </Typography>
+                                  </Box>
+                                  <Typography variant="body2" sx={{ mb: 2 }}>
+                                    {docState.error || 'Failed to load document'}
+                                  </Typography>
+                                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <Button 
+                                      variant="outlined" 
+                                      size="small"
+                                      href={doc.link_url} 
+                                      target="_blank"
+                                      startIcon={<CloudDownloadIcon />}
+                                    >
+                                      Download
+                                    </Button>
+                                    <Button
+                                      variant="contained"
+                                      size="small"
+                                      onClick={() => handleDocumentLoad(index, docIndex, doc.link_url)}
+                                    >
+                                      Retry
+                                    </Button>
+                                  </Box>
+                                </Paper>
+                              ) : docState.loaded ? (
                                 <Paper sx={{ p: 2, bgcolor: 'background.paper' }}>
-                                <DocumentViewer
-                                    key={docIndex}
+                                  <DocumentViewer
                                     document={doc}
                                     compact={true}
-                                    onError={(error) => console.error(`Error displaying document: ${error}`)}
-                                />
+                                    onError={(error) => {
+                                      console.error(`Error displaying document: ${error}`);
+                                      setDocumentStates(prev => ({
+                                        ...prev,
+                                        [docKey]: { ...prev[docKey], error }
+                                      }));
+                                    }}
+                                  />
                                 </Paper>
+                              ) : (
+                                <Paper 
+                                  sx={{ 
+                                    p: 3, 
+                                    bgcolor: 'background.paper', 
+                                    borderRadius: 1,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                      bgcolor: 'action.hover'
+                                    }
+                                  }}
+                                  onClick={() => handleDocumentLoad(index, docIndex, doc.link_url)}
+                                >
+                                  <CloudDownloadIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
+                                  <Typography variant="subtitle2" align="center" gutterBottom>
+                                    Click to load document
+                                  </Typography>
+                                  <Typography variant="body2" align="center" color="text.secondary" sx={{ mb: 1 }}>
+                                    {doc.link_url.split('/').pop()}
+                                  </Typography>
+                                  <Button 
+                                    variant="contained" 
+                                    size="small"
+                                    startIcon={<CloudDownloadIcon />}
+                                  >
+                                    Load Document
+                                  </Button>
+                                </Paper>
+                              )}
                             </Box>
-                            ))}
+                          );
+                        })}
                       </Box>
                     </Collapse>
                   </>

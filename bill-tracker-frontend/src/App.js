@@ -47,7 +47,6 @@ import {
   Alert
 } from '@mui/material';
 import EventosView from './components/EventosView';
-import DocumentViewer from './components/DocumentViewer';
 
 // Icons
 import SearchIcon from '@mui/icons-material/Search';
@@ -57,9 +56,6 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ShareIcon from '@mui/icons-material/Share';
-import DownloadIcon from '@mui/icons-material/Download';
 import ArticleIcon from '@mui/icons-material/Article';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import PeopleIcon from '@mui/icons-material/People';
@@ -237,57 +233,108 @@ function App() {
     }
   }, []);
 
-  // Handle URL parameters
-  useEffect(() => {
+  const handleOpen = async (billId) => {
+    console.log("handleOpen called with billId:", billId);
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Use our updated fetchBillDetailsWithScraper that returns initial data quickly
+      const billWithInitialData = await fetchBillDetailsWithScraper(billId);
+      
+      // Set the bill with initial data to show the modal immediately
+      setSelectedBill(billWithInitialData);
+      setOpen(true);
+      
+      // Note: The rest of the data will load in the background and update
+      // the state automatically via the loadSutraData function.
+      
+      // Add to recently viewed bills
+      const updatedRecentlyViewed = [billId, ...recentlyViewedBills.filter(id => id !== billId)].slice(0, 10);
+      setRecentlyViewedBills(updatedRecentlyViewed);
+      localStorage.setItem('recentlyViewedBills', JSON.stringify(updatedRecentlyViewed));
+    } catch (err) {
+      console.error('Error fetching bill details:', err);
+      setError({
+        severity: 'error',
+        message: 'Failed to load bill details. Please try again later.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+   // Handle URL parameters
+   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const billId = queryParams.get('billId');
     
     if (billId) {
       handleOpen(billId);
     }
-  }, []);  // Empty dependency array ensures this only runs once on mount
+  }, [handleOpen]);  // Empty dependency array ensures this only runs once on mount
 
-  const handleOpen = async (billId) => {
-    console.log("handleOpen called with billId:", billId);
-    setLoading(true);
+  // Handles on-demand document loading
+  const handleDocumentLoad = async (documentUrl) => {
     try {
-      // Use the enhanced scraper to get bill details
-      const billWithScrapedData = await fetchBillDetailsWithScraper(billId);
-      
-      setSelectedBill(billWithScrapedData);
-      setOpen(true);
-      
-      // Sort actions array by date for timeline consistency
-      if (billWithScrapedData.actions && Array.isArray(billWithScrapedData.actions)) {
-        billWithScrapedData.actions = sortActionsByDate(billWithScrapedData.actions);
+      // If document is already downloaded, just return it
+      if (selectedBill?.eventos) {
+        // Check if this document is already loaded in any evento
+        for (const evento of selectedBill.eventos) {
+          if (evento.documents) {
+            const existingDoc = evento.documents.find(doc => 
+              doc.link_url === documentUrl && doc.downloaded);
+            
+            if (existingDoc) {
+              console.log(`Document already downloaded: ${documentUrl}`);
+              return existingDoc;
+            }
+          }
+        }
       }
       
-      // NEW: If there's no eventos array, create one from actions
-      if (!billWithScrapedData.eventos && billWithScrapedData.actions) {
-        billWithScrapedData.eventos = billWithScrapedData.actions.map(action => ({
-          descripcion: action.description,
-          fecha: action.date,
-          tipo: 'tramite',
-          comision: action.organization ? action.organization.name : null,
-          documents: [] // You might want to extract documents if available
-        }));
-      }
-  
+      // Document not loaded, fetch it now
+      console.log(`Loading document on demand: ${documentUrl}`);
       
-    // Add to recently viewed bills
-    const updatedRecentlyViewed = [billId, ...recentlyViewedBills.filter(id => id !== billId)].slice(0, 10);
-    setRecentlyViewedBills(updatedRecentlyViewed);
-    localStorage.setItem('recentlyViewedBills', JSON.stringify(updatedRecentlyViewed));
-  } catch (err) {
-    console.error('Error fetching bill details:', err);
-    setError({
-      severity: 'error',
-      message: 'Failed to load bill details. Please try again later.'
-    });
-  } finally {
-    setLoading(false);
-  }
-};
+      // Call our new document loading function
+      const result = await loadDocumentOnDemand(documentUrl);
+      
+      if (!result.error) {
+        // Update the document in all eventos where it appears
+        const updatedBill = { ...selectedBill };
+        let updatedAnyDocument = false;
+        
+        if (updatedBill.eventos) {
+          updatedBill.eventos = updatedBill.eventos.map(evento => {
+            if (!evento.documents) return evento;
+            
+            const updatedDocuments = evento.documents.map(doc => {
+              if (doc.link_url === documentUrl) {
+                updatedAnyDocument = true;
+                return { ...doc, ...result };
+              }
+              return doc;
+            });
+            
+            return { ...evento, documents: updatedDocuments };
+          });
+        }
+        
+        if (updatedAnyDocument) {
+          setSelectedBill(updatedBill);
+        }
+      }
+      
+      return result;
+    } catch (error) {
+      console.error(`Error loading document: ${error.message}`);
+      return {
+        link_url: documentUrl,
+        error: error.message || 'Failed to load document',
+        downloaded: false
+      };
+    }
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -312,6 +359,10 @@ function App() {
           latest: extractBestDate(openStatesBill, 'latest'),
           created: extractBestDate(openStatesBill, 'created'),
           passage: extractBestDate(openStatesBill, 'passage')
+        },
+        loading: {
+          timeline: true, // Set timeline to loading state initially
+          documents: true // Set documents to loading state initially
         }
       };
       
@@ -320,7 +371,16 @@ function App() {
         processedBill.actions = sortActionsByDate(processedBill.actions);
       }
       
-      console.log(`Successfully fetched basic bill data for ${billId}`);
+      // Create a fallback eventos array from actions
+      processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
+        ? processedBill.actions.map(action => ({
+            descripcion: action.description,
+            fecha: action.date,
+            tipo: 'tramite',
+            comision: action.organization ? action.organization.name : null,
+            documents: []
+          }))
+        : [];
       
       // Step 2: Find SUTRA URL from the sources array
       let sutraUrl = null;
@@ -339,56 +399,67 @@ function App() {
         }
       }
       
-      // If we couldn't find a SUTRA URL, return the basic data and create 
-      // a fallback eventos array from actions
+      // If we couldn't find a SUTRA URL, return the basic data
       if (!sutraUrl) {
         console.warn(`No SUTRA URL found for bill ${billId}. Using only OpenStates data.`);
-        
-        // Create eventos array from actions as a fallback
-        processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
-          ? processedBill.actions.map(action => ({
-              descripcion: action.description,
-              fecha: action.date,
-              tipo: 'tramite',
-              comision: action.organization ? action.organization.name : null,
-              documents: []
-            }))
-          : [];
-        
+        processedBill.loading.timeline = false;
+        processedBill.loading.documents = false;
         return processedBill;
       }
       
-      // Step 3: Call our backend scraper with the SUTRA URL
-      console.log(`Calling enhanced scraper with URL: ${sutraUrl}`);
+      // Step 3: Start loading the bill data and immediately return the basic data
+      // Note: We'll continue loading in the background
+      loadSutraData(sutraUrl, processedBill); // Runs in background
+      
+      // Return the basic bill with loading indicators
+      return processedBill;
+    } catch (error) {
+      console.error('Error in fetchBillDetailsWithScraper:', error);
+      throw error;
+    }
+  };
+
+  // New function to load SUTRA data in the background and update the state when complete
+  const loadSutraData = async (sutraUrl, processedBill) => {
+    try {
+      console.log(`Calling fast scraper endpoint with URL: ${sutraUrl}`);
       
       // Get the backend URL - handle both development and production
       const backendUrl = process.env.NODE_ENV === 'production' 
-        ? '/api/download-documents'  // In production, use relative URL
-        : 'http://localhost:3001/api/download-documents';  // In development
+        ? '/api/fast-bill-info'  // In production, use relative URL
+        : 'http://localhost:3001/api/fast-bill-info';  // In development
       
-        try {
-          console.log(`Calling optimized scraper endpoint with URL: ${sutraUrl}`);
-          
-          const scraperResponse = await axios.post(backendUrl, {
-            sutraUrl: sutraUrl
-          }, {
-            timeout: 30000 // 30 second timeout
-          });
-                
-      // Step 4: Check if scraper response was successful
+      // Call the fast scraper endpoint
+      const scraperResponse = await axios.post(backendUrl, {
+        sutraUrl: sutraUrl
+      }, {
+        timeout: 5000 // 5 second timeout for fast scraper
+      });
+      
+      // Check if scraper response was successful
       if (scraperResponse.data && scraperResponse.data.success !== false) {
-        console.log(`Successfully scraped additional data from SUTRA`);
+        console.log(`Fast scraper successful in ${scraperResponse.data.scrape_time} seconds`);
         
-        // Combine data from both sources
-        const combinedData = {
+        // Update the bill data with the scraper results
+        const updatedBill = {
           ...processedBill,
-          // Add scraped data with fallbacks
-          eventos: scraperResponse.data.eventos || [],
+          eventos: scraperResponse.data.eventos || processedBill.eventos,
           comisiones: scraperResponse.data.comisiones || processedBill.comisiones || [],
+          measure_number: scraperResponse.data.measure_number || processedBill.measure_number,
+          title: scraperResponse.data.title || processedBill.title,
+          filing_date: scraperResponse.data.filing_date || processedBill.filing_date,
+          authors: scraperResponse.data.authors || processedBill.authors,
+          loading: {
+            ...processedBill.loading,
+            timeline: false // Mark timeline as loaded
+          }
         };
         
-        console.log(`Combined data has ${combinedData.eventos?.length || 0} eventos`);
-        return combinedData;
+        // Update the selectedBill state with the new data
+        setSelectedBill(updatedBill);
+        
+        console.log(`Updated bill data with ${updatedBill.eventos?.length || 0} eventos`);
+        return updatedBill;
       } else {
         // If scraper failed but returned a response, log the error
         if (scraperResponse.data && scraperResponse.data.error) {
@@ -397,83 +468,75 @@ function App() {
           console.error(`Scraper failed with unknown error`);
         }
         
-        // Use the fallback eventos array
-        processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
-          ? processedBill.actions.map(action => ({
-              descripcion: action.description,
-              fecha: action.date,
-              tipo: 'tramite',
-              comision: action.organization ? action.organization.name : null,
-              documents: []
-            }))
-          : [];
+        // Mark loading as complete even though it failed
+        const updatedBill = {
+          ...processedBill,
+          loading: {
+            ...processedBill.loading,
+            timeline: false,
+            documents: false
+          }
+        };
         
-        return processedBill;
-      }
-      } catch (scraperError) {
-        console.error('Error calling scraper backend:', scraperError);
-        
-        // Return the basic bill data with a fallback eventos array
-        processedBill.eventos = processedBill.actions && processedBill.actions.length > 0 
-          ? processedBill.actions.map(action => ({
-              descripcion: action.description,
-              fecha: action.date,
-              tipo: 'tramite',
-              comision: action.organization ? action.organization.name : null,
-              documents: []
-            }))
-          : [];
-        
-        return processedBill;
+        setSelectedBill(updatedBill);
+        return updatedBill;
       }
     } catch (error) {
-      console.error('Error in fetchBillDetailsWithScraper:', error);
-      throw error;
+      console.error('Error calling fast scraper:', error);
+      
+      // Mark loading as complete even though it failed
+      const updatedBill = {
+        ...processedBill,
+        loading: {
+          ...processedBill.loading,
+          timeline: false,
+          documents: false
+        },
+        error: {
+          timeline: true,
+          message: error.message || 'Failed to load additional bill data'
+        }
+      };
+      
+      setSelectedBill(updatedBill);
+      return updatedBill;
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    
+  const loadDocumentOnDemand = async (documentUrl) => {
     try {
-      const date = new Date(dateString);
+      console.log(`Loading document on demand: ${documentUrl}`);
       
-      // Check if date is valid (not NaN)
-      if (isNaN(date.getTime())) {
-        console.warn(`Invalid date string: ${dateString}`);
-        return 'Invalid Date';
-      }
+      // Get the backend URL
+      const backendUrl = process.env.NODE_ENV === 'production' 
+        ? '/api/process-document'
+        : 'http://localhost:3001/api/process-document';
       
-      // Check for obviously wrong years (like 8019)
-      const year = date.getFullYear();
-      if (year > 2100 || year < 1900) {
-        // This might be a year parsing error - attempt to fix
-        console.warn(`Suspicious year (${year}) in date: ${dateString}`);
-        
-        // Try to extract and fix the date manually
-        const dateParts = dateString.split(/[^0-9]/);
-        if (dateParts.length >= 3) {
-          // Attempt to create a corrected date
-          const correctedYear = dateParts[0].length === 4 ? dateParts[0] : `20${dateParts[0].slice(-2)}`;
-          const correctedDate = new Date(`${correctedYear}-${dateParts[1]}-${dateParts[2]}`);
-          if (!isNaN(correctedDate.getTime())) {
-            return correctedDate.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            });
-          }
-        }
-      }
-      
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+      // Call the document processor endpoint
+      const response = await axios.post(backendUrl, {
+        documentUrl: documentUrl
+      }, {
+        timeout: 15000 // 15 second timeout for document processing
       });
+      
+      if (response.data && !response.data.error) {
+        console.log(`Document processed successfully: ${documentUrl}`);
+        return response.data;
+      } else {
+        console.error(`Error processing document: ${response.data?.error || 'Unknown error'}`);
+        return {
+          link_url: documentUrl,
+          error: response.data?.error || 'Failed to process document',
+          downloaded: false
+        };
+      }
     } catch (error) {
-      console.error(`Error formatting date: ${dateString}`, error);
-      return 'Date Error';
+      console.error(`Error loading document: ${error.message}`);
+      return {
+        link_url: documentUrl,
+        error: error.message || 'Failed to load document',
+        downloaded: false
+      };
     }
   };
 
@@ -1665,10 +1728,13 @@ function App() {
                 </Grid>
               )}
 
-
-              {tabValue === 1 && selectedBill.eventos && (
-                              <EventosView eventos={selectedBill.eventos} />
-                            )}
+              {tabValue === 1 && selectedBill && (
+                <EventosView 
+                  eventos={selectedBill.eventos} 
+                  isLoading={selectedBill.loading?.timeline}
+                  onDocumentLoad={handleDocumentLoad}  // This calls loadDocumentOnDemand
+                />
+              )}
               
               {tabValue === 2 && (
                 <Paper elevation={1} sx={{ p: 3, borderRadius: 2 }}>

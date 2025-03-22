@@ -1,0 +1,31 @@
+2025-03-22 09:47:14,049 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154373
+2025-03-22 09:47:14,953 - INFO - Found 2 event items
+2025-03-22 09:47:14,955 - INFO - Processed 2 events in 0.91 seconds
+2025-03-22 09:47:14,955 - INFO - FAST SCRAPE: Completed in 0.91 seconds
+2025-03-22 09:47:32,851 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/154373/0100.pdf
+2025-03-22 09:52:07,939 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154373
+2025-03-22 09:52:08,380 - INFO - Found 2 event items
+2025-03-22 09:52:08,381 - INFO - Processed 2 events in 0.44 seconds
+2025-03-22 09:52:08,382 - INFO - FAST SCRAPE: Completed in 0.44 seconds
+2025-03-22 09:53:06,082 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154362
+2025-03-22 09:53:06,441 - INFO - Found 1 event items
+2025-03-22 09:53:06,441 - INFO - Processed 1 events in 0.36 seconds
+2025-03-22 09:53:06,441 - INFO - FAST SCRAPE: Completed in 0.36 seconds
+2025-03-22 09:53:21,595 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/osl/esutra/MedidaReg.aspx?rid=129800
+2025-03-22 09:53:22,029 - INFO - Found 0 event items
+2025-03-22 09:53:22,029 - INFO - Processed 0 events in 0.43 seconds
+2025-03-22 09:53:22,029 - INFO - FAST SCRAPE: Completed in 0.43 seconds
+2025-03-22 09:53:35,682 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154362
+2025-03-22 09:53:36,013 - INFO - Found 1 event items
+2025-03-22 09:53:36,013 - INFO - Processed 1 events in 0.33 seconds
+2025-03-22 09:53:36,013 - INFO - FAST SCRAPE: Completed in 0.33 seconds
+2025-03-22 09:53:51,897 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154194
+2025-03-22 09:53:52,291 - INFO - Found 4 event items
+2025-03-22 09:53:52,293 - INFO - Processed 4 events in 0.40 seconds
+2025-03-22 09:53:52,293 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-22 09:54:00,423 - INFO - Downloading document on demand: https://sutra.oslpr.org/SutraFilesGen/154194/ps0413-25A-009.doc
+2025-03-22 09:54:00,827 - ERROR - Error processing document https://sutra.oslpr.org/SutraFilesGen/154194/ps0413-25A-009.doc: 404 Client Error: Not Found for url: https://sutra.oslpr.org/SutraFiles/anejos/154194/ps0413-25A-009.doc
+2025-03-22 10:13:24,696 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153856
+2025-03-22 10:13:25,158 - INFO - Found 4 event items
+2025-03-22 10:13:25,159 - INFO - Processed 4 events in 0.46 seconds
+2025-03-22 10:13:25,159 - INFO - FAST SCRAPE: Completed in 0.46 seconds
