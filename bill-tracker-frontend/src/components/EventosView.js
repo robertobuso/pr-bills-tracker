@@ -156,6 +156,7 @@ const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
         
         // Call the parent's document loading function
         const result = await onDocumentLoad(documentUrl);
+        console.log(`Document loading result:`, result);
         
         // Update document states based on result
         setDocumentStates(prev => ({
@@ -163,11 +164,12 @@ const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
           [docKey]: { 
             loading: false, 
             loaded: !result.error, 
-            error: result.error || null
+            error: result.error || null,
+            data: result  // Store the full result
           }
         }));
         
-        console.log(`Document loading complete for ${documentUrl}:`, result);
+        console.log(`Document loading complete for ${documentUrl}`);
         
         // Remove from pending requests
         delete requestsRef.current[documentUrl];
@@ -202,6 +204,114 @@ const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
     
     return requestPromise;
   };
+
+  const renderDocument = (doc, index, docIndex) => {
+    const docKey = `${index}-${docIndex}`;
+    const docState = documentStates[docKey] || { loading: false, loaded: !!doc.downloaded, error: null };
+    
+    if (docState.loading) {
+      return (
+        <Box sx={{ p: 3, textAlign: 'center', bgcolor: 'background.paper', borderRadius: 1 }}>
+          <CircularProgress size={24} sx={{ mb: 1 }} />
+          <Typography variant="body2" color="text.secondary">
+            Loading document...
+          </Typography>
+        </Box>
+      );
+    } 
+    
+    if (docState.error) {
+      return (
+        <Paper sx={{ p: 3, bgcolor: 'error.light', color: 'error.main', borderRadius: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+            <ErrorOutlineIcon sx={{ mr: 1 }} />
+            <Typography variant="body2" fontWeight="bold">
+              Error loading document
+            </Typography>
+          </Box>
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {docState.error || 'Failed to load document'}
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button 
+              variant="outlined" 
+              size="small"
+              href={doc.link_url} 
+              target="_blank"
+              startIcon={<CloudDownloadIcon />}
+            >
+              Download
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => handleDocumentLoad(index, docIndex, doc.link_url)}
+            >
+              Retry
+            </Button>
+          </Box>
+        </Paper>
+      );
+    }
+    
+    if (docState.loaded || doc.downloaded) {
+      // Use docState.data if available, otherwise fall back to the original doc
+      const documentToRender = docState.data || doc;
+      console.log(`Rendering document:`, documentToRender);
+      
+      return (
+        <Paper sx={{ p: 2, bgcolor: 'background.paper' }}>
+          <DocumentViewer
+            document={documentToRender}
+            compact={true}
+            onError={(error) => {
+              console.error(`Error displaying document: ${error}`);
+              setDocumentStates(prev => ({
+                ...prev,
+                [docKey]: { ...prev[docKey], error }
+              }));
+            }}
+          />
+        </Paper>
+      );
+    }
+    
+    // Document not loaded yet, show load button
+    return (
+      <Paper 
+        sx={{ 
+          p: 3, 
+          bgcolor: 'background.paper', 
+          borderRadius: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          '&:hover': {
+            bgcolor: 'action.hover'
+          }
+        }}
+        onClick={() => handleDocumentLoad(index, docIndex, doc.link_url)}
+      >
+        <CloudDownloadIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
+        <Typography variant="subtitle2" align="center" gutterBottom>
+          Click to load document
+        </Typography>
+        <Typography variant="body2" align="center" color="text.secondary" sx={{ mb: 1 }}>
+          {doc.link_url.split('/').pop()}
+        </Typography>
+        <Button 
+          variant="contained" 
+          size="small"
+          startIcon={<CloudDownloadIcon />}
+        >
+          Load Document
+        </Button>
+      </Paper>
+    );
+  };
+  
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -403,105 +513,17 @@ const EventosView = ({ eventos, isLoading, onDocumentLoad }) => {
                     <Collapse in={isExpanded}>
                       <Box sx={{ px: 2, pb: 2 }}>
                         <Divider sx={{ mb: 2 }} />
-                        {evento.documents.map((doc, docIndex) => {
-                          const docKey = `${index}-${docIndex}`;
-                          const docState = documentStates[docKey] || { loading: false, loaded: !!doc.downloaded, error: null };
-                          
-                          return (
+                          {evento.documents.map((doc, docIndex) => (
                             <Box key={docIndex} sx={{ mb: 3 }}>
                               <Typography variant="subtitle2" sx={{ mb: 1, display: 'flex', alignItems: 'center' }}>
                                 <DescriptionIcon sx={{ mr: 1, fontSize: '1rem' }} />
                                 {doc.description || `Document ${docIndex + 1}`}
                               </Typography>
                               
-                              {docState.loading ? (
-                                <Box sx={{ p: 3, textAlign: 'center', bgcolor: 'background.paper', borderRadius: 1 }}>
-                                  <CircularProgress size={24} sx={{ mb: 1 }} />
-                                  <Typography variant="body2" color="text.secondary">
-                                    Loading document...
-                                  </Typography>
-                                </Box>
-                              ) : docState.error ? (
-                                <Paper sx={{ p: 3, bgcolor: 'error.light', color: 'error.main', borderRadius: 1 }}>
-                                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                    <ErrorOutlineIcon sx={{ mr: 1 }} />
-                                    <Typography variant="body2" fontWeight="bold">
-                                      Error loading document
-                                    </Typography>
-                                  </Box>
-                                  <Typography variant="body2" sx={{ mb: 2 }}>
-                                    {docState.error || 'Failed to load document'}
-                                  </Typography>
-                                  <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Button 
-                                      variant="outlined" 
-                                      size="small"
-                                      href={doc.link_url} 
-                                      target="_blank"
-                                      startIcon={<CloudDownloadIcon />}
-                                    >
-                                      Download
-                                    </Button>
-                                    <Button
-                                      variant="contained"
-                                      size="small"
-                                      onClick={() => handleDocumentLoad(index, docIndex, doc.link_url)}
-                                    >
-                                      Retry
-                                    </Button>
-                                  </Box>
-                                </Paper>
-                              ) : docState.loaded ? (
-                                <Paper sx={{ p: 2, bgcolor: 'background.paper' }}>
-                                  <DocumentViewer
-                                    document={doc}
-                                    compact={true}
-                                    onError={(error) => {
-                                      console.error(`Error displaying document: ${error}`);
-                                      setDocumentStates(prev => ({
-                                        ...prev,
-                                        [docKey]: { ...prev[docKey], error }
-                                      }));
-                                    }}
-                                  />
-                                </Paper>
-                              ) : (
-                                <Paper 
-                                  sx={{ 
-                                    p: 3, 
-                                    bgcolor: 'background.paper', 
-                                    borderRadius: 1,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    cursor: 'pointer',
-                                    '&:hover': {
-                                      bgcolor: 'action.hover'
-                                    }
-                                  }}
-                                  onClick={() => handleDocumentLoad(index, docIndex, doc.link_url)}
-                                >
-                                  <CloudDownloadIcon sx={{ fontSize: 40, color: 'primary.main', mb: 1 }} />
-                                  <Typography variant="subtitle2" align="center" gutterBottom>
-                                    Click to load document
-                                  </Typography>
-                                  <Typography variant="body2" align="center" color="text.secondary" sx={{ mb: 1 }}>
-                                    {doc.link_url.split('/').pop()}
-                                  </Typography>
-                                  <Button 
-                                    variant="contained" 
-                                    size="small"
-                                    startIcon={<CloudDownloadIcon />}
-                                  >
-                                    Load Document
-                                  </Button>
-                                </Paper>
-                              )}
+                              {renderDocument(doc, index, docIndex)}
                             </Box>
-                          );
-                        })}
-                      </Box>
+                        ))}
+                        </Box>
                     </Collapse>
                   </>
                 )}

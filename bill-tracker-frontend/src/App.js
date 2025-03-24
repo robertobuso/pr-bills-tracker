@@ -278,66 +278,77 @@ function App() {
     return handleDocumentLoadParent(documentUrl); // Simply call the parent handler
   };
 
-  const handleDocumentLoadParent = async (documentUrl) => {
-    try {
-      // If document is already downloaded, just return it
-      if (selectedBill?.eventos) {
-        // Check if this document is already loaded in any evento
-        for (const evento of selectedBill.eventos) {
-          if (evento.documents) {
-            const existingDoc = evento.documents.find(doc =>
-              doc.link_url === documentUrl && doc.downloaded);
+const handleDocumentLoadParent = async (documentUrl) => {
+  try {
+    console.log(`Parent document load handler called for: ${documentUrl}`);
+    
+    // If document is already downloaded, just return it
+    if (selectedBill?.eventos) {
+      // Check if this document is already loaded in any evento
+      for (const evento of selectedBill.eventos) {
+        if (evento.documents) {
+          const existingDoc = evento.documents.find(doc =>
+            doc.link_url === documentUrl && doc.downloaded);
 
-            if (existingDoc) {
-              console.log(`Document already downloaded: ${documentUrl}`);
-              return existingDoc;
-            }
+          if (existingDoc) {
+            console.log(`Document already downloaded: ${documentUrl}`);
+            return existingDoc;
           }
         }
       }
+    }
 
-      // Document not loaded, fetch it now
-      console.log(`Loading document on demand: ${documentUrl}`);
+    // Document not loaded, fetch it now
+    console.log(`Loading document on demand: ${documentUrl}`);
 
-      // Call our new document loading function
-      const result = await loadDocumentOnDemand(documentUrl);
+    // Call our document loading function
+    const result = await loadDocumentOnDemand(documentUrl);
+    
+    // Ensure the downloaded flag is set
+    result.downloaded = !result.error;
+    
+    // Update the document in all eventos where it appears
+    if (!result.error) {
+      console.log(`Document loaded successfully:`, result);
+      
+      const updatedBill = { ...selectedBill };
+      let updatedAnyDocument = false;
 
-      if (!result.error) {
-        // Update the document in all eventos where it appears
-        const updatedBill = { ...selectedBill };
-        let updatedAnyDocument = false;
+      if (updatedBill.eventos) {
+        updatedBill.eventos = updatedBill.eventos.map(evento => {
+          if (!evento.documents) return evento;
 
-        if (updatedBill.eventos) {
-          updatedBill.eventos = updatedBill.eventos.map(evento => {
-            if (!evento.documents) return evento;
-
-            const updatedDocuments = evento.documents.map(doc => {
-              if (doc.link_url === documentUrl) {
-                updatedAnyDocument = true;
-                return { ...doc, ...result };
-              }
-              return doc;
-            });
-
-            return { ...evento, documents: updatedDocuments };
+          const updatedDocuments = evento.documents.map(doc => {
+            if (doc.link_url === documentUrl) {
+              updatedAnyDocument = true;
+              // Merge the result with the existing document
+              return { ...doc, ...result };
+            }
+            return doc;
           });
-        }
 
-        if (updatedAnyDocument) {
-          setSelectedBill(updatedBill);
-        }
+          return { ...evento, documents: updatedDocuments };
+        });
       }
 
-      return result;
-    } catch (error) {
-      console.error(`Error loading document: ${error.message}`);
-      return {
-        link_url: documentUrl,
-        error: error.message || 'Failed to load document',
-        downloaded: false
-      };
+      if (updatedAnyDocument) {
+        console.log(`Updated bill documents in state`);
+        setSelectedBill(updatedBill);
+      }
+    } else {
+      console.error(`Error loading document:`, result.error);
     }
-  };
+
+    return result;
+  } catch (error) {
+    console.error(`Error in document load parent handler: ${error.message}`);
+    return {
+      link_url: documentUrl,
+      error: error.message || 'Failed to load document',
+      downloaded: false
+    };
+  }
+}; 
 
   const handleClose = () => {
     setOpen(false);
@@ -510,31 +521,45 @@ function App() {
     try {
       console.log(`Loading document on demand: ${documentUrl}`);
       
-      // Get the backend URL
-      const backendUrl = process.env.NODE_ENV === 'production' 
-        ? '/api/process-document'
-        : 'http://localhost:3001/api/process-document';
+      // Get the file extension
+      const fileExt = documentUrl.split('.').pop().toLowerCase();
       
-      // Call the document processor endpoint
-      const response = await axios.post(backendUrl, {
-        documentUrl: documentUrl
-      }, {
-        timeout: 15000 // 15 second timeout for document processing
-      });
-      
-      if (response.data && !response.data.error) {
-        console.log(`Document processed successfully: ${documentUrl}`);
-        return response.data;
-      } else {
-        console.error(`Error processing document: ${response.data?.error || 'Unknown error'}`);
+      // Handle Word documents (DOC and DOCX) using Google Docs Viewer
+      if (fileExt === 'doc' || fileExt === 'docx') {
+        console.log(`${fileExt.toUpperCase()} file detected, using Google Docs Viewer`);
+        
+        // For Word documents, use Google Docs Viewer
+        const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(documentUrl)}&embedded=true`;
+        
         return {
           link_url: documentUrl,
-          error: response.data?.error || 'Failed to process document',
-          downloaded: false
+          viewer_url: googleDocsViewerUrl,
+          description: documentUrl.split('/').pop(),
+          downloaded: true,
+          fileType: fileExt,
+          error: null
         };
       }
+      
+      // For PDFs and other file types, use the proxy approach (which works well)
+      const backendUrl = process.env.NODE_ENV === 'production' 
+        ? '/api/proxy-document'
+        : 'http://localhost:3001/api/proxy-document';
+      
+      const proxyUrl = `${backendUrl}?url=${encodeURIComponent(documentUrl)}`;
+      
+      console.log(`Document will be loaded via proxy: ${proxyUrl}`);
+      
+      return {
+        link_url: documentUrl,
+        proxy_url: proxyUrl,
+        description: documentUrl.split('/').pop(),
+        downloaded: true,
+        fileType: fileExt,
+        error: null
+      };
     } catch (error) {
-      console.error(`Error loading document: ${error.message}`);
+      console.error(`Error preparing document URL: ${error.message}`);
       return {
         link_url: documentUrl,
         error: error.message || 'Failed to load document',
@@ -542,7 +567,7 @@ function App() {
       };
     }
   };
-
+  
   const truncateTitle = (title) => {
     if (!title) return 'No Title';
     const words = title.split(' ');

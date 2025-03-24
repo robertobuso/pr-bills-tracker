@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import mammoth from 'mammoth'; // Import mammoth.js
-// import { renderAsync } from 'docx-preview'; // Removed docx-preview
+import mammoth from 'mammoth';
 import {
   Box,
   Paper,
@@ -24,7 +23,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-
 // Set worker source for PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -39,10 +37,14 @@ const DocumentViewer = ({ document }) => {
     const [documentData, setDocumentData] = useState(null);
     const [retryCount, setRetryCount] = useState(0);
     const [useDirectUrl, setUseDirectUrl] = useState(false);
-    const [useIframeInstead, setUseIframeInstead] = useState(false);
-    const [htmlContent, setHtmlContent] = useState(''); // State to hold HTML content for DOCX/DOC rendering
+    const [useIframeInstead, setUseIframeInstead] = useState(true); // Set to true by default
+    const [htmlContent, setHtmlContent] = useState('');
+    const [googleViewerFailed, setGoogleViewerFailed] = useState(false);
 
-    console.log("[DocumentViewer] Initial render with document:", document); // Debug log
+    console.log("[DocumentViewer] Initializing with document:", document);
+    
+    // Validate document prop - must be done after hook declarations
+    const isValidDocument = document && typeof document === 'object' && document.link_url;
     
     // Determine document type from URL
     const getDocumentType = (url) => {
@@ -59,12 +61,15 @@ const DocumentViewer = ({ document }) => {
     };
 
     const getProxyUrl = (url) => {
+        if (!url) return '';
+        const encodedUrl = encodeURIComponent(url);
+        
         return process.env.NODE_ENV === 'production'
-          ? `/api/proxy-document?url=${encodeURIComponent(url)}`
-          : `http://localhost:3001/api/proxy-document?url=${encodeURIComponent(url)}`;
+          ? `/api/proxy-document?url=${encodedUrl}`
+          : `http://localhost:3001/api/proxy-document?url=${encodedUrl}`;
     };
 
-    const documentType = getDocumentType(document.link_url);
+    const documentType = isValidDocument ? getDocumentType(document.link_url) : 'unknown';
 
     // Handle PDF document loading
     const onDocumentLoadSuccess = ({ numPages }) => {
@@ -109,12 +114,12 @@ const DocumentViewer = ({ document }) => {
     };
 
     const getDirectFileUrl = () => {
-        if (document.filepath) {
-        // Extract the filename from filepath
-        const filename = document.filepath.split('/').pop();
-        return process.env.NODE_ENV === 'production'
-            ? `/api/serve-document/${filename}`
-            : `http://localhost:3001/api/serve-document/${filename}`;
+        if (document && document.filepath) {
+            // Extract the filename from filepath
+            const filename = document.filepath.split('/').pop();
+            return process.env.NODE_ENV === 'production'
+                ? `/api/serve-document/${filename}`
+                : `http://localhost:3001/api/serve-document/${filename}`;
         }
         return null;
     };
@@ -125,7 +130,7 @@ const DocumentViewer = ({ document }) => {
         setError(null);
         setDocumentData(null);
         setUseDirectUrl(false);
-        setUseIframeInstead(false);
+        setUseIframeInstead(true); // Always use iframe for reliability
         setRetryCount(prev => prev + 1);
     };
 
@@ -133,11 +138,9 @@ const DocumentViewer = ({ document }) => {
     const fetchDocumentWithFetch = async (url) => {
         try {
             setLoading(true);
-             // Clean the URL - remove any "-false-X" suffix that might be added
-            const cleanUrl = url.replace(/-false-\d+$/, '');
-            console.log(`Fetching document with fetch from cleaned URL: ${cleanUrl}`);
+            console.log(`Fetching document with fetch from URL: ${url}`);
             
-            const response = await fetch(cleanUrl, {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Cache-Control': 'no-cache',
@@ -172,24 +175,15 @@ const DocumentViewer = ({ document }) => {
         }
     }; 
 
-    const getFileUrl = () => {
-        if (document.filepath) {
-          const filename = document.filepath.split('/').pop();
-          return process.env.NODE_ENV === 'production'
-            ? `/api/serve-document/${filename}`
-            : `http://localhost:3001/api/serve-document/${filename}`;
-        }
-        return null;
-    };
-
     // Helper function to render PDF in an iframe
     const renderPdfWithIframe = () => {
         const directFileUrl = getDirectFileUrl();
+        // Use proxy URL if no direct file URL available
         const iframeUrl = directFileUrl || getProxyUrl(document.link_url);
 
-        console.log("[renderPdfWithIframe] Function called. Iframe URL:", iframeUrl); // Log iframe URL
+        console.log("[renderPdfWithIframe] Function called. Iframe URL:", iframeUrl);
 
-        const iframeJSX = ( // Store JSX in a variable
+        return (
             <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
                 <iframe
                     src={iframeUrl}
@@ -205,37 +199,43 @@ const DocumentViewer = ({ document }) => {
                 />
             </Box>
         );
-
-        console.log("[renderPdfWithIframe] Returning JSX:", iframeJSX); // Log returned JSX
-        return iframeJSX; // Return the JSX variable
     };
     
     useEffect(() => {
+        // Only proceed if we have a valid document
+        if (!isValidDocument) {
+          setLoading(false);
+          setError('Invalid document data');
+          return;
+        }
+        
         // Add a request tracking flag to prevent duplicate requests
         let isCurrentRequest = true;
         
-        if (!document.link_url) {
-            setError('No document URL provided');
-            setLoading(false);
-            return;
+        const documentUrl = document.link_url;
+        const requestKey = `${documentUrl}-${useDirectUrl}-${retryCount}`;
+        console.log(`Loading document with key: ${requestKey}`);
+      
+        // Skip processing for Word documents - they will be handled directly
+        if (documentType === 'doc' || documentType === 'docx') {
+          console.log(`${documentType.toUpperCase()} file detected, skipping normal document processing`);
+          setLoading(false);
+          return;
         }
         
-        const cleanDocumentUrl = document.link_url.replace(/-false-\d+$/, '');
-        const requestKey = `${cleanDocumentUrl}-${useDirectUrl}-${retryCount}`;
-        console.log(`Loading document with key: ${requestKey}`);
-
+        // Handle PDF and other documents normally
         // For the actual URL to use in requests
-        const urlToUse = useDirectUrl ? cleanDocumentUrl : getProxyUrl(cleanDocumentUrl);
+        const urlToUse = useDirectUrl ? documentUrl : getProxyUrl(documentUrl);
         
         // Skip if we're already loading this exact document with the same parameters
         if (loading && containerRef.current?.requestKey === requestKey) {
-            console.log('Skipping duplicate document load request');
-            return;
+          console.log('Skipping duplicate document load request');
+          return;
         }
         
         // Store the current request key
         if (containerRef.current) {
-            containerRef.current.requestKey = requestKey;
+          containerRef.current.requestKey = requestKey;
         }
         
         // Reset state when document changes
@@ -247,139 +247,67 @@ const DocumentViewer = ({ document }) => {
         
         // For iframe viewing of PDFs, we don't need to fetch the data initially
         if (useIframeInstead && documentType === 'pdf') {
-            setLoading(false);
-            return;
+          setLoading(false);
+          return;
         }
         
         // For PDF files, directly fetch the data
-        if (documentType === 'pdf' ) { // Process PDF here
-            console.log(`Loading PDF: ${cleanDocumentUrl} via ${useDirectUrl ? 'direct URL' : 'proxy'}: ${urlToUse}`);
-            
-            // Use Fetch to manually retrieve the PDF
-            fetchDocumentWithFetch(urlToUse)
-                .then(blob => {
-                    if (!isCurrentRequest) return;
-                    
-                    // Create a URL directly from the blob
-                    const blobUrl = URL.createObjectURL(blob);
-                    console.log("Created blob URL for PDF:", blobUrl);
-                    
-                    // Set document data to the blob URL instead of converting to data URL
-                    setDocumentData(blobUrl);
-                    setLoading(false);
-                })
-                .catch(err => {
-                    if (!isCurrentRequest) return;
-                    
-                    console.error('Error fetching PDF:', err);
-                    setError(`Failed to load document: ${err.message}`);
-                    setLoading(false);
-                    
-                    // If proxy fails, try direct URL as fallback (if not already tried)
-                    if (!useDirectUrl) {
-                        console.log('Trying direct URL as fallback...');
-                        setUseDirectUrl(true);
-                    }
-                });
-        }
-        else if (documentType === 'docx' || documentType === 'doc') {
-            const loadDocx = async () => {
-                try {
-                    if (!isCurrentRequest) return;
-                    
-                    setLoading(true);
-                    console.log(`Loading DOCX/DOC: ${document.link_url} via ${useDirectUrl ? 'direct URL' : 'proxy'}: ${urlToUse}`);
-
-                    let docxBlobForMammoth;
-
-                    if (documentType === 'doc') {
-                        // Convert DOC to DOCX first
-                        console.log("Detected .doc file, converting to DOCX on server...");
-                       // Clean URL if it has a -false suffix
-                        const cleanUrl = document.link_url.replace(/-false$/, '');
-                        const conversionUrl = `/api/convert-doc-to-docx?docUrl=${encodeURIComponent(cleanDocumentUrl)}`;
-                        const conversionResponse = await fetch(conversionUrl);
-                        if (!conversionResponse.ok) {
-                            throw new Error(`DOC to DOCX conversion failed: ${conversionResponse.statusText}`);
-                        }
-                        docxBlobForMammoth = await conversionResponse.blob(); // Use blob from conversion
-                        console.log("DOC to DOCX conversion successful, proceeding to render DOCX");
-                    } else {
-                         // Directly fetch DOCX if it's already DOCX
-                        docxBlobForMammoth = await fetchDocumentWithFetch(urlToUse);
-                    }
-
-                    if (!isCurrentRequest) return;
-
-                    if (containerRef.current) {
-                        try {
-                            // Convert blob to ArrayBuffer for mammoth
-                            const arrayBuffer = await docxBlobForMammoth.arrayBuffer();
-                            console.log("ArrayBuffer size:", arrayBuffer.byteLength, "bytes"); // Log size for debugging
-                            
-                            const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                            console.log("Mammoth conversion result:", result); // Debug conversion result
-                            
-                            if (!isCurrentRequest) return;
-                        
-                            if (result && result.value) {
-                                // Set the HTML content using dangerouslySetInnerHTML
-                                setHtmlContent(result.value);
-                                setLoading(false);
-                            } else {
-                                console.error("Mammoth conversion returned empty or invalid result:", result);
-                                throw new Error("Document conversion failed - empty result");
-                            }
-                        } catch (renderError) {
-                            if (!isCurrentRequest) return;
-                            console.error('Error rendering DOCX:', renderError);
-                            throw new Error(`Failed to render document: ${renderError.message}`);
-                        }
-                    }
-                } catch (err) {
-                    if (!isCurrentRequest) return;
-                    
-                    console.error('Error loading DOCX/DOC:', err);
-                    setError(`Failed to load document: ${err.message}`);
-                    setLoading(false);
-                    
-                    // Try direct URL if proxy failed
-                    if (!useDirectUrl) {
-                        console.log('Trying direct URL as fallback...');
-                        setUseDirectUrl(true);
-                    }
-                }
-            };
-            
-            loadDocx();
+        if (documentType === 'pdf') {
+          console.log(`Loading PDF: ${documentUrl} via ${useDirectUrl ? 'direct URL' : 'proxy'}: ${urlToUse}`);
+          
+          // Use Fetch to manually retrieve the PDF
+          fetchDocumentWithFetch(urlToUse)
+            .then(blob => {
+              if (!isCurrentRequest) return;
+              
+              // Create a URL directly from the blob
+              const blobUrl = URL.createObjectURL(blob);
+              console.log("Created blob URL for PDF:", blobUrl);
+              
+              // Set document data to the blob URL
+              setDocumentData(blobUrl);
+              setLoading(false);
+            })
+            .catch(err => {
+              if (!isCurrentRequest) return;
+              
+              console.error('Error fetching PDF:', err);
+              setError(`Failed to load document: ${err.message}`);
+              setLoading(false);
+              
+              // If proxy fails, try direct URL as fallback (if not already tried)
+              if (!useDirectUrl) {
+                console.log('Trying direct URL as fallback...');
+                setUseDirectUrl(true);
+              }
+            });
         } else {
-            // Unsupported document types
-            setError(`Document type ${documentType} is not supported for preview. Please download to view.`);
-            setLoading(false);
+          // Unsupported document types
+          setError(`Document type ${documentType} is not supported for preview. Please download to view.`);
+          setLoading(false);
         }
         
         return () => {
-            // Mark this request as abandoned if the component unmounts or the effect re-runs
-            isCurrentRequest = false;
+          // Mark this request as abandoned if the component unmounts or the effect re-runs
+          isCurrentRequest = false;
         };
-    }, [document.link_url, documentType, retryCount, useDirectUrl, useIframeInstead]);
+      }, [document, documentType, retryCount, useDirectUrl, useIframeInstead, isValidDocument, loading]);      
+
+    // If the document is invalid, show an error
+    if (!isValidDocument) {
+        return (
+            <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: 2 }}>
+                <Typography variant="h6" color="error">Invalid Document</Typography>
+                <Typography variant="body1">
+                    The document could not be displayed because invalid data was provided.
+                </Typography>
+            </Paper>
+        );
+    }
     
     // Prepare the document display based on type
     const renderDocument = () => {
         console.log("[renderDocument] Function called. Document type:", documentType);
-        // First check if document URL is valid
-        if (!document.link_url || typeof document.link_url !== 'string') {
-            return (
-                <Box sx={{ p: 3, textAlign: 'center' }}>
-                    <Typography variant="h6" color="error" gutterBottom>
-                        Invalid Document URL
-                    </Typography>
-                    <Typography paragraph>
-                        The document URL is missing or invalid.
-                    </Typography>
-                </Box>
-            );
-        }
         
         if (loading) {
             return (
@@ -443,32 +371,17 @@ const DocumentViewer = ({ document }) => {
 
         switch (documentType) {
             case 'pdf':
-            // First check if we have a direct file URL (most reliable)
-            const directFileUrl = getDirectFileUrl();
-            
-            // If we have a direct file URL, use a simple iframe approach
-            if (directFileUrl) {
-                return (
-                <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
-                    <iframe
-                    src={directFileUrl}
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        border: 'none',
-                        overflow: 'hidden'
-                    }}
-                    title={document.description || "PDF Document"}
-                    />
-                </Box>
-                );
-            }
-
-            if (directFileUrl || documentData) {
+                // Use iframe approach for all PDF rendering (most reliable)
+                const directFileUrl = getDirectFileUrl();
+                // Use proxy URL if no direct file URL available
+                const pdfUrl = directFileUrl || getProxyUrl(document.link_url);
+                
+                console.log(`[PDF Renderer] Using URL: ${pdfUrl} for document:`, document);
+                
                 return (
                     <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
                         <iframe
-                            src={directFileUrl || documentData}
+                            src={pdfUrl}
                             style={{
                                 width: '100%',
                                 height: '100%',
@@ -476,158 +389,121 @@ const DocumentViewer = ({ document }) => {
                                 overflow: 'hidden'
                             }}
                             title={document.description || "PDF Document"}
+                            onLoad={() => console.log('[PDF Renderer] iframe loaded successfully')}
+                            onError={(e) => console.error('[PDF Renderer] iframe load error:', e)}
                         />
                     </Box>
                 );
-            }            
-            
-            // If user clicked to use iframe instead (for proxy approach)
-            if (useIframeInstead) {
-                return renderPdfWithIframe();
-            }
-            
-            return (
-                // First try with object tag (most compatible)
-                <Box sx={{ width: '100%', height: '600px', position: 'relative' }}>
-                    <object
-                        data={documentData}
-                        type="application/pdf"
-                        width="100%"
-                        height="100%"
-                        style={{ border: 'none' }}
-                    >
-                        {/* Fallback to react-pdf if object tag fails */}
-                        <Document
-                            file={documentData}                  
-                            onLoadSuccess={onDocumentLoadSuccess}
-                            onLoadError={onDocumentLoadError}
-                            loading={
-                                <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-                                    <CircularProgress />
-                                </Box>
-                            }
-                            options={{
-                                cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/cmaps/',
-                                cMapPacked: true,
-                                withCredentials: false,
-                                disableStream: true,
-                                disableAutoFetch: true,
+        
+            case 'docx': // DOCX rendering using Google Docs Viewer
+            case 'doc':  // DOC rendering also using Google Docs Viewer
+                const docType = documentType.toUpperCase();
+                console.log(`Rendering ${docType} file with viewer options`);
+                
+                // Check if we have a viewer URL from the document processing
+                const viewerUrl = document.viewer_url || 
+                    `https://docs.google.com/viewer?url=${encodeURIComponent(document.link_url)}&embedded=true`;
+                
+                // If Google Viewer failed or we explicitly want to skip it, show the fallback
+                if (googleViewerFailed) {
+                    return (
+                        <Box sx={{ 
+                            width: '100%', 
+                            p: 4, 
+                            backgroundColor: '#f5f5f5', 
+                            borderRadius: 2,
+                            textAlign: 'center'
+                        }}>
+                            <Typography variant="h6" gutterBottom>
+                                {docType} File Preview
+                            </Typography>
+                            
+                            <Typography variant="body1" paragraph>
+                                This document cannot be previewed directly in the browser.
+                            </Typography>
+                            
+                            <Typography variant="body2" paragraph color="text.secondary">
+                                Microsoft Word documents may require special software to view properly.
+                            </Typography>
+                            
+                            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+                                <Button 
+                                    variant="contained" 
+                                    startIcon={<DownloadIcon />}
+                                    href={document.link_url} 
+                                    target="_blank"
+                                >
+                                    Download Document
+                                </Button>
+                                
+                                <Button 
+                                    variant="outlined"
+                                    onClick={() => setGoogleViewerFailed(false)}
+                                >
+                                    Try Google Viewer Again
+                                </Button>
+                            </Box>
+                        </Box>
+                    );
+                }
+                
+                return (
+                    <Box sx={{ width: '100%', height: '650px', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+                        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Typography variant="body2" color="text.secondary">
+                                {docType} preview powered by Google Docs Viewer
+                            </Typography>
+                            
+                            <Box sx={{ display: 'flex', gap: 1 }}>
+                                <Button 
+                                    variant="text" 
+                                    size="small"
+                                    onClick={() => setGoogleViewerFailed(true)}
+                                >
+                                    Can't view?
+                                </Button>
+                                
+                                <Button 
+                                    variant="outlined" 
+                                    size="small"
+                                    href={document.link_url} 
+                                    target="_blank"
+                                    startIcon={<DownloadIcon />}
+                                >
+                                    Download
+                                </Button>
+                            </Box>
+                        </Box>
+                        
+                        <Paper 
+                            elevation={1} 
+                            sx={{ 
+                                flexGrow: 1, 
+                                overflow: 'hidden', 
+                                display: 'flex', 
+                                flexDirection: 'column',
+                                border: '1px solid #e0e0e0',
+                                borderRadius: '4px'
                             }}
                         >
-                            <Page 
-                                pageNumber={pageNumber} 
-                                scale={zoom}
-                                renderTextLayer={false}
-                                renderAnnotationLayer={false}
-                                error={
-                                    <Typography color="error" align="center">
-                                        Failed to load page.
-                                    </Typography>
-                                }
+                            <iframe
+                                src={viewerUrl}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    border: 'none'
+                                }}
+                                title={document.description || `${docType} Document`}
+                                onLoad={() => console.log(`[${docType} Viewer] Google Docs iframe loaded successfully`)}
+                                onError={(e) => {
+                                    console.error(`[${docType} Viewer] Google Docs iframe error:`, e);
+                                    setGoogleViewerFailed(true);
+                                }}
                             />
-                        </Document>
-                    </object>
-                </Box>
-            );
+                        </Paper>
+                    </Box>
+                );
         
-            case 'docx': // DOCX rendering using mammoth
-                return (
-                    <Box>
-                    {loading && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-                        <CircularProgress sx={{ mb: 2 }} />
-                        <Typography variant="body2" color="text.secondary">
-                            Loading document...
-                        </Typography>
-                        <Button 
-                            href={document.link_url} 
-                            target="_blank" 
-                            variant="outlined" 
-                            sx={{ mt: 2 }}
-                            startIcon={<DownloadIcon />}
-                        >
-                            Download Original
-                        </Button>
-                        </Box>
-                    )}
-                    
-                    {error && (
-                        <Box sx={{ p: 3, textAlign: 'center' }}>
-                        <Typography variant="body1" color="error" gutterBottom>
-                            {error}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                            Document preview is unavailable. Please download the document directly.
-                        </Typography>
-                        <Button 
-                            href={document.link_url} 
-                            target="_blank" 
-                            variant="contained" 
-                            color="primary"
-                            startIcon={<DownloadIcon />}
-                        >
-                            Download Document
-                        </Button>
-                        </Box>
-                    )}
-                    
-                    {!loading && !error && (
-                        <Box ref={containerRef} sx={{ width: '100%', minHeight: '500px', overflowX: 'auto', padding: 2 }}>
-                            <div dangerouslySetInnerHTML={{ __html: htmlContent }} className="mammoth-docx-content" />
-                        </Box>
-                    )}
-                    </Box>
-                );
-
-            case 'doc':  // DOC rendering also using mammoth after server conversion
-                return (
-                    <Box>
-                    {loading && (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-                        <CircularProgress sx={{ mb: 2 }} />
-                        <Typography variant="body2" color="text.secondary">
-                            Loading document...
-                        </Typography>
-                        <Button 
-                            href={document.link_url} 
-                            target="_blank" 
-                            variant="outlined" 
-                            sx={{ mt: 2 }}
-                            startIcon={<DownloadIcon />}
-                        >
-                            Download Original
-                        </Button>
-                        </Box>
-                    )}
-                    
-                    {error && (
-                        <Box sx={{ p: 3, textAlign: 'center' }}>
-                        <Typography variant="body1" color="error" gutterBottom>
-                            {error}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                            Document preview is unavailable. Please download the document directly.
-                        </Typography>
-                        <Button 
-                            href={document.link_url} 
-                            target="_blank" 
-                            variant="contained" 
-                            color="primary"
-                            startIcon={<DownloadIcon />}
-                        >
-                            Download Document
-                        </Button>
-                        </Box>
-                    )}
-                    
-                    {!loading && !error && (
-                        <Box ref={containerRef} sx={{ width: '100%', minHeight: '500px', overflowX: 'auto', padding: 2 }}>
-                            <div dangerouslySetInnerHTML={{ __html: htmlContent }} className="mammoth-docx-content" />
-                        </Box>
-                    )}
-                    </Box>
-                );
-                
             default:
                 return (
                     <Box sx={{ p: 3, textAlign: 'center' }}>
@@ -755,10 +631,5 @@ const DocumentViewer = ({ document }) => {
         </Paper>
     );
 };
-
-// Basic CSS for mammoth.js content - adjust as needed in your CSS files
-const MammothDocxContentStyle = () => (
-    <style>{`.mammoth-docx-content { word-wrap: break-word; }`}</style>
-);
 
 export default DocumentViewer;
