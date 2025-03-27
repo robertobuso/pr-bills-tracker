@@ -1,0 +1,57 @@
+2025-03-27 14:39:13,249 - INFO - Searching for bills introduced on 2025-03-26 using URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-26&fecha_radicacion_hasta=2025-03-26
+2025-03-27 14:39:14,338 - INFO - Found 0 bill items on the page
+2025-03-27 14:50:31,442 - INFO - Searching for bills introduced on 2025-03-26 using URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 14:50:31,442 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 14:50:32,597 - INFO - Found 5 bill items on the page
+2025-03-27 14:56:14,415 - INFO - Searching for bills introduced on 2025-03-26 using URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 14:56:14,418 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 14:56:15,071 - INFO - Found 5 bill items on the page
+2025-03-27 14:59:34,204 - INFO - Searching for bills introduced on 2025-03-26
+2025-03-27 14:59:34,205 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 14:59:34,206 - INFO - Base URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 14:59:34,206 - INFO - Scraping page 1 of 1: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 14:59:34,943 - INFO - Found 5 bill items on page 1
+2025-03-27 15:00:15,757 - INFO - Searching for bills introduced on 2025-03-26
+2025-03-27 15:00:15,757 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 15:00:15,758 - INFO - Base URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:00:15,758 - INFO - Scraping page 1 of 1: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:00:16,796 - INFO - Found 5 bill items on page 1
+2025-03-27 15:02:55,497 - INFO - Searching for bills introduced on 2025-03-26
+2025-03-27 15:02:55,497 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 15:02:55,498 - INFO - Base URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:02:55,498 - INFO - Scraping page 1: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:02:56,208 - INFO - Found 5 bill items on page 1
+2025-03-27 15:02:56,224 - INFO - Moving to page 2
+2025-03-27 15:02:56,224 - ERROR - Error scraping search results: name 'time' is not defined
+2025-03-27 15:03:59,728 - INFO - Searching for bills introduced on 2025-03-26
+2025-03-27 15:03:59,729 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 15:03:59,729 - INFO - Base URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:03:59,729 - INFO - Scraping page 1: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:04:00,472 - INFO - Found 5 bill items on page 1
+2025-03-27 15:04:00,480 - INFO - Moving to page 2
+2025-03-27 15:04:00,481 - INFO - Scraping page 2: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26&page=2
+2025-03-27 15:04:01,061 - INFO - Found 5 bill items on page 2
+2025-03-27 15:04:01,072 - INFO - Moving to page 3
+2025-03-27 15:04:01,072 - INFO - Scraping page 3: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26&page=3
+2025-03-27 15:04:01,606 - INFO - Found 5 bill items on page 3
+2025-03-27 15:04:01,614 - INFO - Moving to page 4
+2025-03-27 15:04:01,614 - INFO - Scraping page 4: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26&page=4
+2025-03-27 15:04:02,808 - INFO - Found 3 bill items on page 4
+2025-03-27 15:04:02,814 - INFO - No next page link found, stopping at page 4
+2025-03-27 15:04:02,814 - INFO - Total bills collected: 18
+2025-03-27 15:17:40,611 - INFO - Searching for bills introduced on 2025-03-26
+2025-03-27 15:17:40,612 - INFO - Date range: from 2025-03-25 to 2025-03-26
+2025-03-27 15:17:40,612 - INFO - Base URL: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:17:40,613 - INFO - Scraping page 1: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26
+2025-03-27 15:17:41,534 - INFO - Found 5 bill items on page 1
+2025-03-27 15:17:41,543 - INFO - Moving to page 2
+2025-03-27 15:17:41,543 - INFO - Scraping page 2: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26&page=2
+2025-03-27 15:17:42,228 - INFO - Found 5 bill items on page 2
+2025-03-27 15:17:42,239 - INFO - Moving to page 3
+2025-03-27 15:17:42,239 - INFO - Scraping page 3: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26&page=3
+2025-03-27 15:17:43,036 - INFO - Found 5 bill items on page 3
+2025-03-27 15:17:43,049 - INFO - Moving to page 4
+2025-03-27 15:17:43,049 - INFO - Scraping page 4: https://sutra.oslpr.org/medidas?cuatrienio_id=2025&fecha_radicacion_desde=2025-03-25&fecha_radicacion_hasta=2025-03-26&page=4
+2025-03-27 15:17:43,551 - INFO - Found 3 bill items on page 4
+2025-03-27 15:17:43,557 - INFO - No next page link found, stopping at page 4
+2025-03-27 15:17:43,557 - INFO - Total bills collected: 18

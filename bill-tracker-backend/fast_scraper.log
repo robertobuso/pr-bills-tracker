@@ -333,3 +333,180 @@
 2025-03-23 21:12:23,004 - INFO - Found 7 event items
 2025-03-23 21:12:23,006 - INFO - Processed 7 events in 0.50 seconds
 2025-03-23 21:12:23,006 - INFO - FAST SCRAPE: Completed in 0.50 seconds
+2025-03-24 08:03:12,684 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154373
+2025-03-24 08:03:13,411 - INFO - Found 2 event items
+2025-03-24 08:03:13,412 - INFO - Processed 2 events in 0.73 seconds
+2025-03-24 08:03:13,412 - INFO - FAST SCRAPE: Completed in 0.73 seconds
+2025-03-24 08:05:30,711 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152744
+2025-03-24 08:05:31,162 - INFO - Found 5 event items
+2025-03-24 08:05:31,164 - INFO - Processed 5 events in 0.45 seconds
+2025-03-24 08:05:31,164 - INFO - FAST SCRAPE: Completed in 0.45 seconds
+2025-03-24 08:06:52,753 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152670
+2025-03-24 08:06:53,218 - INFO - Found 4 event items
+2025-03-24 08:06:53,219 - INFO - Processed 4 events in 0.47 seconds
+2025-03-24 08:06:53,219 - INFO - FAST SCRAPE: Completed in 0.47 seconds
+2025-03-24 08:07:41,417 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152791
+2025-03-24 08:07:41,816 - INFO - Found 5 event items
+2025-03-24 08:07:41,817 - INFO - Processed 5 events in 0.40 seconds
+2025-03-24 08:07:41,817 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-24 08:07:54,211 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154296
+2025-03-24 08:07:54,532 - INFO - Found 3 event items
+2025-03-24 08:07:54,533 - INFO - Processed 3 events in 0.32 seconds
+2025-03-24 08:07:54,533 - INFO - FAST SCRAPE: Completed in 0.32 seconds
+2025-03-24 08:08:04,180 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153567
+2025-03-24 08:08:04,590 - INFO - Found 18 event items
+2025-03-24 08:08:04,595 - INFO - Processed 15 events in 0.42 seconds
+2025-03-24 08:08:04,595 - INFO - Processing 3 additional events with remaining time
+2025-03-24 08:08:04,596 - INFO - FAST SCRAPE: Completed in 0.42 seconds
+2025-03-24 08:18:41,778 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154361
+2025-03-24 08:18:42,189 - INFO - Found 1 event items
+2025-03-24 08:18:42,190 - INFO - Processed 1 events in 0.41 seconds
+2025-03-24 08:18:42,190 - INFO - FAST SCRAPE: Completed in 0.41 seconds
+2025-03-24 08:18:59,718 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152744
+2025-03-24 08:19:00,115 - INFO - Found 5 event items
+2025-03-24 08:19:00,117 - INFO - Processed 5 events in 0.40 seconds
+2025-03-24 08:19:00,117 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-24 08:56:01,987 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:01,988 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:02,273 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:02,293 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:02,429 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:02,759 - INFO - Found 1 event items
+2025-03-24 08:56:02,760 - INFO - Processed 1 events in 0.77 seconds
+2025-03-24 08:56:02,760 - INFO - FAST SCRAPE: Completed in 0.77 seconds
+2025-03-24 08:56:02,857 - INFO - Found 1 event items
+2025-03-24 08:56:02,860 - INFO - Processed 1 events in 0.59 seconds
+2025-03-24 08:56:02,860 - INFO - FAST SCRAPE: Completed in 0.59 seconds
+2025-03-24 08:56:02,860 - INFO - Found 1 event items
+2025-03-24 08:56:02,861 - INFO - Processed 1 events in 0.87 seconds
+2025-03-24 08:56:02,861 - INFO - FAST SCRAPE: Completed in 0.87 seconds
+2025-03-24 08:56:02,861 - INFO - Found 1 event items
+2025-03-24 08:56:02,862 - INFO - Processed 1 events in 0.57 seconds
+2025-03-24 08:56:02,862 - INFO - FAST SCRAPE: Completed in 0.57 seconds
+2025-03-24 08:56:03,035 - INFO - Found 1 event items
+2025-03-24 08:56:03,035 - INFO - Processed 1 events in 0.61 seconds
+2025-03-24 08:56:03,036 - INFO - FAST SCRAPE: Completed in 0.61 seconds
+2025-03-24 08:56:04,637 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:04,786 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:04,870 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:05,237 - INFO - Found 1 event items
+2025-03-24 08:56:05,237 - INFO - Processed 1 events in 0.60 seconds
+2025-03-24 08:56:05,237 - INFO - FAST SCRAPE: Completed in 0.60 seconds
+2025-03-24 08:56:05,275 - INFO - Found 1 event items
+2025-03-24 08:56:05,276 - INFO - Processed 1 events in 0.49 seconds
+2025-03-24 08:56:05,276 - INFO - FAST SCRAPE: Completed in 0.49 seconds
+2025-03-24 08:56:05,375 - INFO - Found 1 event items
+2025-03-24 08:56:05,378 - INFO - Processed 1 events in 0.51 seconds
+2025-03-24 08:56:05,378 - INFO - FAST SCRAPE: Completed in 0.51 seconds
+2025-03-24 08:56:05,754 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154363
+2025-03-24 08:56:06,291 - INFO - Found 1 event items
+2025-03-24 08:56:06,293 - INFO - Processed 1 events in 0.54 seconds
+2025-03-24 08:56:06,293 - INFO - FAST SCRAPE: Completed in 0.54 seconds
+2025-03-24 08:58:16,893 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152433
+2025-03-24 08:58:17,291 - INFO - Found 4 event items
+2025-03-24 08:58:17,293 - INFO - Processed 4 events in 0.40 seconds
+2025-03-24 08:58:17,293 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-24 08:58:28,667 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152433
+2025-03-24 08:58:29,061 - INFO - Found 4 event items
+2025-03-24 08:58:29,063 - INFO - Processed 4 events in 0.40 seconds
+2025-03-24 08:58:29,063 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-24 08:59:21,320 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153139
+2025-03-24 08:59:21,718 - INFO - Found 12 event items
+2025-03-24 08:59:21,722 - INFO - Processed 12 events in 0.40 seconds
+2025-03-24 08:59:21,722 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-24 08:59:42,347 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153139
+2025-03-24 08:59:42,750 - INFO - Found 12 event items
+2025-03-24 08:59:42,755 - INFO - Processed 12 events in 0.41 seconds
+2025-03-24 08:59:42,755 - INFO - FAST SCRAPE: Completed in 0.41 seconds
+2025-03-24 09:00:37,390 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152720
+2025-03-24 09:00:37,862 - INFO - Found 7 event items
+2025-03-24 09:00:37,865 - INFO - Processed 7 events in 0.47 seconds
+2025-03-24 09:00:37,865 - INFO - FAST SCRAPE: Completed in 0.47 seconds
+2025-03-24 14:49:26,699 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152433
+2025-03-24 14:49:27,413 - INFO - Found 4 event items
+2025-03-24 14:49:27,415 - INFO - Processed 4 events in 0.72 seconds
+2025-03-24 14:49:27,415 - INFO - FAST SCRAPE: Completed in 0.72 seconds
+2025-03-24 14:49:53,877 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152547
+2025-03-24 14:49:54,311 - INFO - Found 12 event items
+2025-03-24 14:49:54,315 - INFO - Processed 12 events in 0.44 seconds
+2025-03-24 14:49:54,315 - INFO - FAST SCRAPE: Completed in 0.44 seconds
+2025-03-24 14:50:06,899 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153759
+2025-03-24 14:50:07,288 - INFO - Found 6 event items
+2025-03-24 14:50:07,290 - INFO - Processed 6 events in 0.39 seconds
+2025-03-24 14:50:07,291 - INFO - FAST SCRAPE: Completed in 0.39 seconds
+2025-03-24 14:50:24,462 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153759
+2025-03-24 14:50:24,863 - INFO - Found 6 event items
+2025-03-24 14:50:24,865 - INFO - Processed 6 events in 0.40 seconds
+2025-03-24 14:50:24,865 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-24 14:50:39,212 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152434
+2025-03-24 14:50:39,625 - INFO - Found 15 event items
+2025-03-24 14:50:39,630 - INFO - Processed 15 events in 0.42 seconds
+2025-03-24 14:50:39,630 - INFO - FAST SCRAPE: Completed in 0.42 seconds
+2025-03-24 15:38:49,775 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152433
+2025-03-24 15:38:50,259 - INFO - Found 4 event items
+2025-03-24 15:38:50,261 - INFO - Processed 4 events in 0.49 seconds
+2025-03-24 15:38:50,261 - INFO - FAST SCRAPE: Completed in 0.49 seconds
+2025-03-24 15:39:55,731 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153759
+2025-03-24 15:39:56,147 - INFO - Found 6 event items
+2025-03-24 15:39:56,149 - INFO - Processed 6 events in 0.42 seconds
+2025-03-24 15:39:56,149 - INFO - FAST SCRAPE: Completed in 0.42 seconds
+2025-03-24 15:40:50,318 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153458
+2025-03-24 15:40:50,761 - INFO - Found 6 event items
+2025-03-24 15:40:50,763 - INFO - Processed 6 events in 0.44 seconds
+2025-03-24 15:40:50,763 - INFO - FAST SCRAPE: Completed in 0.45 seconds
+2025-03-24 15:41:18,644 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152547
+2025-03-24 15:41:19,025 - INFO - Found 12 event items
+2025-03-24 15:41:19,029 - INFO - Processed 12 events in 0.38 seconds
+2025-03-24 15:41:19,029 - INFO - FAST SCRAPE: Completed in 0.39 seconds
+2025-03-24 15:41:28,440 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152570
+2025-03-24 15:41:28,991 - INFO - Found 6 event items
+2025-03-24 15:41:28,993 - INFO - Processed 6 events in 0.55 seconds
+2025-03-24 15:41:28,993 - INFO - FAST SCRAPE: Completed in 0.55 seconds
+2025-03-24 15:41:39,468 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152434
+2025-03-24 15:41:39,825 - INFO - Found 15 event items
+2025-03-24 15:41:39,830 - INFO - Processed 15 events in 0.36 seconds
+2025-03-24 15:41:39,830 - INFO - FAST SCRAPE: Completed in 0.36 seconds
+2025-03-24 15:42:02,169 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152434
+2025-03-24 15:42:02,542 - INFO - Found 15 event items
+2025-03-24 15:42:02,547 - INFO - Processed 15 events in 0.38 seconds
+2025-03-24 15:42:02,547 - INFO - FAST SCRAPE: Completed in 0.38 seconds
+2025-03-24 17:27:05,785 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153886
+2025-03-24 17:27:06,317 - INFO - Found 6 event items
+2025-03-24 17:27:06,320 - INFO - Processed 6 events in 0.53 seconds
+2025-03-24 17:27:06,320 - INFO - FAST SCRAPE: Completed in 0.54 seconds
+2025-03-24 17:29:05,205 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153896
+2025-03-24 17:29:05,707 - INFO - Found 6 event items
+2025-03-24 17:29:05,709 - INFO - Processed 6 events in 0.50 seconds
+2025-03-24 17:29:05,709 - INFO - FAST SCRAPE: Completed in 0.50 seconds
+2025-03-24 17:29:18,173 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153896
+2025-03-24 17:29:18,520 - INFO - Found 6 event items
+2025-03-24 17:29:18,521 - INFO - Processed 6 events in 0.35 seconds
+2025-03-24 17:29:18,521 - INFO - FAST SCRAPE: Completed in 0.35 seconds
+2025-03-24 17:29:25,576 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153896
+2025-03-24 17:29:25,982 - INFO - Found 6 event items
+2025-03-24 17:29:25,984 - INFO - Processed 6 events in 0.41 seconds
+2025-03-24 17:29:25,984 - INFO - FAST SCRAPE: Completed in 0.41 seconds
+2025-03-24 17:29:31,248 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153936
+2025-03-24 17:29:31,731 - INFO - Found 6 event items
+2025-03-24 17:29:31,734 - INFO - Processed 6 events in 0.49 seconds
+2025-03-24 17:29:31,734 - INFO - FAST SCRAPE: Completed in 0.49 seconds
+2025-03-24 17:29:42,242 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/154364
+2025-03-24 17:29:42,527 - INFO - Found 1 event items
+2025-03-24 17:29:42,528 - INFO - Processed 1 events in 0.29 seconds
+2025-03-24 17:29:42,528 - INFO - FAST SCRAPE: Completed in 0.29 seconds
+2025-03-24 17:29:48,910 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153886
+2025-03-24 17:29:49,583 - INFO - Found 6 event items
+2025-03-24 17:29:49,586 - INFO - Processed 6 events in 0.68 seconds
+2025-03-24 17:29:49,586 - INFO - FAST SCRAPE: Completed in 0.68 seconds
+2025-03-24 17:29:55,573 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/153896
+2025-03-24 17:29:55,972 - INFO - Found 6 event items
+2025-03-24 17:29:55,976 - INFO - Processed 6 events in 0.40 seconds
+2025-03-24 17:29:55,976 - INFO - FAST SCRAPE: Completed in 0.40 seconds
+2025-03-27 13:04:29,609 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152744
+2025-03-27 13:04:30,800 - INFO - Found 5 event items
+2025-03-27 13:04:30,806 - INFO - Processed 5 events in 1.20 seconds
+2025-03-27 13:04:30,806 - INFO - FAST SCRAPE: Completed in 1.20 seconds
+2025-03-27 13:05:27,538 - INFO - FAST SCRAPE: Starting rapid scrape of https://sutra.oslpr.org/medidas/152551
+2025-03-27 13:05:28,282 - INFO - Found 9 event items
+2025-03-27 13:05:28,284 - INFO - Processed 9 events in 0.75 seconds
+2025-03-27 13:05:28,284 - INFO - FAST SCRAPE: Completed in 0.75 seconds

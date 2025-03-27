@@ -418,6 +418,60 @@ exec(`python3 ${tempFileName}`, { timeout: 30000 }, (error, stdout, stderr) => {
 });
 });
 
+//Radicado Endpoint
+app.post('/api/bills-by-introduction-date', async (req, res) => {
+  let { date } = req.body; // Expected format can be MM/DD/YYYY or YYYY-MM-DD
+  
+  if (!date) {
+    return res.status(400).json({ success: false, error: 'Date is required.' });
+  }
+  
+  try {
+    // Convert date to YYYY-MM-DD format if it's in MM/DD/YYYY format
+    if (date.includes('/')) {
+      const parts = date.split('/');
+      date = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+    }
+    
+    console.log(`Searching for bills introduced on ${date}`);
+    
+    // Execute the Python script with the date parameter
+    const { exec } = require('child_process');
+    exec(`python3 date_search_scraper.py "${date}"`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Exec error: ${error}`);
+        console.error(`Stderr: ${stderr}`);
+        return res.status(500).json({ 
+          success: false, 
+          error: 'Failed to scrape search results.', 
+          details: stderr 
+        });
+      }
+
+      try {
+        // Parse the results
+        const searchResults = JSON.parse(stdout);
+        
+        res.json(searchResults);
+      } catch (parseError) {
+        console.error(`JSON parse error: ${parseError}`);
+        console.error(`Raw Python output: ${stdout}`);
+        res.status(500).json({ 
+          success: false, 
+          error: 'Failed to parse search results.', 
+          rawOutput: stdout.substring(0, 1000) // Limit output size
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error processing search request:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to process search request.' 
+    });
+  }
+});
+
 // DOC to DOCX Conversion Endpoint
 const execPromise = util.promisify(exec); // Promisify exec for async/await
 

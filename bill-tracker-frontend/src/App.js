@@ -62,6 +62,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import EventIcon from '@mui/icons-material/Event';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 // Email Feature
 import Dialog from '@mui/material/Dialog';
@@ -112,112 +113,150 @@ function App() {
   });
   const [emailLoading, setEmailLoading] = useState(false);
   const [emailError, setEmailError] = useState(null);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [introDateDialogOpen, setIntroDateDialogOpen] = useState(false);
+  const [selectedIntroDate, setSelectedIntroDate] = useState(null);
+  const [introDateLoading, setIntroDateLoading] = useState(false);
 
   // Create a theme based on dark mode preference
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-      primary: {
-        main: '#1976d2',
+    const theme = createTheme({
+      palette: {
+        mode: darkMode ? 'dark' : 'light',
+        primary: {
+          main: '#1976d2',
+        },
+        secondary: {
+          main: '#dc004e',
+        },
+        background: {
+          default: darkMode ? '#121212' : '#f5f5f5',
+          paper: darkMode ? '#1e1e1e' : '#ffffff',
+        },
       },
-      secondary: {
-        main: '#dc004e',
+      typography: {
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        h4: {
+          fontWeight: 600,
+        },
+        h6: {
+          fontWeight: 500,
+        },
       },
-      background: {
-        default: darkMode ? '#121212' : '#f5f5f5',
-        paper: darkMode ? '#1e1e1e' : '#ffffff',
-      },
-    },
-    typography: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      h4: {
-        fontWeight: 600,
-      },
-      h6: {
-        fontWeight: 500,
-      },
-    },
-    components: {
-      MuiCard: {
-        styleOverrides: {
-          root: {
-            borderRadius: 12,
-            boxShadow: darkMode 
-              ? '0 8px 16px rgba(0, 0, 0, 0.5)'
-              : '0 6px 12px rgba(0, 0, 0, 0.1)',
-            transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
-            '&:hover': {
-              transform: 'translateY(-4px)',
+      components: {
+        MuiCard: {
+          styleOverrides: {
+            root: {
+              borderRadius: 12,
               boxShadow: darkMode 
-                ? '0 12px 20px rgba(0, 0, 0, 0.6)'
-                : '0 10px 18px rgba(0, 0, 0, 0.15)',
+                ? '0 8px 16px rgba(0, 0, 0, 0.5)'
+                : '0 6px 12px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: darkMode 
+                  ? '0 12px 20px rgba(0, 0, 0, 0.6)'
+                  : '0 10px 18px rgba(0, 0, 0, 0.15)',
+              },
+            },
+          },
+        },
+        MuiChip: {
+          styleOverrides: {
+            root: {
+              borderRadius: 6,
+              fontWeight: 500,
             },
           },
         },
       },
-      MuiChip: {
-        styleOverrides: {
-          root: {
-            borderRadius: 6,
-            fontWeight: 500,
-          },
-        },
-      },
-    },
-  });
+    });
 
-  const fetchBills = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      let url = `${BASE_URL}/bills?jurisdiction=ocd-jurisdiction%2Fcountry%3Aus%2Fterritory%3Apr%2Fgovernment&sort=latest_action_desc&include=sponsorships&include=abstracts&include=other_titles&include=other_identifiers&include=actions&include=sources&include=documents&include=versions&include=votes&include=related_bills&page=${page}&per_page=10&apikey=${API_KEY}`;
-      
-      // Add search query if present
-      if (searchTerm) {
-        url += `&query=${encodeURIComponent(searchTerm)}`;
-      }
-      
-      // Add filters
-      if (filters.classification) {
-        url += `&classification=${encodeURIComponent(filters.classification)}`;
-      }
-      
-      console.log('Fetching bills from OpenStates API:', url);
-      const requestId = Math.random().toString(36).substring(7);
-      console.log(`[${requestId}] Making API request to OpenStates:`, url);
-
-      const response = await axios.get(url);
-      console.log(`[${requestId}] Received API response with ${response.data.results.length} bills`);
-
-      setBills(response.data.results);
-      
-      // Calculate total pages
-      const totalItems = response.data.pagination.total_items;
-      const perPage = response.data.pagination.per_page;
-      setTotalPages(Math.ceil(totalItems / perPage));
-    } catch (err) {
-      console.error('Error fetching bills:', err);
-      setError({
-        severity: 'error',
-        message: 'Failed to load bills. Please try again later.'
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [page, searchTerm, filters.classification]);
-
-  useEffect(() => {
-    // Skip the initial render to avoid duplicate calls
-    if (initialRenderRef.current) {
-      console.log('INITIAL RENDER - Skipping duplicate fetch');
-      initialRenderRef.current = false;
-      return;
-    }
+    const fetchBills = useCallback(async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        // Log search state for debugging
+        console.log('Search state:', { searchTerm, hasSearched });
+        
+        let url = `${BASE_URL}/bills?jurisdiction=ocd-jurisdiction%2Fcountry%3Aus%2Fterritory%3Apr%2Fgovernment&sort=latest_action_desc&include=sponsorships&include=abstracts&include=other_titles&include=other_identifiers&include=actions&include=sources&include=documents&include=versions&include=votes&include=related_bills&page=${page}&per_page=10&apikey=${API_KEY}`;
+        
+        // IMPORTANT: Add search parameter - using q instead of query
+        if (searchTerm) {
+          url += `&q=${encodeURIComponent(searchTerm)}`;
+          console.log(`Adding search parameter q=${encodeURIComponent(searchTerm)}`);
+        }
+        
+        // Add filters
+        if (filters.classification) {
+          url += `&classification=${encodeURIComponent(filters.classification)}`;
+        }
+        
+        console.log('FINAL URL:', url);
+        const requestId = Math.random().toString(36).substring(7);
+        console.log(`[${requestId}] Making API request to OpenStates:`, url);
     
-    console.log('EFFECT TRIGGERED - Fetching bills with:', { page, searchTerm, classification: filters.classification });
-    fetchBills();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, searchTerm, filters.classification]); 
+        const response = await axios.get(url);
+        console.log(`[${requestId}] Received API response with ${response.data.results.length} bills`);
+    
+        setBills(response.data.results);
+        
+        // Calculate total pages
+        const totalItems = response.data.pagination.total_items;
+        const perPage = response.data.pagination.per_page;
+        setTotalPages(Math.ceil(totalItems / perPage));
+      } catch (err) {
+        console.error('Error fetching bills:', err);
+        setError({
+          severity: 'error',
+          message: 'Failed to load bills. Please try again later.'
+        });
+      } finally {
+        setLoading(false);
+      }
+    }, [page, searchTerm, filters.classification]); // Note: hasSearched is not needed in dependencies if we use searchTerm directly
+
+    useEffect(() => {
+      // Handle first render
+      if (initialRenderRef.current) {
+        console.log('INITIAL RENDER - Performing initial fetch');
+        initialRenderRef.current = false;
+        
+        // Do initial fetch
+        const initialFetch = async () => {
+          try {
+            console.log('Performing initial data fetch...');
+            setLoading(true);
+            
+            const initialUrl = `${BASE_URL}/bills?jurisdiction=ocd-jurisdiction%2Fcountry%3Aus%2Fterritory%3Apr%2Fgovernment&sort=latest_action_desc&include=sponsorships&include=abstracts&include=other_titles&include=other_identifiers&include=actions&include=sources&include=documents&include=versions&include=votes&include=related_bills&page=1&per_page=10&apikey=${API_KEY}`;
+            
+            const response = await axios.get(initialUrl);
+            console.log(`Initial fetch successful, got ${response.data.results.length} bills`);
+            
+            setBills(response.data.results);
+            setTotalPages(Math.ceil(response.data.pagination.total_items / response.data.pagination.per_page));
+            setLoading(false);
+          } catch (error) {
+            console.error('Initial fetch failed:', error);
+            setError({
+              severity: 'error',
+              message: 'Failed to load initial data. Please refresh the page.'
+            });
+            setLoading(false);
+          }
+        };
+        
+        initialFetch();
+        return;
+      }
+      
+      // IMPORTANT: Only fetch when page or filters change
+      // NOT when searchTerm changes
+      console.log('Page or filter changed - fetching new data');
+      if (page > 1 || filters.classification) {
+        fetchBills();
+      }
+      
+    }, [page, filters.classification]); // Specifically remove searchTerm from dependencies
   
   useEffect(() => {
     // Load bookmarked bills from localStorage on component mount
@@ -278,77 +317,77 @@ function App() {
     return handleDocumentLoadParent(documentUrl); // Simply call the parent handler
   };
 
-const handleDocumentLoadParent = async (documentUrl) => {
-  try {
-    console.log(`Parent document load handler called for: ${documentUrl}`);
-    
-    // If document is already downloaded, just return it
-    if (selectedBill?.eventos) {
-      // Check if this document is already loaded in any evento
-      for (const evento of selectedBill.eventos) {
-        if (evento.documents) {
-          const existingDoc = evento.documents.find(doc =>
-            doc.link_url === documentUrl && doc.downloaded);
+  const handleDocumentLoadParent = async (documentUrl) => {
+    try {
+      console.log(`Parent document load handler called for: ${documentUrl}`);
+      
+      // If document is already downloaded, just return it
+      if (selectedBill?.eventos) {
+        // Check if this document is already loaded in any evento
+        for (const evento of selectedBill.eventos) {
+          if (evento.documents) {
+            const existingDoc = evento.documents.find(doc =>
+              doc.link_url === documentUrl && doc.downloaded);
 
-          if (existingDoc) {
-            console.log(`Document already downloaded: ${documentUrl}`);
-            return existingDoc;
+            if (existingDoc) {
+              console.log(`Document already downloaded: ${documentUrl}`);
+              return existingDoc;
+            }
           }
         }
       }
-    }
 
-    // Document not loaded, fetch it now
-    console.log(`Loading document on demand: ${documentUrl}`);
+      // Document not loaded, fetch it now
+      console.log(`Loading document on demand: ${documentUrl}`);
 
-    // Call our document loading function
-    const result = await loadDocumentOnDemand(documentUrl);
-    
-    // Ensure the downloaded flag is set
-    result.downloaded = !result.error;
-    
-    // Update the document in all eventos where it appears
-    if (!result.error) {
-      console.log(`Document loaded successfully:`, result);
+      // Call our document loading function
+      const result = await loadDocumentOnDemand(documentUrl);
       
-      const updatedBill = { ...selectedBill };
-      let updatedAnyDocument = false;
+      // Ensure the downloaded flag is set
+      result.downloaded = !result.error;
+      
+      // Update the document in all eventos where it appears
+      if (!result.error) {
+        console.log(`Document loaded successfully:`, result);
+        
+        const updatedBill = { ...selectedBill };
+        let updatedAnyDocument = false;
 
-      if (updatedBill.eventos) {
-        updatedBill.eventos = updatedBill.eventos.map(evento => {
-          if (!evento.documents) return evento;
+        if (updatedBill.eventos) {
+          updatedBill.eventos = updatedBill.eventos.map(evento => {
+            if (!evento.documents) return evento;
 
-          const updatedDocuments = evento.documents.map(doc => {
-            if (doc.link_url === documentUrl) {
-              updatedAnyDocument = true;
-              // Merge the result with the existing document
-              return { ...doc, ...result };
-            }
-            return doc;
+            const updatedDocuments = evento.documents.map(doc => {
+              if (doc.link_url === documentUrl) {
+                updatedAnyDocument = true;
+                // Merge the result with the existing document
+                return { ...doc, ...result };
+              }
+              return doc;
+            });
+
+            return { ...evento, documents: updatedDocuments };
           });
+        }
 
-          return { ...evento, documents: updatedDocuments };
-        });
+        if (updatedAnyDocument) {
+          console.log(`Updated bill documents in state`);
+          setSelectedBill(updatedBill);
+        }
+      } else {
+        console.error(`Error loading document:`, result.error);
       }
 
-      if (updatedAnyDocument) {
-        console.log(`Updated bill documents in state`);
-        setSelectedBill(updatedBill);
-      }
-    } else {
-      console.error(`Error loading document:`, result.error);
+      return result;
+    } catch (error) {
+      console.error(`Error in document load parent handler: ${error.message}`);
+      return {
+        link_url: documentUrl,
+        error: error.message || 'Failed to load document',
+        downloaded: false
+      };
     }
-
-    return result;
-  } catch (error) {
-    console.error(`Error in document load parent handler: ${error.message}`);
-    return {
-      link_url: documentUrl,
-      error: error.message || 'Failed to load document',
-      downloaded: false
-    };
-  }
-}; 
+  }; 
 
   const handleClose = () => {
     setOpen(false);
@@ -578,13 +617,31 @@ const handleDocumentLoadParent = async (documentUrl) => {
   };
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+    const newValue = event.target.value;
+    console.log('Search input changed to:', newValue);
+    setSearchTerm(newValue);
   };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    setPage(1); // Reset to first page on new search
-    fetchBills();
+    console.log('Search form submitted with term:', searchTerm);
+    setPage(1); // Reset to first page
+    
+    // Use setTimeout to ensure state is updated before fetchBills
+    setTimeout(() => {
+      fetchBills(); // This will use the current searchTerm
+    }, 0);
+  };
+
+  const clearSearch = () => {
+    console.log('Clearing search');
+    setSearchTerm('');
+    setPage(1);
+    
+    // Use setTimeout to ensure searchTerm is cleared before fetching
+    setTimeout(() => {
+      fetchBills(); // Will fetch without search term
+    }, 0);
   };
 
   const handleFilterChange = (event) => {
@@ -761,7 +818,7 @@ const handleDocumentLoadParent = async (documentUrl) => {
     
     return (
       <Card
-        key={bill.id}
+        key={bill.id} // Make sure this key is unique
         onClick={() => handleOpen(bill.id)}
         sx={{
           mb: 3,
@@ -800,7 +857,8 @@ const handleDocumentLoadParent = async (documentUrl) => {
               <Box display="flex" alignItems="center" mb={1}>
                 <ArticleIcon sx={{ mr: 1, color: 'primary.main' }} />
                 <Typography variant="subtitle2" color="text.secondary">
-                  {bill.identifier}
+                  {/* Display measure_number if available, otherwise fall back to identifier */}
+                  {bill.measure_number || bill.identifier}
                 </Typography>
                 <Box ml="auto" display="flex" alignItems="center">
                   {isHighlighted && (
@@ -815,7 +873,7 @@ const handleDocumentLoadParent = async (documentUrl) => {
                     />
                   )}
                   <Chip 
-                    label={statusChip.label} 
+                    label={bill.status || statusChip.label} 
                     color={statusChip.color} 
                     size="small" 
                     sx={{ fontWeight: 'bold' }}
@@ -824,16 +882,19 @@ const handleDocumentLoadParent = async (documentUrl) => {
               </Box>
               
               <Typography variant="h6" component="h3" gutterBottom>
+                {/* Use title from SUTRA if available, otherwise fall back to OpenStates title */}
                 {truncateTitle(bill.title)}
               </Typography>
             </Grid>
             
             <Grid item xs={12}>
               <Typography variant="body2" color="text.secondary" paragraph>
-                {bill.abstracts && bill.abstracts.length > 0 ? (
-                  bill.abstracts[0].abstract.substring(0, 200) + 
-                  (bill.abstracts[0].abstract.length > 200 ? '...' : '')
-                ) : 'No abstract available'}
+                {bill.authors ? 
+                  `Authors: ${bill.authors}` : 
+                  (bill.abstracts && bill.abstracts.length > 0 ? 
+                    bill.abstracts[0].abstract.substring(0, 200) + 
+                    (bill.abstracts[0].abstract.length > 200 ? '...' : '') : 
+                    'No abstract available')}
               </Typography>
             </Grid>
             
@@ -851,11 +912,11 @@ const handleDocumentLoadParent = async (documentUrl) => {
                 >
                   <Box>
                     <Typography variant="body2" color="text.secondary">
-                      {latestActionDate.date 
+                      {bill.filing_date || (latestActionDate.date 
                         ? formatBillDate(latestActionDate.date) 
-                        : 'Date not available'}
+                        : 'Date not available')}
                     </Typography>
-                    {timeAgo && (
+                    {timeAgo && !bill.filing_date && (
                       <Typography 
                         variant="caption" 
                         color="text.secondary" 
@@ -876,7 +937,7 @@ const handleDocumentLoadParent = async (documentUrl) => {
                   color={isHighlighted ? 'secondary.main' : 'text.secondary'}
                   sx={{ fontWeight: isHighlighted ? 'bold' : 'normal' }}
                 >
-                  {bill.latest_action_description || 'No action'}
+                  {bill.status || bill.latest_action_description || 'Radicado'}
                 </Typography>
               </Box>
             </Grid>
@@ -884,7 +945,7 @@ const handleDocumentLoadParent = async (documentUrl) => {
         </CardContent>
       </Card>
     );
-  };  
+  };
 
   const renderBillInformation = (bill) => {
     // Extract the best dates for different bill events
@@ -1231,6 +1292,44 @@ const handleDocumentLoadParent = async (documentUrl) => {
     }
   };
 
+  const searchBillsByIntroDate = async () => {
+    if (!selectedIntroDate) return;
+    
+    try {
+      setIntroDateLoading(true);
+      
+      // Format date to YYYY-MM-DD for the API
+      const formattedDate = selectedIntroDate.toISOString().split('T')[0];
+      
+      const backendUrl = process.env.NODE_ENV === 'production'
+        ? '/api/bills-by-introduction-date'
+        : 'http://localhost:3001/api/bills-by-introduction-date';
+      
+      const response = await axios.post(backendUrl, { date: formattedDate });
+      
+      if (response.data.success) {
+        // Update the displayed bills
+        setBills(response.data.bills);
+        setIntroDateDialogOpen(false);
+        
+        // Show success message
+        setError({
+          severity: 'success',
+          message: `Found ${response.data.count} bills introduced on ${formattedDate}`
+        });
+      } else {
+        throw new Error(response.data.error || 'Unknown error');
+      }
+    } catch (err) {
+      setError({
+        severity: 'error',
+        message: `Error searching for bills: ${err.message}`
+      });
+    } finally {
+      setIntroDateLoading(false);
+    }
+  };
+  
   const renderActionTimeline = (bill) => {
     // Sort actions by date
     const sortedActions = sortActionsByDate(bill.actions || []);
@@ -1364,7 +1463,7 @@ const handleDocumentLoadParent = async (documentUrl) => {
                 Tío Pepe Bills Tracker
               </Typography>
               
-              <Box component="form" onSubmit={handleSearchSubmit} sx={{ flexGrow: 1, mx: 2 }}>
+              <Box component="form" onSubmit={handleSearchSubmit} sx={{ flexGrow: 1, mx: 2, display: 'flex' }}>
                 <TextField
                   size="small"
                   placeholder="Search bills..."
@@ -1378,22 +1477,69 @@ const handleDocumentLoadParent = async (documentUrl) => {
                         <SearchIcon />
                       </InputAdornment>
                     ),
-                    endAdornment: searchTerm && (
+                    endAdornment: searchTerm ? (
                       <InputAdornment position="end">
                         <IconButton 
                           size="small" 
-                          onClick={() => setSearchTerm('')}
+                          onClick={() => {
+                            clearSearch();
+                          }}
                           edge="end"
                         >
                           <CloseIcon fontSize="small" />
                         </IconButton>
                       </InputAdornment>
-                    ),
+                    ) : null,
                   }}
                 />
+                <Button 
+                  type="submit" 
+                  variant="contained" 
+                  color="primary"
+                  disabled={loading || !searchTerm}
+                  sx={{ ml: 1 }}
+                >
+                  {loading ? <CircularProgress size={20} /> : "Search"}
+                </Button>
               </Box>
+              {searchTerm && hasSearched && !loading && (
+                <Box sx={{ mb: 2, mt: 1 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    {bills.length > 0 
+                      ? `Found ${bills.length} results for "${searchTerm}"`
+                      : `No results found for "${searchTerm}"`}
+                  </Typography>
+                </Box>
+              )}
+              {hasSearched && (
+                <Box sx={{ my: 2 }}>
+                  <Button 
+                    variant="outlined" 
+                    size="small" 
+                    startIcon={<RefreshIcon />}
+                    onClick={() => {
+                      setSearchTerm('');
+                      setHasSearched(false);
+                      setPage(1);
+                      fetchBills();
+                    }}
+                  >
+                    Clear Search
+                  </Button>
+                </Box>
+              )}
             </Box>
             
+            <Tooltip title="Find Bills by Introduction Date">
+              <IconButton 
+                color="inherit" 
+                onClick={() => setIntroDateDialogOpen(true)}
+                sx={{ ml: 1 }}
+              >
+                <EventIcon />
+              </IconButton>
+            </Tooltip>
+
             <Tooltip title="Filter">
               <IconButton 
                 color="inherit" 
@@ -2038,6 +2184,53 @@ const handleDocumentLoadParent = async (documentUrl) => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Introduction Date Dialog */}
+      <Dialog
+        open={introDateDialogOpen}
+        onClose={() => setIntroDateDialogOpen(false)}
+        aria-labelledby="intro-date-dialog-title"
+      >
+        <DialogTitle id="intro-date-dialog-title">Find Bills by Introduction Date</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Select a date to find bills that were introduced ("Radicado") on that day.
+          </DialogContentText>
+          <Box sx={{ mt: 3 }}>
+            <TextField
+              id="intro-date"
+              label="Introduction Date"
+              type="date"
+              fullWidth
+              value={selectedIntroDate ? selectedIntroDate.toISOString().split('T')[0] : ''}
+              onChange={(e) => {
+                const dateValue = e.target.value;
+                if (dateValue) {
+                  setSelectedIntroDate(new Date(dateValue));
+                } else {
+                  setSelectedIntroDate(null);
+                }
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIntroDateDialogOpen(false)}>Cancel</Button>
+          <Button 
+            onClick={searchBillsByIntroDate} 
+            disabled={!selectedIntroDate || introDateLoading}
+            color="primary"
+            variant="contained"
+            startIcon={introDateLoading ? <CircularProgress size={20} /> : <SearchIcon />}
+          >
+            {introDateLoading ? 'Searching...' : 'Search'}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </ThemeProvider>
   );
 }
